@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'request_form_app',
+    'companies_app',
     'localflavor',
 ]
 

@@ -84,3 +84,4 @@ class Case(models.Model):
 	status = models.CharField(max_length=20,choices=status_choices,default='new')
 	created_date_time = models.DateField(auto_now_add=True)
 	# days_open = models.CharField()
+
