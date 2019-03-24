@@ -21,4 +21,5 @@ from companies_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.IndexView.as_view(),name='index'),
+    path('request/',include('request_form_app.urls')),
 ]

@@ -1,8 +1,8 @@
- from django.urls import path
- from request_form_app import views
+from django.urls import path
+from request_form_app import views
 
- app_name = 'request_form_app'
+app_name = 'request_form_app'
 
- urlpatterns = [
- 	path('request/',views.IndexView(),name='step one'),
- ]
+urlpatterns = [
+	path('',views.ConsumerBasicInfoForm,name='basic info'),
+]
