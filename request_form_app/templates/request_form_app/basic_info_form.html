@@ -1,0 +1,12 @@
+{% extends 'request_form_app/base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+
+{% block body_block %}
+
+		{{form|crispy}}
+		<button class="btn btn-primary" style="float:right;margin-left: 20px;width: 100px;" type="submit">Submit</button>
+		<button class="btn btn-link" style="float:right;">Back</button>
+		
+{% endblock %}

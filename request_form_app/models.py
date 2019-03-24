@@ -28,7 +28,7 @@ class Consumer(models.Model):
 	# 	)
 
 
-	first_name = models.CharField(max_length=256,blank=False)
+	first_name = models.CharField(max_length=256,blank=True)
 	last_name = models.CharField(max_length=256,blank=False)
 	email = models.EmailField(max_length=256,blank=False)
 	alternative_email = models.EmailField(max_length=256,blank=False)
