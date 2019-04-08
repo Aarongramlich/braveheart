@@ -31,7 +31,7 @@ class Consumer(models.Model):
 	first_name = models.CharField(max_length=256,blank=True)
 	last_name = models.CharField(max_length=256,blank=False)
 	email = models.EmailField(max_length=256,blank=False)
-	alternative_email = models.EmailField(max_length=256,blank=False)
+	alternative_email = models.EmailField(max_length=256,blank=True)
 	# phone = models.PhoneField FIGURE OUT BEST WAY TO STORE PHONE
 	# alternative_phone = models.PhoneField FIGURE OUT BEST WAY TO STORE PHONE
 	primary_address = models.CharField(max_length=256,blank=True)
