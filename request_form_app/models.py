@@ -1,5 +1,5 @@
 from django.db import models
-from localflavor.us.models import USStateField, USSocialSecurityNumberField, USPostalCodeField
+from localflavor.us.models import USStateField, USSocialSecurityNumberField, USZipCodeField
 
 # Create your models here.
 
@@ -37,15 +37,18 @@ class Consumer(models.Model):
 	primary_address = models.CharField(max_length=256,blank=True)
 	primary_address_line_two = models.CharField(max_length=256,blank=True)
 	primary_city = models.CharField(max_length=256,blank=True)
-	primary_state = models.CharField(max_length=256,blank=True)
-	primary_zip = models.CharField(max_length=256,blank=True)
+	# primary_state = models.CharField(max_length=256,blank=True) REPLACED WITH LOCALFLAVOR FIELD
+	primary_state = USStateField(null=True,blank=True)
+	# primary_zip = models.CharField(max_length=256,blank=True) REPLACED WITH LOCALFLAVOR FIELD
+	primary_zip = USZipCodeField(null=True,blank=True)
 	primary_country = models.CharField(max_length=256,blank=True)
 	alternative_address = models.CharField(max_length=256,blank=True)
 	alternative_address_line_two = models.CharField(max_length=256,blank=True)
 	alternative_city = models.CharField(max_length=256,blank=True)
 	alternative_state = models.CharField(max_length=256,blank=True)
 	alternative_country = models.CharField(max_length=256,blank=True)
-	ssn = models.CharField(max_length=9,blank=True)
+	# ssn = models.CharField(max_length=9,blank=True)
+	ssn = USSocialSecurityNumberField(null=True,blank=True)
 	driver_license_number = models.CharField(max_length=10,blank=True)
 	driver_license_state = models.CharField(max_length=2,blank=True)
 	date_of_birth = models.DateField(blank=True)

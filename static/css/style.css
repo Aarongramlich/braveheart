@@ -1,10 +1,30 @@
+#requestContent{
+	background-color: #f0f0f0;
+}
+
 #heroContainer{
 	background-color: #007dc1;
+	position: relative;
+	height: 225px;
+}
+
+#heroContent {
+	color: white;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+  	transform: translateY(-50%);
 }
 
 #heroText {
-	color: white;
+	/*color: white;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+  	transform: translateY(-50%);*/
 }
+
+#heroButton {}
 
 #requestForm{
 	background-color: transparent;
@@ -21,7 +41,7 @@
 	/*position: fixed;*/
 	/*left:50%;
 	transform: translateX(-50%);*/
-	
+
 	/*top: 50%;
     transform: translateY(-50%);*/
 }
