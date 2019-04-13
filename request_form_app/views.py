@@ -1,32 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from . import models
-from .forms import ConsumerBasicInfoForm
+from request_form_app.models import Consumer,Case
+from request_form_app.forms import CaseForm,ConsumerForm
 from django.views.generic import (View, TemplateView, ListView, DetailView, 
-									CreateView,DeleteView,UpdateView)
+									CreateView,DeleteView,UpdateView,FormView)
 from django.urls import reverse, reverse_lazy
 
 # Create your views here.
 
-# def ConsumerBasicInfoView(request):
-# 	if request.method == 'POST':
-# 		form = ConsumerBasicInfoForm(request.POST)
-# 		if form.is_valid():
-# 			return HttpResponseRedirect('/thanks/')
-# 	else:
-# 		form = ConsumerBasicInfoForm(request.POST)
+class CaseCreateView(CreateView):
 
-# 	return render(request,'basic_info_form.html', {'form': form})
+	model = Case
+	form_class = CaseForm
 
-def ConsumerBasicInfoView(request):
-	if request.method == 'POST':
-		form = ConsumerBasicInfoForm()
-		if form.is_valid():
-			return HttpResponseRedirect('/thanks/')
-	else:
-		form = ConsumerBasicInfoForm(request.POST)
+class CaseDetailView(DetailView):
+	model = Case
+	template_name = 'request_form_app/case_detail.html'	
 
-	return render(request,'request_form_app/basic_info_form.html', {'form': form})
-
-class IndexView(TemplateView):
-	template_name = 'index.html'
+	def consumer_dupe_check(request,email,pk):
+		pass
