@@ -56,7 +56,7 @@ class Consumer(models.Model):
 	terms_of_service_signed = models.BooleanField(default=False)
 
 	def __str__(self):
-		return self.first_name + self.last_name
+		return self.first_name + " " + self.last_name
 
 	def get_absolute_url(self):
 		return reverse('request_form_app:case_detail',kwargs={'pk':self.pk})
@@ -68,11 +68,17 @@ class Company(models.Model):
 	website = models.URLField(max_length=200)
 	primary_contact = models.ForeignKey('Contact',on_delete=models.CASCADE,null=True,blank=True)
 
+	def __str__(self):
+		return self.company_name
+
 class Contact(models.Model):
 
 	first_name = models.CharField(max_length=256,blank=False)
 	last_name = models.CharField(max_length=256,blank=False)
 	works_for = models.ForeignKey(Company,on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.first_name + " " + self.last_name
 
 class Case(models.Model):
 
@@ -133,6 +139,9 @@ class Case(models.Model):
 	driver_license_state = models.CharField(max_length=2,blank=True)
 	date_of_birth = models.DateField(null=True,blank=True)
 	terms_of_service_signed = models.BooleanField(default=False)
+
+	def __str__(self):
+		return self.first_name + self.last_name + " (" + self.email + ")"
 
 	def get_absolute_url(self):
 			return reverse('request_form_app:case_detail',kwargs={'pk':self.pk})
