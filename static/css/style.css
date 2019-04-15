@@ -1,3 +1,7 @@
+body{
+	font-family: 'Montserrat', sans-serif;
+}
+
 #requestContent{
 	background-color: #f0f0f0;
 }
@@ -24,7 +28,7 @@
   	transform: translateY(-50%);*/
 }
 
-/*#heroButton {}*/
+
 
 #requestForm{
 	background-color: transparent;

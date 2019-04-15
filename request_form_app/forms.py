@@ -41,12 +41,11 @@ class CaseForm(forms.ModelForm):
 			'primary_city' : 'City',
 			'primary_state' : 'State',
 			'primary_zip' : 'Zip',
-			'delete_request':'Delete all of my applicable data',
-			'what_request': 'Learn more about what data we store',
-			'who_request': 'Find out who we share data with',
-			'opt_out_request':'Opt-out of the future sharing of my data',
+			'delete_request':'Delete my data',
+			'what_request': 'Find out what data we store',
+			'who_request': 'Find out who we share with',
+			'opt_out_request':'Opt-out of sharing my data',
 		}
-
 	
 
 	# form = ConsumerBasicInfoForm(request.POST)

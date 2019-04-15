@@ -12,17 +12,20 @@
 
 {% block body_block %}
 
-		<div class="container jumbotron mt-2 mb-0" id="heroContainer">
+	<div class="container jumbotron mt-2 mb-0" id="heroContainer">
 			<div id="heroContent">
-			<h3 id="heroText">Culture Sip cares about your privacy.<br> Submit a request below and we'll send you your data.</h3>
-			<a class="btn btn-primary mt-2" type="button" id="heroButton" role="button" href="https://www.caprivacy.org/about-us">Read more about your rights.</a>
-			</div>
-		</div>
-		<h2 style="text-align: center; padding-top: 60px; padding-bottom: 30px; ">REQUEST FORM</h2>
+			<h4 id="heroText">Culture Sip cares about your privacy.<br> Submit a request below for insight into your data.</h4>
+			<button type="button" class="btn btn-outline-light mt-2">Read more about your rights.</button>
 
-		<div class="container pt-3">
-			<form method="POST">
-				<div class="form-row">
+			</div>
+	</div>
+
+	
+
+	<div class="container pt-3">
+		<form method="POST">
+			<h5 style="padding-top: 30px; padding-bottom: 10px;"><strong>Help us find you in our database:</strong></h5>
+			<div class="form-row">
 					{% csrf_token %}
 				
 					<div class="form-group col-md-6 mb-0">
@@ -31,24 +34,27 @@
 					<div class="form-group col-md-6 mb-0">
 						{{form.last_name|as_crispy_field}}
 					</div>
-				</div>
-				<div class="form-row">
+			</div>
+
+			<div class="form-row">
 					<div class="form-group col-md-6 mb-0">
 						{{form.email|as_crispy_field}}
 					</div>
 					<div class="form-group col-md-6 mb-0">
 						{{form.alternative_email|as_crispy_field}}
 					</div>
-				</div>
-				<div class="form-row">
+			</div>
+
+			<div class="form-row">
 					<div class="form-group col-md-6 mb-0">
 						{{form.primary_address|as_crispy_field}}
 					</div>
 					<div class="form-group col-md-6 mb-0">
 						{{form.primary_address_line_two|as_crispy_field}}
 					</div>
-				</div>
-				<div class="form-row mb-3">
+			</div>
+
+			<div class="form-row mb-3">
 					<div class="form-group col-md-6 mb-0">
 						{{form.primary_city|as_crispy_field}}
 					</div>
@@ -58,33 +64,52 @@
 					<div class="form-group col-md-3 mb-0">
 						{{form.primary_zip|as_crispy_field}}
 					</div>
-				</div>
+			</div>
 
-				<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#termConditions" style="float: right">Submit Request</button>
+			<h5><strong>What would you like to include in your request?</strong></h5>
+
+			<div class="form-row mb-3">
+				<div class="form-group col-md-3 mb-0">
+					{{form.what_request|as_crispy_field}}
+				</div>
+				<div class="form-group col-md-3 mb-0">
+					{{form.opt_out_request|as_crispy_field}}
+				</div>
+				<div class="form-group col-md-3 mb-0">
+					{{form.who_request|as_crispy_field}}
+				</div>
+				<div class="form-group col-md-3 mb-0">
+					{{form.delete_request|as_crispy_field}}
+				</div>
+			</div>
+
+
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#termConditions" style="float: right">Submit Request</button>
+
+
+
+
 				<!-- <button class="btn btn-primary" style="float:right;margin-left: 20px;width: 100px;" type="submit">Submit</button>
 				<button class="btn btn-link" style="float:right;">Back</button> -->
-			</form>
-		</div>
-	<div class="container jumbotron pt-5" style="background-color: transparent; ">
-	
 
-<!-- BOOTSTRAP SCROLLING LONG CONTENT  -->
+		<div class="modal fade" id="termConditions" tabindex="-1" aria-labelledby="termsTitle" aria-hidden="true">
 
-	<div class="modal fade" id="termConditions" tabindex="-1" role="dialog" aria-labelledby="termsTitle" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
+
 			<div class="modal-content">
+
 				<div class="modal-header">
+
 					<h5 class="modal-title" id="termsTitle">Terms and Conditions</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+
 				<div class="modal-body">
 					<h3>Privacy Policy</h3>
 
-
 					<p>Effective date: April 08, 2019</p>
-
 
 					<p>Culture Sip, LLC ("us", "we", or "our") operates the wwww.culturesip.com website (hereinafter referred to as the "Service").</p>
 
@@ -113,11 +138,13 @@
 					</ul>
 
 					<h4>Information Collection and Use</h4>
+
 					<p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
 
 					<h3>Types of Data Collected</h3>
 
 					<h4>Personal Data</h4>
+
 					<p>While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you ("Personal Data"). Personally identifiable information may include, but is not limited to:</p>
 
 					<ul>
@@ -203,16 +230,37 @@
 					<ul>
 			          
 			        </ul>	
-	
 				</div>
+
 				<div class="modal-footer">
+
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
 					<button type="submit" class="btn btn-primary">I Accept</button>
+
 				</div>
 			</div>
 		</div>
 	</div>
+
+	</form>
+	</div>
 </div>
-</div>
+	<div class="container">
+		<div class="jumbotron" style="background-color: #1e346e">
+			<h3 style="color:white">Make a request over the phone: 1-800-561-7162</h3>
+		</div>
+		
+	</div>
+
+
+<!-- 	<div class="container jumbotron pt-5" style="background-color: transparent; ">
+ -->	
+
+<!-- BOOTSTRAP SCROLLING LONG CONTENT  -->
+
+	
+<!-- </div> -->
+
 
 {% endblock %}
