@@ -49,3 +49,17 @@ body{
 	/*top: 50%;
     transform: translateY(-50%);*/
 }
+
+/*CASE DETAIL CSS*/
+
+.container.case-data{
+	background-color: blue;
+}
+
+.jumbotron.case-data{
+	background-color: blue;
+}
+
+.bob{
+	background-color: blue;
+}

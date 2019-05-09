@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Consumer,Case
+from .models import Consumer,Request
 from localflavor.us.models import USStateField, USSocialSecurityNumberField, USZipCodeField
-
+from django.core.mail import send_mail
 
 
 class ConsumerForm(forms.ModelForm):
@@ -29,10 +29,10 @@ class ConsumerForm(forms.ModelForm):
 
 		}
 
-class CaseForm(forms.ModelForm):
+class RequestForm(forms.ModelForm):
 	
 	class Meta:
-		model = Case
+		model = Request
 		fields = ['first_name','last_name','email','alternative_email', 'primary_address', 'primary_address_line_two','primary_city','primary_state','primary_zip','primary_country','delete_request','what_request','who_request','opt_out_request']
 
 		labels = {
@@ -46,6 +46,13 @@ class CaseForm(forms.ModelForm):
 			'who_request': 'Find out who we share with',
 			'opt_out_request':'Opt-out of sharing my data',
 		}
+
+	# def send_email(self):
+	# 	send_mail('Hello from Braveheart Data!',
+	# 		'This is the automated message. <br> This is a test message',
+	# 		'support@braveheartdata.com',
+	# 		[Case.email],
+	# 		fail_silently=False)
 	
 
 	# form = ConsumerBasicInfoForm(request.POST)

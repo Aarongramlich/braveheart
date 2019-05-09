@@ -1,0 +1,63 @@
+body{
+	font-family: 'Montserrat', sans-serif;
+}
+
+#requestContent{
+	background-color: #f0f0f0;
+}
+
+#heroContainer{
+	background-color: #007dc1;
+	position: relative;
+	height: 225px;
+}
+
+#heroContent {
+	color: white;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+  	transform: translateY(-50%);
+}
+
+#heroText {
+	/*color: white;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+  	transform: translateY(-50%);*/
+}
+
+
+
+#requestForm{
+	background-color: transparent;
+	border:solid black thin;
+}
+
+#privacyPolicy{
+	border: solid thin grey;
+	background-color: white;
+
+}
+
+#termConditions{
+	/*position: fixed;*/
+	/*left:50%;
+	transform: translateX(-50%);*/
+
+	/*top: 50%;
+    transform: translateY(-50%);*/
+}
+
+/*CASE DETAIL CSS*/
+
+
+.case-form-detail{
+	background-color: #F9F9F9;
+}
+
+.jumbotron.case-form-jumbo{
+	background-color: #F9F9F9;
+	border-style: black 2px solid;
+}

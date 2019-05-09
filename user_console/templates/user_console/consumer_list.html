@@ -1,0 +1,115 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/consumer_list.css' %}">
+{% endblock %}
+	
+{% block main_block %}
+
+
+	<div class="container-fullwidth" id="consumer-container">
+
+		<div class="container-fullwidth" id="consumer-header-container">
+			
+
+
+
+		<div class="row" id="consumer-row">
+			<div class="col-2 text-center">
+
+				<h1 class="display-5" id="consumer-header">CONSUMERS</h1>
+
+				<button type="button" class="btn btn-success mb-4">Create New Consumer</button>
+
+
+
+
+				
+
+
+
+
+				<div class="list-group" id="list-tab" role="tablist">
+
+					<li class="list-group-item" style="text-align: center;font-size:1.2em;background-color:#F3F5F8 ">FILTERS</li>
+
+					<a class="list-group-item list-group-item-action active" id="filter-1-list" data-toggle='list' href='#filter-1' role='tab' aria-controls='filter-1'>All Consumers</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-2-list" data-toggle='list' href='#filter-2' role='tab' aria-controls='filter-2'>Created Today</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-3-list" data-toggle='list' href='#filter-3' role='tab' aria-controls='filter-3'>Created Last 7 Days</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-4-list" data-toggle='list' href='#filter-4' role='tab' aria-controls='filter-4'>Ready for Review</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-5-list" data-toggle='list' href='#filter-5' role='tab' aria-controls='filter-5'>Green Status (1-14 Days)</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-6-list" data-toggle='list' href='#filter-6' role='tab' aria-controls='filter-6'>Yellow Status (15-30 Days)</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-7-list" data-toggle='list' href='#filter-7' role='tab' aria-controls='filter-7'>Red Status (31-45 Days)</a>
+
+				</div>
+			</div>
+			
+			<div class="col-10">
+
+				<button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export Consumers</button>
+		
+				<div class="tab-content" id="nav-tabContent"> 
+				
+					<div class="tab-pane show active" id="filter-1" role='tabpanel' arialabelledby='filter-1-list'>
+					<table class="table table-light table-bordered table-hover table-sm" id="consumer-table">
+						<thead class="thead" style="background-color:#2d5d7b;color: white;">
+							<th class="table-head" scope="col">Consumer ID</th>
+							<th class="table-head" scope="col">First Name</th>
+							<th class="table-head" scope="col">Last Name</th>
+							<th class="table-head" scope="col">Email</th>
+							<th class="table-head" scope="col">Phone</th>
+							<th class="table-head" scope="col">Address</th>
+							<th class="table-head" scope="col">City</th>
+							<th class="table-head" scope="col">State</th>
+							
+						</thead>
+						
+
+						<tbody>
+							{% for consumer in everyone_list %}
+
+								
+								<tr>
+									<th scope="row">{{consumer.pk }}</th>
+									<td>{{consumer.first_name}}</td>
+									<td>{{consumer.last_name}}</td>
+									<td>{{consumer.email }}</td>
+									<td>{{consumer.phone}}</td>
+									<td style="max-width: 400px;">{{consumer.primary_address}}</td>
+									<td>{{consumer.primary_city}}</td>
+									<td>{{consumer.primary_state}}</td>
+									
+									
+									
+								</tr>
+								
+							{% endfor %}	
+						</tbody>
+					</table>
+					</div>
+
+					
+
+
+
+
+
+
+
+
+
+				</div>
+		</div>
+		</div>
+		</div>
+
+	</div>
+
+{% endblock %}

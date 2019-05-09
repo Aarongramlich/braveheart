@@ -30,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = '/console/home/'
+LOGOUT_REDIRECT_URL = '/console/login/'
 
 # Application definition
 
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
     'companies_app',
     'localflavor',
     'crispy_forms',
+    'user_console',
 ]
 
 MIDDLEWARE = [
@@ -126,9 +129,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+#     'braveheart/static/',
+# ]
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    'braveheart/static/',
-]
+    os.path.join(BASE_DIR, "static"),]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 465
+# EMAIL_HOST_USER = 'aaron@braveheartdata.com' 
+# EMAIL_HOST_PASSWORD = 'Suzie3847!'
+# EMAIL_USE_SSL = True
+# EMAIL_USE_TLS = False 

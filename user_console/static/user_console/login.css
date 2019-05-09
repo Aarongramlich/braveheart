@@ -1,0 +1,24 @@
+#login-container{
+	height:100vh;
+}
+
+.col-6.login-col{
+	background-color: #F3F5F8;
+}
+
+.jumbotron.login-jumbo{
+	width: 500px;
+	margin-top: 30px;
+	margin:auto;
+	background-color: white;
+	border:1px solid #5D5D5D;
+}
+
+.login-logo{
+	width: 250px;
+	height: auto;
+	padding-top: 200px;
+	padding-bottom: 30px;
+	margin: auto;
+	display: block;
+}

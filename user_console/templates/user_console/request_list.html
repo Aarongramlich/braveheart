@@ -1,0 +1,470 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_list.css' %}">
+{% endblock %}
+
+
+{% block main_block %}
+
+	<div class="container-fullwidth" id="request-container">
+
+		<div class="container-fullwidth" id="request-header-container">
+			
+
+
+
+		<div class="row" id="request-row">
+			<div class="col-2 text-center">
+
+				<h1 class="display-5" id="request-header">REQUESTS</h1>
+
+				<button type="button" class="btn btn-success mb-4">Create New Request</button>
+
+
+
+
+				<!-- <div class="btn-group">
+
+					<button id="dropdownMenuButton" class="btn btn-primary dropdown-toggle" type="button" data-toggle='dropdown' aria-haspop='true' aria-expanded='false'>Filters</button>
+
+					
+
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#filter-5" data-toggle='list' aria-controls='filter-5' id="filter-5-list">Green Status</a>
+						<a class="dropdown-item" href="#filter-4" data-toggle='list' aria-controls='filter-4' id="filter-4-list">Ready for Review</a>
+					</div>
+
+				</div> -->
+
+
+
+
+				<div class="list-group" id="list-tab" role="tablist">
+
+					<li class="list-group-item" style="text-align: center;font-size:1.2em;background-color:#F3F5F8 ">FILTERS</li>
+
+					<a class="list-group-item list-group-item-action active" id="filter-1-list" data-toggle='list' href='#filter-1' role='tab' aria-controls='filter-1'>All Requests</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-2-list" data-toggle='list' href='#filter-2' role='tab' aria-controls='filter-2'>Created Today</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-3-list" data-toggle='list' href='#filter-3' role='tab' aria-controls='filter-3'>Created Last 7 Days</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-4-list" data-toggle='list' href='#filter-4' role='tab' aria-controls='filter-4'>Ready for Review</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-5-list" data-toggle='list' href='#filter-5' role='tab' aria-controls='filter-5'>Green Status (1-14 Days)</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-6-list" data-toggle='list' href='#filter-6' role='tab' aria-controls='filter-6'>Yellow Status (15-30 Days)</a>
+
+					<a class="list-group-item list-group-item-action" id="filter-7-list" data-toggle='list' href='#filter-7' role='tab' aria-controls='filter-7'>Red Status (31-45 Days)</a>
+
+				</div>
+			</div>
+			
+			<div class="col-10">
+
+				<button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export Requests</button>
+		
+				<div class="tab-content" id="nav-tabContent"> 
+				
+					<div class="tab-pane show active" id="filter-1" role='tabpanel' arialabelledby='filter-1-list'>
+					<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+						<thead class="thead" style="background-color:#2d5d7b;color: white;">
+							<th class="table-head" scope="col">Request ID</th>
+							<th class="table-head" scope="col">First Name</th>
+							<th class="table-head" scope="col">Last Name</th>
+							<th class="table-head" scope="col">Email</th>
+							<th class="table-head" scope="col">Phone</th>
+							<th class="table-head" scope="col">Address</th>
+							<th class="table-head" scope="col">City</th>
+							<th class="table-head" scope="col">State</th>
+							<th class="table-head" scope="col">Days Open</th>
+							<th class="table-head" scope="col">Status</th>
+							<th class="table-head" scope="col">What</th>
+							<th class="table-head" scope="col">Opt-out</th>
+							<th class="table-head" scope="col">Delete</th>
+						</thead>
+						
+
+						<tbody>
+							{% for request in todays_list %}
+
+								{% if request.status == 'red' %}
+								<tr>
+									<th scope="row">{{request.pk }}</th>
+									<td>{{request.first_name}}</td>
+									<td>{{request.last_name}}</td>
+									<td>{{request.email }}</td>
+									<td>{{request.phone}}</td>
+									<td style="max-width: 400px;">{{request.primary_address}}</td>
+									<td>{{request.primary_city}}</td>
+									<td>{{request.primary_state}}</td>
+									<td>{{request.days_open}}</td>
+									<td><span class="badge badge-pill badge-danger">CRITICAL</span></td>
+									<td>{{request.what_request}}</td>
+									<td>{{request.opt_out_request}}</td>
+									<td>{{request.delete_request}}</td>
+								</tr>
+								{% elif request.status == 'yellow' %}
+								<tr>
+									<th scope="row">{{request.pk }}</th>
+									<td>{{request.first_name}}</td>
+									<td>{{request.last_name}}</td>
+									<td>{{request.email }}</td>
+									<td>{{request.phone}}</td>
+									<td style="max-width: 400px;">{{request.primary_address}}</td>
+									<td>{{request.primary_city}}</td>
+									<td>{{request.primary_state}}</td>
+									<td>{{request.days_open}}</td>
+									<td><span class="badge badge-pill badge-warning">DANGER</span></td>
+									<td>{{request.what_request}}</td>
+									<td>{{request.opt_out_request}}</td>
+									<td>{{request.delete_request}}</td>
+								</tr>
+								{% else %}
+								<tr>
+									<th scope="row">{{ request.pk }}</th>
+									<td>{{request.first_name}}</td>
+									<td>{{request.last_name}}</td>
+									<td>{{request.email }}</td>
+									<td>{{request.phone}}</td>
+									<td style="max-width: 400px;">{{request.primary_address}}</td>
+									<td>{{request.primary_city}}</td>
+									<td>{{request.primary_state}}</td>
+									<td>{{request.days_open}}</td>
+									<td><span class="badge badge-pill badge-success">OKAY</span></td>
+									<td>{{request.what_request}}</td>
+									<td>{{request.opt_out_request}}</td>
+									<td>{{request.delete_request}}</td>
+								</tr>
+								{% endif %}
+							{% endfor %}	
+						</tbody>
+					</table>
+					</div>
+
+					
+
+
+					<div class="tab-pane" id="filter-4" role='tabpanel' arialabelledby='filter-4-list'>
+						<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+							<thead class="thead" style="background-color:#2d5d7b;color: white;">
+								<th class="table-head" scope="col">Request ID</th>
+								<th class="table-head" scope="col">First Name</th>
+								<th class="table-head" scope="col">Last Name</th>
+								<th class="table-head" scope="col">Email</th>
+								<th class="table-head" scope="col">Phone</th>
+								<th class="table-head" scope="col">Address</th>
+								<th class="table-head" scope="col">City</th>
+								<th class="table-head" scope="col">State</th>
+								<th class="table-head" scope="col">Days Open</th>
+								<th class="table-head" scope="col">Status</th>
+								<th class="table-head" scope="col">What</th>
+								<th class="table-head" scope="col">Opt-out</th>
+								<th class="table-head" scope="col">Delete</th>
+							</thead>
+							
+
+							<tbody>
+								{% for request in data_ready_to_send_list %}
+
+									{% if request.status == 'red' %}
+									<tr>
+										<th scope="row">{{request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-danger">CRITICAL</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% elif request.status == 'yellow' %}
+									<tr>
+										<th scope="row">{{request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-warning">DANGER</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% else %}
+									<tr>
+										<th scope="row">{{ request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-success">OKAY</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% endif %}
+								{% endfor %}	
+							</tbody>
+						</table>
+					</div>
+
+
+					<div class="tab-pane" id="filter-5" role='tabpanel' arialabelledby='filter-5-list'>
+						<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+							<thead class="thead" style="background-color:#2d5d7b;color: white;">
+								<th class="table-head" scope="col">Request ID</th>
+								<th class="table-head" scope="col">First Name</th>
+								<th class="table-head" scope="col">Last Name</th>
+								<th class="table-head" scope="col">Email</th>
+								<th class="table-head" scope="col">Phone</th>
+								<th class="table-head" scope="col">Address</th>
+								<th class="table-head" scope="col">City</th>
+								<th class="table-head" scope="col">State</th>
+								<th class="table-head" scope="col">Days Open</th>
+								<th class="table-head" scope="col">Status</th>
+								<th class="table-head" scope="col">What</th>
+								<th class="table-head" scope="col">Opt-out</th>
+								<th class="table-head" scope="col">Delete</th>
+							</thead>
+							
+
+							<tbody>
+								{% for request in green_status_list %}
+
+									{% if request.status == 'red' %}
+									<tr>
+										<th scope="row">{{request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-danger">CRITICAL</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% elif request.status == 'yellow' %}
+									<tr>
+										<th scope="row">{{request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-warning">DANGER</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% else %}
+									<tr>
+										<th scope="row">{{ request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-success">OKAY</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% endif %}
+								{% endfor %}	
+							</tbody>
+						</table>
+					</div>
+
+
+					<div class="tab-pane" id="filter-6" role='tabpanel' arialabelledby='filter-6-list'>
+						<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+							<thead class="thead" style="background-color:#2d5d7b;color: white;">
+								<th class="table-head" scope="col">Request ID</th>
+								<th class="table-head" scope="col">First Name</th>
+								<th class="table-head" scope="col">Last Name</th>
+								<th class="table-head" scope="col">Email</th>
+								<th class="table-head" scope="col">Phone</th>
+								<th class="table-head" scope="col">Address</th>
+								<th class="table-head" scope="col">City</th>
+								<th class="table-head" scope="col">State</th>
+								<th class="table-head" scope="col">Days Open</th>
+								<th class="table-head" scope="col">Status</th>
+								<th class="table-head" scope="col">What</th>
+								<th class="table-head" scope="col">Opt-out</th>
+								<th class="table-head" scope="col">Delete</th>
+							</thead>
+							
+
+							<tbody>
+								{% for request in yellow_status_list %}
+
+									{% if request.status == 'red' %}
+									<tr>
+										<th scope="row">{{request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-danger">CRITICAL</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% elif request.status == 'yellow' %}
+									<tr>
+										<th scope="row">{{request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-warning">DANGER</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% else %}
+									<tr>
+										<th scope="row">{{ request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-success">OKAY</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% endif %}
+								{% endfor %}	
+							</tbody>
+						</table>
+					</div>
+
+
+					<div class="tab-pane" id="filter-7" role='tabpanel' arialabelledby='filter-7-list'>
+						<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+							<thead class="thead" style="background-color:#2d5d7b;color: white;">
+								<th class="table-head" scope="col">Request ID</th>
+								<th class="table-head" scope="col">First Name</th>
+								<th class="table-head" scope="col">Last Name</th>
+								<th class="table-head" scope="col">Email</th>
+								<th class="table-head" scope="col">Phone</th>
+								<th class="table-head" scope="col">Address</th>
+								<th class="table-head" scope="col">City</th>
+								<th class="table-head" scope="col">State</th>
+								<th class="table-head" scope="col">Days Open</th>
+								<th class="table-head" scope="col">Status</th>
+								<th class="table-head" scope="col">What</th>
+								<th class="table-head" scope="col">Opt-out</th>
+								<th class="table-head" scope="col">Delete</th>
+							</thead>
+							
+
+							<tbody>
+								{% for request in red_status_list %}
+
+									{% if request.status == 'red' %}
+									<tr>
+										<th scope="row">{{request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-danger">CRITICAL</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% elif request.status == 'yellow' %}
+									<tr>
+										<th scope="row">{{request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-warning">DANGER</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% else %}
+									<tr>
+										<th scope="row">{{ request.pk }}</th>
+										<td>{{request.first_name}}</td>
+										<td>{{request.last_name}}</td>
+										<td>{{request.email }}</td>
+										<td>{{request.phone}}</td>
+										<td style="max-width: 400px;">{{request.primary_address}}</td>
+										<td>{{request.primary_city}}</td>
+										<td>{{request.primary_state}}</td>
+										<td>{{request.days_open}}</td>
+										<td><span class="badge badge-pill badge-success">OKAY</span></td>
+										<td>{{request.what_request}}</td>
+										<td>{{request.opt_out_request}}</td>
+										<td>{{request.delete_request}}</td>
+									</tr>
+									{% endif %}
+								{% endfor %}	
+							</tbody>
+						</table>
+					</div>
+
+
+
+
+
+
+
+				</div>
+		</div>
+		</div>
+		</div>
+
+	</div>
+	
+{% endblock %}

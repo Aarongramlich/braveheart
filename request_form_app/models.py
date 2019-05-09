@@ -1,47 +1,26 @@
 from django.db import models
 from django.urls import reverse
 from localflavor.us.models import USStateField, USSocialSecurityNumberField, USZipCodeField
+# from phone_field import PhoneField
 
 # Create your models here.
 
 class Consumer(models.Model):
 
-	# driver_license_state = (
-	# 	('AL','AL'),
-	# 	('AK','AK'),
-	# 	('AR','AR'),
-	# 	('CA','CA'),
-	# 	('CO','CO'),
-	# 	('CT','CT'),
-	# 	('DE','DE'),
-	# 	('FL','FL'),
-	# 	('AL','AL'),
-	# 	('AL','AL'),
-	# 	('AL','AL'),
-	# 	('AL','AL'),
-	# 	('AL','AL'),
-	# 	('AL','AL'),
-	# 	('AL','AL'),
-	# 	('AL','AL'),
-	# 	('AL','AL'),
-	# 	('AL','AL'),
-
-	# 	)
-
+	ready_for_send_choices=(
+		('yes','Yes'),
+		('no','No')
+		)
 
 	first_name = models.CharField(max_length=256,blank=True)
 	last_name = models.CharField(max_length=256,blank=False)
 	email = models.EmailField(max_length=256,blank=True)
-	alternative_email = models.EmailField(max_length=256,blank=False)
-	# phone = models.PhoneField FIGURE OUT BEST WAY TO STORE PHONE
-	# alternative_phone = models.PhoneField FIGURE OUT BEST WAY TO STORE PHONE
+	alternative_email = models.EmailField(max_length=256,blank=True)
 	primary_address = models.CharField(max_length=256,blank=True)
 	primary_address_line_two = models.CharField(max_length=256,blank=True)
 	primary_city = models.CharField(max_length=256,blank=True)
-	# primary_state = models.CharField(max_length=256,blank=True) REPLACED WITH LOCALFLAVOR FIELD
-	primary_state = USStateField(blank=True)
-	# primary_zip = models.CharField(max_length=256,blank=True) REPLACED WITH LOCALFLAVOR FIELD
-	primary_zip = USZipCodeField(blank=True)
+	primary_state = USStateField(null=True,blank=True)
+	primary_zip = USZipCodeField(null=True,blank=True)
 	primary_country = models.CharField(max_length=256,blank=True)
 	alternative_address = models.CharField(max_length=256,blank=True)
 	alternative_address_line_two = models.CharField(max_length=256,blank=True)
@@ -54,13 +33,19 @@ class Consumer(models.Model):
 	driver_license_state = models.CharField(max_length=2,blank=True)
 	date_of_birth = models.DateField(null=True,blank=True)
 	terms_of_service_signed = models.BooleanField(default=False)
-	last_signed_terms_of_service_date = models.DateField(null=True,blank=True)
+	identity_verified = models.BooleanField(default=False,null=True)
+	# last_signed_terms_of_service_date = models.DateField(null=True,blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+	phone = models.CharField(max_length=13,blank=True)
+	alternative_phone = models.CharField(max_length=13,blank=True)
+
 
 	def __str__(self):
 		return self.first_name + " " + self.last_name
 
 	def get_absolute_url(self):
-		return reverse('request_form_app:case_detail',kwargs={'pk':self.pk})
+		return reverse('request_form_app:request_detail',kwargs={'pk':self.pk})
 
 
 class Company(models.Model):
@@ -77,11 +62,13 @@ class Contact(models.Model):
 	first_name = models.CharField(max_length=256,blank=False)
 	last_name = models.CharField(max_length=256,blank=False)
 	works_for = models.ForeignKey(Company,on_delete=models.CASCADE)
+	phone = models.CharField(max_length=13,blank=True)
+	alternative_phone = models.CharField(max_length=13,blank=True)
 
 	def __str__(self):
 		return self.first_name + " " + self.last_name
 
-class Case(models.Model):
+class Request(models.Model):
 
 	request_source_choices = (
 		('none','None'),
@@ -94,7 +81,7 @@ class Case(models.Model):
 		('medium','Medium'),
 		('high','High')
 		)
-	status_choices = (
+	stage_choices = (
 		('new','New'),
 		('in progress','In Progress'),
 		('completed', 'Completed'),
@@ -104,6 +91,18 @@ class Case(models.Model):
 	request_choices = (
 		('yes','Yes please'),
 		('no', 'Not right now')
+		)
+
+	data_ready_to_send_choices = (
+		('yes','Yes'),
+		('no','No')
+		)
+
+	status_choices = (
+		('green','Green'),
+		('yellow','Yellow'),
+		('orange','Orange'),
+		('red','Red'),
 		)
 
 	consumer = models.ForeignKey(Consumer, on_delete=models.CASCADE,null=True,blank=True)
@@ -116,8 +115,9 @@ class Case(models.Model):
 	opt_out_request = models.CharField(max_length=5,choices=request_choices,default='no')
 	priority = models.CharField(max_length=10,choices=priority_choices,default='low')
 	escalated = models.BooleanField(null=True)
-	status = models.CharField(max_length=20,choices=status_choices,default='new')
-	created_date_time = models.DateField(auto_now_add=True)
+	stage = models.CharField(max_length=20,choices=stage_choices,default='new')
+	created_at = models.DateField(auto_now_add=True)
+	updated_at = models.DateField(auto_now=True)
 	# days_open = models.CharField()
 	# verified_request = models.BooleanField(null=True)
 
@@ -125,8 +125,8 @@ class Case(models.Model):
 	last_name = models.CharField(max_length=256,blank=False)
 	email = models.EmailField(max_length=256,blank=False)
 	alternative_email = models.EmailField(max_length=256,blank=True)
-	# phone = models.PhoneField FIGURE OUT BEST WAY TO STORE PHONE
-	# alternative_phone = models.PhoneField FIGURE OUT BEST WAY TO STORE PHONE
+	phone = models.CharField(max_length=13,blank=True)
+	alternative_phone = models.CharField(max_length=13,blank=True)
 	primary_address = models.CharField(max_length=256,blank=True)
 	primary_address_line_two = models.CharField(max_length=256,blank=True)
 	primary_city = models.CharField(max_length=256,blank=True)
@@ -147,9 +147,19 @@ class Case(models.Model):
 	date_of_birth = models.DateField(null=True,blank=True)
 	terms_of_service_signed = models.BooleanField(default=False)
 	# terms_of_service_signed_date = models.DateField(null=True,blank=True)
+	data_ready_to_send = models.CharField(max_length=5,choices=data_ready_to_send_choices,default='no')
+	status = models.CharField(max_length=10,choices=status_choices,default='green')
+	days_open = models.IntegerField(default='1',null=False)
 
 	def __str__(self):
 		return self.first_name + self.last_name + " (" + self.email + ")"
 
+
 	def get_absolute_url(self):
-			return reverse('request_form_app:case_detail',kwargs={'pk':self.pk})
+			return reverse('request_form_app:request_detail',kwargs={'pk':self.pk})
+
+
+
+
+
+
