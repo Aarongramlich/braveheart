@@ -118,7 +118,6 @@ class Request(models.Model):
 	stage = models.CharField(max_length=20,choices=stage_choices,default='new')
 	created_at = models.DateField(auto_now_add=True)
 	updated_at = models.DateField(auto_now=True)
-	# days_open = models.CharField()
 	# verified_request = models.BooleanField(null=True)
 
 	first_name = models.CharField(max_length=256,blank=False)
@@ -130,9 +129,7 @@ class Request(models.Model):
 	primary_address = models.CharField(max_length=256,blank=True)
 	primary_address_line_two = models.CharField(max_length=256,blank=True)
 	primary_city = models.CharField(max_length=256,blank=True)
-	# primary_state = models.CharField(max_length=256,blank=True) REPLACED WITH LOCALFLAVOR FIELD
 	primary_state = USStateField(null=True,blank=True)
-	# primary_zip = models.CharField(max_length=256,blank=True) REPLACED WITH LOCALFLAVOR FIELD
 	primary_zip = USZipCodeField(null=True,blank=True)
 	primary_country = models.CharField(max_length=256,blank=True)
 	alternative_address = models.CharField(max_length=256,blank=True)
@@ -140,7 +137,6 @@ class Request(models.Model):
 	alternative_city = models.CharField(max_length=256,blank=True)
 	alternative_state = models.CharField(max_length=256,blank=True)
 	alternative_country = models.CharField(max_length=256,blank=True)
-	# ssn = models.CharField(max_length=9,blank=True)
 	ssn = USSocialSecurityNumberField(null=True,blank=True)
 	driver_license_number = models.CharField(max_length=10,blank=True)
 	driver_license_state = models.CharField(max_length=2,blank=True)

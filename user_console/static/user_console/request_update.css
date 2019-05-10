@@ -1,0 +1,39 @@
+#request-header-container{
+	padding-top: 30px;
+	width: 80%;
+	margin:auto;
+	display: block;
+	/*border-bottom: 1px solid #F2F1F1;*/
+	padding-bottom: 20px;
+
+}
+
+#header-wrapper{
+	border-bottom: 1px solid #DCDAD9;
+	background-color: #FAFAFA;
+	color: #080707;
+	margin-top: 90px;
+	/*font-weight: 300;*/
+
+}
+
+#data-container{
+
+	margin-top: 10%;
+	padding-top: 15px;
+	/*width: 80%;
+	margin: auto;
+	display:block;*/
+	background: radial-gradient(circle, rgba(20,117,190,1) 0%, rgba(46,192,249,0.75) 100%);
+}
+
+#data-jumbo{
+
+	background-color: white;
+	border-radius: 5px;
+	width: 80%;
+	margin: auto;
+	display:block;
+	/*background-color: #FAFAFA;*/
+
+}

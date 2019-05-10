@@ -1,0 +1,130 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css_block%}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_detail.css' %}">
+{% endblock %}
+
+{% block main_block %}
+<div class="container-fullwidth">
+
+	
+	
+
+	<div class="container-fullwidth fixed-top" id="header-wrapper">
+
+		<div class="container-fullwidth" id="request-header-container">
+			<div class="row">
+				<!-- {% if request.status == 'red' %}
+					<div class="alert alert-danger alert-dismissible fade show" role='alert'>This request is near expiration!
+						<button type="button" class="close" data-dismiss='alert' aria-label="Close">
+							<span aria-hidden='true'>&times;</span>
+						</button>
+					</div>
+				{% endif %} -->
+				<div class="col-11">
+					<!-- <p id="request-image" style="padding-top: 10px; padding-right: 40px;"><img src="{% static 'user_console/asset 3.svg' %}" width="60" height="auto"></p> -->
+				
+					<span style="font-size: 1.2em;"><b>{{request.first_name}} {{request.last_name}} - {{request.email}}</b></span><br>
+					<p><span style="font-size:.9em;">Request: {{request.pk}}</span><br>
+
+					
+					<span style="font-size: .9em;">Company: {{request.company_requested}}<br>
+
+					{% if request.status == 'red' %}
+						<span class="badge badge-pill badge-danger">CRITICAL</span>
+						<span style="font-size: 1em;"><i> - 2 days until expiration</i></span>
+					
+					{% elif request.status == 'yellow' %}
+						<span class="badge badge-pill badge-warning" >DANGER</span>
+						<span style="font-size: 1em;"><i> - 14 days until expiration</i></span>
+
+					{% else %}
+						<span class="badge badge-pill badge-success" >OKAY</span>
+						<span style="font-size: 1em;"><i> - 44 days until expiration</i></span>
+					{% endif %}</span></p>
+
+					
+				</div>
+				<div class="col-1 float-right pt-4">
+					<a href="{% url 'user_console:request_update' pk=request.pk %}"><button type="button" class="btn btn-info float-right" style="width: 150px;">Edit</button></a>
+					<!-- <button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Send Data</button>
+					<button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Contact Requester</button> -->
+				</div>
+
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fullwidth" id="data-container">
+		<div class="jumbotron" id="data-jumbo">
+			{% if request.status == 'red' %}
+					<div class="alert alert-danger alert-dismissible fade show mb-5" role='alert'>This request is near expiration!
+						<button type="button" class="close" data-dismiss='alert' aria-label="Close">
+							<span aria-hidden='true'>&times;</span>
+						</button>
+					</div>
+				{% endif %}
+		<div class="row" >
+			<div class="col-4">
+				<table>
+					<tbody>
+						<tr><td class="data-row"><span class="field-label">Request ID:</span><br>{{ request.pk }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">First Name:</span><br>{{ request.first_name }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Last Name:</span><br>{{ request.last_name }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Email:</span><br>{{ request.email }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Alternative Email:</span><br>{{ request.alternative_email }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Phone:</span><br>{{ request.phone }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Alternative Phone:</span><br>{{ request.alternative_phone }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary Address:</span><br>{{ request.primary_address }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary Address Line 2:</span><br>{{ request.primary_address_line_two }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary City:</span><br>{{ request.primary_city }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary State:</span><br>{{ request.primary_state }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary Zip:</span><br>{{ request.primary_zip }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary Country:</span><br>{{ request.primary_country }}</td></tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-4">
+				<table>
+					<tbody>
+							<tr><td class="data-row"><span class="field-label">Company Requested:</span><br>{{request.company_requested}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">SSN:</span><br>{{ request.ssn }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Request Source:</span><br>{{request.request_source}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Website Source:</span><br>{{request.website_source}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">What Request:</span><br>{{request.what_request}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Who Request:</span><br>{{request.who_request}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Opt-out Request:</span><br>{{request.opt_out_request}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Delete Request:</span><br>{{request.delete_request}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Priority:</span><br>{{request.priority}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Escalated:</span><br>{{request.escalated}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Stage: </span><br></td></tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-4">
+				<table>
+					<tbody>
+							<tr><td class="data-row"><span class="field-label">Drivers License Number</span><br>{{request.driver_license_number}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Drivers License State</span><br>{{request.driver_license_state}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Date of Birth</span><br>{{request.date_of_birth}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Terms of Service Signed</span><br>{{request.terms_of_service_signed}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Data Ready to Send</span><br>{{request.data_ready_to_send}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Status</span><br>{{request.status}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Days Open</span><br>{{request.days_open}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Created at:</span><br></td></tr>
+							<tr><td class="data-row"><span class="field-label">Updated at:</span><br></td></tr>
+						</tbody>
+				</table>
+			</div>
+
+		</div>
+		</div>
+	</div>
+	
+</div>
+{% endblock %}
