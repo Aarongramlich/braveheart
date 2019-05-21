@@ -1,9 +1,10 @@
 #request-header{
 	/*padding-top: 10px;*/
-	color:#5D5D5D ;
+	color:#2d5d7b;
 	padding-bottom: 20px;
 	/*padding-left: 180px;*/
 	/*background-color: white;*/
+	opacity: .9;
 }
 
 .btn.btn-success{
@@ -19,6 +20,10 @@
 #list-tab{
 	border-radius: 10px;
 	/*border:1px solid #DCDAD9;*/
+}
+
+#filter-column{
+	border-right:1px solid #DCDAD9;
 }
 
 #request-header-container{
@@ -51,7 +56,7 @@
 	height:100vh;
 	padding-top: 110px;
 	/*margin-bottom: 100px;*/
-	min-height:1200px;
+	min-height:1400px;
 }
 
 #request-row{
@@ -59,9 +64,20 @@
 	background-color: white;
 	width: 95%;
 	margin: auto;
-	padding-top: 10px;
+	padding-top: 30px;
 	padding-bottom: 40px;	
 	/*border: 3px solid #F2F1F1;
 	border-radius: 10px;
 	box-shadow: 10px 10px 20px 10px rgba(0,0,0,0.2);*/
 }
+
+#header-row{
+	width: 95%;
+	margin: auto;
+	border-bottom:1px solid #DCDAD9;
+	padding-bottom: 20px;
+}
+/*
+#new-request-button-row{
+	border-bottom: 1px solid #DCDAD9;
+}*/

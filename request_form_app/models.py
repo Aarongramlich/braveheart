@@ -57,6 +57,9 @@ class Company(models.Model):
 	def __str__(self):
 		return self.company_name
 
+	# def get_absolute_url(self):
+	# 	return reverse('user_console:company_detail',kwargs={'pk':self.pk})
+
 class Contact(models.Model):
 
 	first_name = models.CharField(max_length=256,blank=False)
@@ -118,8 +121,6 @@ class Request(models.Model):
 	stage = models.CharField(max_length=20,choices=stage_choices,default='new')
 	created_at = models.DateField(auto_now_add=True)
 	updated_at = models.DateField(auto_now=True)
-	# verified_request = models.BooleanField(null=True)
-
 	first_name = models.CharField(max_length=256,blank=False)
 	last_name = models.CharField(max_length=256,blank=False)
 	email = models.EmailField(max_length=256,blank=False)
@@ -142,7 +143,6 @@ class Request(models.Model):
 	driver_license_state = models.CharField(max_length=2,blank=True)
 	date_of_birth = models.DateField(null=True,blank=True)
 	terms_of_service_signed = models.BooleanField(default=False)
-	# terms_of_service_signed_date = models.DateField(null=True,blank=True)
 	data_ready_to_send = models.CharField(max_length=5,choices=data_ready_to_send_choices,default='no')
 	status = models.CharField(max_length=10,choices=status_choices,default='green')
 	days_open = models.IntegerField(default='1',null=False)

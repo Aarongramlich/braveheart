@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'localflavor',
     'crispy_forms',
     'user_console',
+    'import_export',
 ]
 
 MIDDLEWARE = [

@@ -22,6 +22,17 @@
 	min-height: 1000px;
 }
 
+#consumer-header{
+	
+	/*padding-top: 10px;*/
+	color:#2d5d7b;
+	padding-bottom: 20px;
+	/*padding-left: 180px;*/
+	/*background-color: white;*/
+	opacity: .9;
+
+}
+
 #consumer-table{
 
 	font-size: .9em;

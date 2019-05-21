@@ -1,0 +1,33 @@
+
+
+#requestform-data-container{
+
+/*	margin-top: 10%;*/
+	padding-top: 5%;
+	/*width: 80%;
+	margin: auto;
+	display:block;*/
+	background: radial-gradient(circle, rgba(20,117,190,1) 0%, rgba(46,192,249,0.75) 100%);
+}
+
+#requestform-data-jumbo{
+
+	background-color: white;
+	border-radius: 5px;
+	width: 80%;
+	margin: auto;
+	display:block;
+	/*background-color: #FAFAFA;*/
+
+}
+
+#title-row{
+	border-bottom:1px solid #DCDAD9;
+	font-size: 1.8em;
+	padding-bottom: 40px;
+	opacity: 0.8;
+}
+
+.form-row{
+	padding-top: 40px;
+}

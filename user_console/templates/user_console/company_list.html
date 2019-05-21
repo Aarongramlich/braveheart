@@ -1,0 +1,67 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_list.css' %}">
+{% endblock %}
+
+
+{% block main_block %}
+	
+	<div class="container-fullwidth" id="request-container">
+		<div class="container-fullwidth" id="request-header-container">
+			<div class="row" id="header-row">
+				<div class="col-2 text-center">
+					<h1 class="display-5" id="request-header">COMPANIES</h1>
+				</div>
+			</div>
+			<div class="row" id="request-row">
+				<div class="col-2 text-center" id="filter-column">
+
+					<div class="row" id="new-request-button-row">
+						<div class="col text-center">
+							<a href="{% url 'user_console:company_create' %}"><button type="button" class="btn btn-success mb-4">Create New Company</button></a>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="col-10">
+					<div class="tab-content" id="nav-tabContent">
+						<div class="tab-pane show active" id="filter-1" role='tabpanel' arialabelledby='filter-1-list'>
+						
+						<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+							<thead class="thead" style="background-color:#2d5d7b;color: white;">
+								<th class="table-head" scope="col">Company Name</th>
+								<th class="table-head" scope="col">Company Website</th>
+								<th class="table-head" scope="col">Primary Contact</th>
+								
+							</thead>
+
+							<tbody>
+
+								{% for company in all_companies_list %}
+									<tr>
+										
+										<td><a href="{% url 'user_console:company_detail' pk=company.pk  %}">{{ company.company_name }}</a></td>
+										<td>{{ company.website }}</td>
+										<td>{{ company.primary_contact }}</td>
+									</tr>
+
+								
+								{% endfor %}
+							</tbody>
+
+
+						</div>
+
+
+				</div>
+				
+			</div>
+
+		</div>
+
+	</div>
+
+{% endblock %}

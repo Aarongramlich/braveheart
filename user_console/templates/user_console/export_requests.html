@@ -1,0 +1,9 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+
+{% block main_block %}
+	<form method="get">
+		{% csrf_token %}
+		<button type="submit">Export Requests</button>
+	</form>
+{% endblock %}

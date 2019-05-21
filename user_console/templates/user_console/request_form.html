@@ -1,0 +1,87 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_form.css' %}">
+{% endblock %}
+
+
+{% block main_block %}
+
+<div class="container-fullwidth">
+	<div class="container-fullwidth" id="requestform-data-container">
+		<div class="jumbotron" id="requestform-data-jumbo">
+			
+			<form method="POST">
+				{% csrf_token %}
+				<div class="row" id="title-row">
+				<div class="col"><i>
+					Create Request
+					</i>
+					<button type="submit" class="btn btn-primary float-right">Save Request</button></a>
+				</div>
+				
+				</div>
+				<div class="form-row">
+					<div class="col-md-3">
+					{{ form.first_name | as_crispy_field }}
+					{{ form.last_name | as_crispy_field }}
+					{{ form.email | as_crispy_field }}
+					{{ form.alternative_email | as_crispy_field }}
+					{{ form.phone | as_crispy_field }}
+					{{ form.alternative_phone | as_crispy_field }}
+					{{ form.ssn | as_crispy_field }}
+					{{ form.driver_license_number | as_crispy_field }}
+					{{ form.driver_license_state | as_crispy_field }}
+					
+					
+				</div>
+				<div class="col-md-3">
+					
+					{{ form.consumer | as_crispy_field }}
+					{{ form.company_requested | as_crispy_field }}
+					{{ form.primary_address | as_crispy_field }}
+					{{ form.primary_address_line_two | as_crispy_field }}
+					{{ form.primary_city | as_crispy_field }}
+					{{ form.primary_state | as_crispy_field }}
+					{{ form.primary_country | as_crispy_field }}
+					{{ form.primary_zip | as_crispy_field }}
+					{{ form.alternative_address | as_crispy_field }}
+					{{ form.alternative_address_line_two | as_crispy_field }}
+					{{ form.alternative_city | as_crispy_field }}
+					{{ form.alternative_state | as_crispy_field }}
+					{{ form.alternative_country | as_crispy_field }}
+					
+					
+				</div>
+
+				<div class="col-md-3">
+					{{ form.data_ready_to_send | as_crispy_field }}
+					{{ form.stage | as_crispy_field }}
+					{{ form.status | as_crispy_field }}
+					{{ form.priority | as_crispy_field }}
+					{{ form.escalated | as_crispy_field }}
+					{{ form.terms_of_service_signed | as_crispy_field }}
+				</div>
+				<div class="col-md-3">
+					{{ form.what_request | as_crispy_field }}
+					{{ form.delete_request | as_crispy_field }}
+					{{ form.opt_out_request | as_crispy_field }}
+					{{ form.who_request | as_crispy_field }}
+					{{ form.request_source | as_crispy_field }}
+					{{ form.website_source | as_crispy_field }}
+					
+				</div>
+				</div>
+				
+			</form>
+				
+			
+		</div>
+		
+	</div>
+	
+</div>
+
+{% endblock %}

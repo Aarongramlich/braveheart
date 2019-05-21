@@ -12,16 +12,29 @@
 
 		<div class="container-fullwidth" id="request-header-container">
 			
-
+		<div class="row" id="header-row">
+			<div class="col-2 text-center">
+				<h1 class="display-5" id="request-header">REQUESTS</h1>
+			</div>
+			<div class="col-10" style="padding-top: 10px;">
+				<a href="{% url 'user_console:export_all_requests' %}"><button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export all requests</button></a>
+				<a href="{% url 'user_console:import_requests' %}"><button type="button" class="btn btn-outline-primary btn-sm mb-4 float-right">Import requests</button></a>
+			</div>
+		</div>
 
 
 		<div class="row" id="request-row">
-			<div class="col-2 text-center">
+			<div class="col-2 text-center" id="filter-column">
 
-				<h1 class="display-5" id="request-header">REQUESTS</h1>
+				<!-- <h1 class="display-5" id="request-header">REQUESTS</h1> -->
+				<div class="row" id="new-request-button-row">
+					<div class="col text-center ">
+						
+					
+					<a href="{% url 'user_console:request_create' %}"><button type="button" class="btn btn-success mb-4">Create New Request</button></a>
 
-				<button type="button" class="btn btn-success mb-4">Create New Request</button>
-
+					</div>
+				</div>
 
 
 
@@ -39,8 +52,8 @@
 				</div> -->
 
 
-
-
+				<div class="row pt-3">
+					<div class="col">
 				<div class="list-group" id="list-tab" role="tablist">
 
 					<li class="list-group-item" style="text-align: center;font-size:1.2em;background-color:#F3F5F8 ">FILTERS</li>
@@ -58,13 +71,14 @@
 					<a class="list-group-item list-group-item-action" id="filter-6-list" data-toggle='list' href='#filter-6' role='tab' aria-controls='filter-6'>Yellow Status (15-30 Days)</a>
 
 					<a class="list-group-item list-group-item-action" id="filter-7-list" data-toggle='list' href='#filter-7' role='tab' aria-controls='filter-7'>Red Status (31-45 Days)</a>
-
+					</div>
+					</div>
 				</div>
 			</div>
 			
 			<div class="col-10">
 
-				<button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export Requests</button>
+				<!-- <button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export Requests</button> -->
 		
 				<div class="tab-content" id="nav-tabContent"> 
 				
@@ -91,7 +105,7 @@
 							{% for request in todays_list %}
 
 								{% if request.status == 'red' %}
-								<a href="{% url 'user_console:request_detail' pk=request.pk %}"><tr>
+								<tr>
 									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
@@ -105,9 +119,9 @@
 									<td>{{request.what_request}}</td>
 									<td>{{request.opt_out_request}}</td>
 									<td>{{request.delete_request}}</td>
-								</tr></a>
+								</tr>
 								{% elif request.status == 'yellow' %}
-								<a href="{% url 'user_console:request_detail' pk=request.pk %}"><tr>
+								<tr>
 									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
@@ -121,7 +135,7 @@
 									<td>{{request.what_request}}</td>
 									<td>{{request.opt_out_request}}</td>
 									<td>{{request.delete_request}}</td>
-								</tr></a>
+								</tr>
 								{% else %}
 								<tr>
 									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></th>

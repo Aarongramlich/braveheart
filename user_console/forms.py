@@ -14,6 +14,7 @@ class RequestForm(forms.ModelForm):
 		'what_request',
 		'who_request',
 		'opt_out_request',
+		'delete_request',
 		'priority',
 		'escalated',
 		'stage',
@@ -41,5 +42,16 @@ class RequestForm(forms.ModelForm):
 		'terms_of_service_signed',
 		'data_ready_to_send',
 		'status',
-		'days_open'
+		'days_open',
+		
+		]
+
+class CompanyForm(forms.ModelForm):
+	class Meta:
+		model = Company
+
+		fields = [
+			'company_name',
+			'website',
+			'primary_contact'
 		]

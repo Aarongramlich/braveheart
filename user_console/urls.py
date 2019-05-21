@@ -13,5 +13,10 @@ urlpatterns = [
 	path('request/<int:pk>/',views.RequestDetailView.as_view(),name='request_detail'),
 	path('consumers/',views.ConsumerListView.as_view(),name='consumer_list'),
 	path('companies/',views.CompanyListView.as_view(),name='company_list'),
-	path('request/<int:pk>/edit',views.RequestUpdate.as_view(),name='request_update')
+	path('company/<int:pk>/',views.CompanyDetailView.as_view(),name='company_detail'),
+	path('company/create/',views.CompanyCreateView.as_view(),name='company_create'),
+	path('request/<int:pk>/edit',views.RequestUpdate.as_view(),name='request_update'),
+	path('request/create/',views.RequestCreateView.as_view(),name='request_create'),
+	path('requests/export-all/',views.RequestExport,name='export_all_requests'),
+	path('requests/import/',views.RequestImport,name='import_requests'),
 ]
