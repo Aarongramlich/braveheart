@@ -87,6 +87,8 @@ class Request(models.Model):
 	stage_choices = (
 		('new','New'),
 		('in progress','In Progress'),
+		('ready to review','Ready for Review'),
+		('ready for consumer','Ready for Consumer'),
 		('completed', 'Completed'),
 		('past due', 'Past Due')
 		)

@@ -3,13 +3,19 @@ from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 from django.views.generic import View,TemplateView,ListView,DetailView,FormView,UpdateView,CreateView
 from django.http import HttpResponse, HttpResponseRedirect
+
 from request_form_app.models import Company,Request,Consumer,Contact
+from accounts.models import User
+
 from user_console.forms import RequestForm,CompanyForm
 from django.urls import reverse,reverse_lazy
 from django.shortcuts import get_list_or_404,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from request_form_app.admin import RequestResource
 from tablib import Dataset
+from datetime import date,timedelta,datetime,timezone
+
+
 
 
 
@@ -106,14 +112,24 @@ class RequestListView(LoginRequiredMixin,TemplateView):
 
 	login_url = '/console/login/'
 
+	
+
 	def get_context_data(self,**kwargs):
+
+		today = date.today()
+		last_week = date.today() + timedelta(days=-7)
+
 		context = super(RequestListView,self).get_context_data(**kwargs)
-		context['todays_list'] = Request.objects.all()
-		context['data_ready_to_send_list'] = Request.objects.filter(data_ready_to_send__iexact='yes')
-		context['green_status_list'] = Request.objects.filter(status__iexact='green')
-		context['yellow_status_list'] = Request.objects.filter(status__iexact='yellow')
+		context['all_requests_list'] = Request.objects.filter(company_requested__in = self.request.user.company.all()).order_by('-created_at')
+		context['todays_list'] = Request.objects.filter(created_at__year=today.year,created_at__month=today.month,created_at__day=today.day,company_requested__in = self.request.user.company.all())
+		context['not_started_list'] = Request.objects.filter(stage__iexact='new',company_requested__in = self.request.user.company.all())
+		context['last_week_list'] = Request.objects.filter(created_at__gte=date.today()+timedelta(days=-7),company_requested__in = self.request.user.company.all())
+		context['ready_for_review_list'] = Request.objects.filter(stage__iexact='ready for review',company_requested__in = self.request.user.company.all())
+		context['data_ready_to_send_list'] = Request.objects.filter(stage__iexact='ready for consumer',company_requested__in = self.request.user.company.all())
+		context['green_status_list'] = Request.objects.filter(status__iexact='green',company_requested__in = self.request.user.company.all())
+		context['yellow_status_list'] = Request.objects.filter(status__iexact='yellow',company_requested__in = self.request.user.company.all())
 		# context['orange_status_list'] = Request.objects.filter(status__iexact='orange')
-		context['red_status_list'] = Request.objects.filter(status__iexact='red')
+		context['red_status_list'] = Request.objects.filter(status__iexact='red',company_requested__in = self.request.user.company.all())
 		return context
 
 class RequestDetailView(LoginRequiredMixin,DetailView):

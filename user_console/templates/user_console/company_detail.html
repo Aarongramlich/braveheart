@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block css_block %}
-	
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_detail.css' %}">
 {% endblock %}
 
 
@@ -10,8 +10,25 @@
 	<div class="container-fullwidth">
 
 		<div class="container-fullwidth fixed-top" id="header-wrapper">
+			<div class="container-fullwidth" id="request-header-container">
 			<div class="row">
+				<div class="col-11">
+					<!-- <p id="request-image" style="padding-top: 10px; padding-right: 40px;"><img src="{% static 'user_console/asset 3.svg' %}" width="60" height="auto"></p> -->
 				
+					<span style="font-size: 1.2em;"><b>{{company.company_name}}</b></span><br>
+					<p><span style="font-size:.9em;">ID: {{company.pk}}</span><br>
+
+					
+					<span style="font-size: .9em;">Website: {{company.website}}<br>
+
+					<span style="font-size: .9em;">Primary Contact: {{company.primary_contact}}</span></p>
+
+					
+				</div>
+				<div class="col-1 float-right" style="padding-top: 40px;">
+					<a href=""><button type="button" class="btn btn-success float-right btn-sm">Export requests</button></a>
+				</div>
+				</div>
 			</div>
 
 		</div>

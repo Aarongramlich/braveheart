@@ -18,6 +18,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
 STATIC_DIR = os.path.join(BASE_DIR,"static")
 MEDIA_DIR = os.path.join(BASE_DIR,"media")
 # STATIC_ROOT= os.path.join(BASE_DIR,"static/") only needed for PRODUCTION
+# MEDIA_ROOT
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -48,7 +49,12 @@ INSTALLED_APPS = [
     'crispy_forms',
     'user_console',
     'import_export',
+    'accounts',
+    'response_metadata',
+    'request_response',
 ]
+
+AUTH_USER_MODEL = 'accounts.User' #changes built in user model to our custom user model
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -129,6 +135,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
 
 # STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static"),

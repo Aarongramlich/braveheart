@@ -19,9 +19,14 @@ from request_form_app import views
 from companies_app import views
 from user_console import urls
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.IndexView.as_view(),name='index'),
     path('request/',include('request_form_app.urls')),
     path('console/',include('user_console.urls')),
 ]
+
+
+admin.site.site_header = 'Braveheart Data Admin Site'
