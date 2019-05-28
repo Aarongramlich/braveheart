@@ -23,7 +23,7 @@
 						</button>
 					</div>
 				{% endif %} -->
-				<div class="col-11">
+				<div class="col-10">
 					<!-- <p id="request-image" style="padding-top: 10px; padding-right: 40px;"><img src="{% static 'user_console/asset 3.svg' %}" width="60" height="auto"></p> -->
 				
 					<span style="font-size: 1.2em;"><b>{{request.first_name}} {{request.last_name}} - {{request.email}}</b></span><br>
@@ -47,10 +47,19 @@
 
 					
 				</div>
-				<div class="col-1 float-right" style="padding-top: 40px;">
-					<a href="{% url 'user_console:request_update' pk=request.pk %}"><button type="button" class="btn btn-info float-right btn-sm" style="width: 150px;">Edit Request</button></a>
-					<!-- <button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Send Data</button>
-					<button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Contact Requester</button> -->
+				<div class="col-2 float-right" style="padding-top: 40px;">
+					
+
+					<div class="btn-group" role="group" aria-label="request detail group">
+						
+						<a href="{% url 'user_console:import_requests' %}"><button type="button" class="btn btn-success float-right btn-sm mr-4">Import Response</button></a>
+						<a href="{% url 'request_response:pdf' pk=request.pk %}"><button type="button" class="btn btn-info float-right btn-sm mr-4">Generate Response PDF</button></a>
+						<a href="{% url 'user_console:request_update' pk=request.pk %}"><button type="button" class="btn btn-secondary float-right btn-sm" style="width: 150px;">Edit Request</button></a>
+						<!-- <button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Send Data</button>
+						<button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Contact Requester</button> -->
+
+					</div>
+
 				</div>
 
 				
@@ -116,13 +125,17 @@
 							<tr><td class="data-row"><span class="field-label">Data Ready to Send</span><br>{{request.data_ready_to_send}}</td></tr>
 							<tr><td class="data-row"><span class="field-label">Status</span><br>{{request.status}}</td></tr>
 							<tr><td class="data-row"><span class="field-label">Days Open</span><br>{{request.days_open}}</td></tr>
-							<tr><td class="data-row"><span class="field-label">Created at:</span><br></td></tr>
-							<tr><td class="data-row"><span class="field-label">Updated at:</span><br></td></tr>
+							<tr><td class="data-row"><span class="field-label">Created at:</span><br>{{request.created_at}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Updated at:</span><br>{{request.updated_at}}</td></tr>
 						</tbody>
 				</table>
 			</div>
 
 		</div>
+		<!-- {% if request_response_list %}
+			{{RequestResponse.response_file}}
+			{{RequestResponse.created_at}}
+		{% endif %} -->
 		</div>
 	</div>
 	

@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from localflavor.us.models import USStateField, USSocialSecurityNumberField, USZipCodeField
-# from phone_field import PhoneField
+
 
 # Create your models here.
 
@@ -53,6 +53,16 @@ class Company(models.Model):
 	company_name = models.CharField(max_length=256,blank=False)
 	website = models.URLField(max_length=200)
 	primary_contact = models.ForeignKey('Contact',on_delete=models.CASCADE,null=True,blank=True)
+	address 	= models.TextField(max_length=255,blank=True,null=True)
+	address_line_two = models.TextField(max_length=255,blank=True,null=True)
+	city 		= models.TextField(max_length=255,blank=True,null=True)
+	state 		= USStateField(null=True,blank=True)
+	zip_code 	= USZipCodeField(null=True,blank=True)
+	country 	= models.CharField(max_length=256,blank=True)
+	logo 		= models.ImageField(upload_to='request_form_app/company_logo',height_field='logo_height',width_field='logo_width',null=True,blank=True)
+	logo_height = models.IntegerField(blank=True,null=True)
+	logo_width  = models.IntegerField(blank=True,null=True)
+
 
 	def __str__(self):
 		return self.company_name
@@ -154,7 +164,7 @@ class Request(models.Model):
 
 
 	def get_absolute_url(self):
-			return reverse('request_form_app:request_detail',kwargs={'pk':self.pk})
+		return reverse("user_console:request_detail",kwargs={'pk':self.pk})
 
 
 

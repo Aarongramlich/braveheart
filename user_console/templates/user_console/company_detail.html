@@ -9,12 +9,19 @@
 {% block main_block %}
 	<div class="container-fullwidth">
 
+
+
+
 		<div class="container-fullwidth fixed-top" id="header-wrapper">
+
 			<div class="container-fullwidth" id="request-header-container">
 			<div class="row">
-				<div class="col-11">
+				<div class="col-1">
+					<img src="{{company.logo.url}}" width="150" height="auto" style="background-color: transparent;">
+				</div>
+				<div class="col-10" style="padding-left: 100px;">
 					<!-- <p id="request-image" style="padding-top: 10px; padding-right: 40px;"><img src="{% static 'user_console/asset 3.svg' %}" width="60" height="auto"></p> -->
-				
+					
 					<span style="font-size: 1.2em;"><b>{{company.company_name}}</b></span><br>
 					<p><span style="font-size:.9em;">ID: {{company.pk}}</span><br>
 
@@ -28,10 +35,51 @@
 				<div class="col-1 float-right" style="padding-top: 40px;">
 					<a href=""><button type="button" class="btn btn-success float-right btn-sm">Export requests</button></a>
 				</div>
-				</div>
 			</div>
-
+			
+			</div>
+			
 		</div>
-	
+		<div class="container-fullwidth" id="data-container" >
+			<div class="jumbotron" id="data-jumbo" style="padding-bottom: 300px">
+				<div class="row">
+					<div class="col-4">
+					<table>
+					<tbody>
+						<tr><td class="data-row"><span class="field-label">Company ID:</span><br>{{ company.pk }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Address</span><br>{{ company.address }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Address Line Two</span><br>{{ company.address_line_two }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">City</span><br>{{ company.city }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">State</span><br>{{ company.state }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Zip</span><br>{{ company.zip_code }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Country</span><br>{{ company.Country }}</td></tr>
+
+					
+					</tbody>
+					</table>
+					</div>
+
+					<div class="col-4">
+						<table>
+					<tbody>
+						<tr><td class="data-row"><span class="field-label">Logo Image:</span><br>{{ company.logo }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Logo Height:</span><br>{{ company.logo_height }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Logo Width:</span><br>{{ company.logo_width }}</td></tr>
+						
+					
+					</tbody>
+					</table>
+					</div>
+
+					<div class="col-4">
+					
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+		
 	</div>
 {% endblock %}

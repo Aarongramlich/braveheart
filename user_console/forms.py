@@ -55,3 +55,13 @@ class CompanyForm(forms.ModelForm):
 			'website',
 			'primary_contact'
 		]
+
+class ConsumerForm(forms.ModelForm):
+	class Meta:
+		model = Consumer
+
+		fields = [
+			'first_name',
+			'last_name',
+			'email',
+		]

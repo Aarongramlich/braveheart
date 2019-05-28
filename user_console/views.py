@@ -5,9 +5,10 @@ from django.views.generic import View,TemplateView,ListView,DetailView,FormView,
 from django.http import HttpResponse, HttpResponseRedirect
 
 from request_form_app.models import Company,Request,Consumer,Contact
+from request_response.models import RequestResponse
 from accounts.models import User
 
-from user_console.forms import RequestForm,CompanyForm
+from user_console.forms import RequestForm,CompanyForm,ConsumerForm
 from django.urls import reverse,reverse_lazy
 from django.shortcuts import get_list_or_404,get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -60,6 +61,21 @@ class ConsumerListView(LoginRequiredMixin,ListView):
 	# return render(request,'user_console/consumers_detail.html',)
 
 
+class ConsumerCreateView(LoginRequiredMixin,CreateView):
+
+	model = Consumer
+	form_class= ConsumerForm
+	template_name = 'user_console/consumer_form.html'
+
+	login_url = '/console/login/'
+
+	def form_valid(form,self):
+		return super().form_valid(form)
+
+	def get_success_url(self):
+		return reverse("user_console:consumer_detail",args=[self.object.pk])
+
+
 # COMPANY VIEWS
 
 class CompanyCreateView(LoginRequiredMixin,CreateView):
@@ -99,6 +115,14 @@ class CompanyDetailView(LoginRequiredMixin,DetailView):
 	template_name = 'user_console/company_detail.html'
 
 	login_url = '/console/login/'
+
+	def get_context_data(self, **kwargs):
+		context = super(CompanyDetailView,self).get_context_data(**kwargs)
+
+		context['related_requests_list'] = Request.objects.all()
+		return context
+
+
 
 
 # REQUEST VIEWS
@@ -143,6 +167,12 @@ class RequestDetailView(LoginRequiredMixin,DetailView):
 	login_url = '/console/login/'
 
 	# def get_context_data(self,**kwargs):
+
+	# 	context = super(RequestDetailView,self).get_context_data(**kwargs)
+	# 	context['request_response_list'] = RequestResponse.objects.all()
+
+
+	# def get_context_data(self,**kwargs):
 	# 	context = super(RequestListView,self).get_context_data(**kwargs)
 	# 	context
 
@@ -155,42 +185,45 @@ class RequestUpdate(LoginRequiredMixin,UpdateView):
 
 	login_url = '/console/login/'
 
-	# success_url = reverse_lazy('user_console:request_detail')
-
+	
+	
 	def form_valid(self,form):
-		pk = self.kwargs.get('pk')
-		obj = get_object_or_404(Request, pk=pk)
 		return super().form_valid(form)
+		# self.object = form.save()
+		# return HttpResponseRedirect(self.get_success_url())
+
+	def get_success_url(self):
+		return reverse("user_console:request_detail",args=[self.object.pk])
 
 		# return HttpResponseRedirect(reverse_lazy('user_console:request_detail',kwargs={'pk':self.pk}))
 
-class RequestCreateView(LoginRequiredMixin,CreateView):
+	# success_url = reverse_lazy('user_console:request_detail')
+
+	# def form_valid(self,form):
+	# 	pk = self.kwargs.get('pk')
+	# 	obj = get_object_or_404(Request, pk=pk)
+	# 	return super().form_valid(form)
+
+
+
+		# pk.save()
+
+	
+
+class RequestCreateView(CreateView):
 	model = Request
 	form_class = RequestForm
 	template_name = 'user_console/request_form.html'
 
-
 	login_url = '/console/login/'
 
+	
 	def form_valid(self,form):
-		# request = form.save()
-
-		# send_mail('Hello from Braveheart Data!',
-		# 	'This is the automated message. <b r> This is a test message',
-		# 	'support@braveheartdata.com',
-		# 	[case.email],
-		# 	fail_silently=False)
-
-		return super().form_valid(form)
-
-		return HttpResponseRedirect(reverse('request_form_app:request_detail',kwargs={'pk':self.pk}))
-
-# def RequestExportRedirect(request):
-# 	retrun HttpResponseRedirect('requests/export-all')
-
-
-# class ExportCompanyRequestsView(LoginRequiredMixin,View):
-
+		
+		return super(RequestCreateView, self).form_valid(form)
+		
+	def get_success_url(self):
+		return reverse("request_form_app:request_detail",args=[self.object.pk])
 
 
 

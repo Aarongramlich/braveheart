@@ -18,6 +18,12 @@ from django.urls import path, include
 from request_form_app import views
 from companies_app import views
 from user_console import urls
+# from user_console import views
+from request_response import urls
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 
 
 
@@ -26,7 +32,8 @@ urlpatterns = [
     path('',views.IndexView.as_view(),name='index'),
     path('request/',include('request_form_app.urls')),
     path('console/',include('user_console.urls')),
-]
+    path('response/',include('request_response.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 admin.site.site_header = 'Braveheart Data Admin Site'

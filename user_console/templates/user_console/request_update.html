@@ -46,11 +46,13 @@
 
 					
 				</div>
-				<div class="button-box col-lg-2 float-right" style="padding-top: 40px;">
+				
+				
+					<div class="button-box col-lg-2 float-right" style="padding-top: 40px;">
 					<a href="{% url 'user_console:request_list'%}"><button type="Cancel" title="cancel" class="btn btn-danger btn-sm" style="width: 125px;">Cancel</button></a>
-					<button type="Submit" class="btn btn-info btn-sm" style="width: 125px;">Save</button>
+					<a href="{% url 'user_console:request_detail' pk=request.pk %}"><button type="Submit" class="btn btn-info btn-sm" style="width: 125px;">Save</button></a>
+				
 				</div>
-
 				
 
 				
@@ -62,6 +64,7 @@
 	<div class="container-fullwidth" id="data-container">
 		<div class="jumbotron" id="data-jumbo">
 		<form method="POST">
+			
 			{% csrf_token %}
 			<div class="form-row">
 				
@@ -115,7 +118,7 @@
 					{{ form.website_source | as_crispy_field }}
 					
 				</div>
-			
+			</div>
 		</form>
 		</div>
 	</div>
