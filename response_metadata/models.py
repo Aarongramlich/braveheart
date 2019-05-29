@@ -1,13 +1,12 @@
 from django.db import models
 from request_form_app.models import Request,Company
-from request_response.models import RequestResponse,ResponseData
 
 # Create your models here.
 
 
 
 class Metadata(models.Model):
-
+	
 	data_category_choices = (
 		('personal','Personal Information'),
 		('commercial','Commercial Information'),

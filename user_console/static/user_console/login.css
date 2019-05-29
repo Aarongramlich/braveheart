@@ -22,3 +22,18 @@
 	margin: auto;
 	display: block;
 }
+
+#login-image{
+	display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  width: 200px;
+  height: auto;
+  padding-top: 250px;
+}
+
+#login-image-back{
+	background-color: #1475BE;
+	/*background: linear-gradient(0deg, rgba(20,117,190,1) 0%, rgba(47,191,248,1) 85%);*/
+}
