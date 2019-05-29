@@ -8,6 +8,8 @@ from request_form_app.models import Company,Request,Consumer,Contact
 from request_response.models import RequestResponse
 from accounts.models import User
 
+from request_response import urls
+
 from user_console.forms import RequestForm,CompanyForm,ConsumerForm
 from django.urls import reverse,reverse_lazy
 from django.shortcuts import get_list_or_404,get_object_or_404
@@ -107,7 +109,9 @@ class CompanyListView(LoginRequiredMixin,TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context=super(CompanyListView,self).get_context_data(**kwargs)
+
 		context['all_companies_list'] = Company.objects.all()
+
 		return context
 
 class CompanyDetailView(LoginRequiredMixin,DetailView):
@@ -118,8 +122,8 @@ class CompanyDetailView(LoginRequiredMixin,DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(CompanyDetailView,self).get_context_data(**kwargs)
-
-		context['related_requests_list'] = Request.objects.all()
+		pk = self.kwargs.get('pk')
+		context['related_requests_list'] = Request.objects.filter(company_requested_id=pk)
 		return context
 
 
@@ -166,15 +170,15 @@ class RequestDetailView(LoginRequiredMixin,DetailView):
 
 	login_url = '/console/login/'
 
-	# def get_context_data(self,**kwargs):
+	def get_context_data(self,**kwargs):
+		context = super(RequestDetailView,self).get_context_data(**kwargs)
+		pk=self.kwargs.get('pk')
+		context['request_response_list']=RequestResponse.objects.filter(request__id=pk)
+		return context
 
-	# 	context = super(RequestDetailView,self).get_context_data(**kwargs)
-	# 	context['request_response_list'] = RequestResponse.objects.all()
+	
 
 
-	# def get_context_data(self,**kwargs):
-	# 	context = super(RequestListView,self).get_context_data(**kwargs)
-	# 	context
 
 
 class RequestUpdate(LoginRequiredMixin,UpdateView):

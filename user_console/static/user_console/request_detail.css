@@ -62,3 +62,12 @@
 	/*background-color: #FAFAFA;*/
 
 }
+
+#request-table{
+	font-size: .8em;
+	
+}
+
+#related-list-col{
+	border-left: 1px solid #DCDAD9;
+}

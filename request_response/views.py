@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.views.generic import View,TemplateView,ListView,DetailView,FormView,UpdateView,CreateView
-from django.contrib.auth.decorators import permission_required 
+from django.contrib.auth.decorators import permission_required,login_required 
+from .forms import RequestResponseForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import RequestResponse
@@ -16,13 +17,51 @@ from request_form_app.models import Request,Company
 
 # Create your views here.
 
-@permission_required('admin.admin')
+@login_required()
 def request_response_upload(request):   #https://www.youtube.com/watch?v=BppyfPye8eo
 	template = "request_response_upload.html"
 
 	prompt = {
 		'order': 'Order of the CSV should be first_name,last_name,email'
 	}
+
+class RequestResponseCreateView(LoginRequiredMixin,CreateView):
+
+
+	model=RequestResponse
+
+
+
+	form_class = RequestResponseForm
+	template_name = 'request_response/request_response_form.html'
+
+	def form_valid(self,form):
+		Response = form.save(commit=False)
+		Response.request = self.pk
+		Response.company = self.pk.company__id
+		Response.save()
+
+
+	
+
+	# initial = {
+	# 	'request': get_context_data('pk').default_request,
+	# 	'company': initial_values('company__id').default_company,
+	# 	}	
+
+
+
+	login_url='/console/login'
+
+
+
+class RequestResponseDetailView(LoginRequiredMixin,DetailView):
+	model = RequestResponse
+	template = "request_response_detail.html"
+
+	login_url='/console/login'
+
+
 
 
 # def generate_pdf(self, request,*args,**kwargs):
@@ -49,11 +88,15 @@ class GeneratePdf(DetailView):
 
 	def get(self, request, *args, **kwargs):
 		
-		# context = super(GeneratePdf,self).get(request,*args,**kwargs)
+		context = super(GeneratePdf,self).get(request,*args,**kwargs)
+		# pk = self.kwargs.get('pk')
+		
 		# return context
+ 
+		# context['request_object'] = Request.objects.filter(pk=pk)
 
 		context = {
-			'first_name': 'Dave',
+			'first_name': context.get('first_name'),
 			'last_name': 'Lee',
 			'email': 'david.lee@gmail1.com',
 			'email_2': 'davel87@gmail1.com',
@@ -74,7 +117,7 @@ class GeneratePdf(DetailView):
 			'interests': 'Golf, Cars',
 			'relationship_status': 'Married',
 			 }
-		pdf = render_to_pdf('request_response/response.html',context)
+		pdf = render_to_pdf('request_response/response.html',(context))
         
 		if pdf:
 			response = HttpResponse(pdf,content_type='application/pdf')

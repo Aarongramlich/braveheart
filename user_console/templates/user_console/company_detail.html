@@ -59,7 +59,7 @@
 					</table>
 					</div>
 
-					<div class="col-4">
+					<div class="col-3">
 						<table>
 					<tbody>
 						<tr><td class="data-row"><span class="field-label">Logo Image:</span><br>{{ company.logo }}</td></tr>
@@ -71,8 +71,49 @@
 					</table>
 					</div>
 
-					<div class="col-4">
-					
+					<div class="col-5 pt-3" id="related-list-col">
+						<table class="table table-light table-bordered table-hover table-sm" id="request-table" style="background-color: white">
+							<h5>{{company.company_name}}'s Data Privacy Requests</h5>
+							<thead class="thead" style="background-color:#215CA0;color: white;">
+								<th class="table-head" scope="col">Request ID</th>
+								<th class="table-head" scope="col">First Name</th>
+								<th class="table-head" scope="col">Last Name</th>
+								<th class="table-head" scope="col">Email</th>
+								<th class="table-head" scope="col">Status</th>
+							</thead>
+							
+								{% for request in related_requests_list %}
+									{% if request.status == 'red' %}
+									<tr>
+										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></th>
+										<td>{{ request.first_name }}</td>
+										<td>{{ request.last_name }}</td>
+										<td>{{request.email}}</td>
+										<td><span class="badge badge-pill badge-danger">CRITICAL</span></td>
+										
+									</tr>
+									{% elif request.status == 'yelow' %}
+									<tr>
+										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></th>
+										<td>{{ request.first_name }}</td>
+										<td>{{ request.last_name }}</td>
+										<td>{{request.email}}</td>
+										<td><span class="badge badge-pill badge-warning">DANGER</span></td>
+										
+									</tr>
+									{% else %}
+									<tr>
+										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></th>
+										<td>{{ request.first_name }}</td>
+										<td>{{ request.last_name }}</td>
+										<td>{{request.email}}</td>
+										<td><span class="badge badge-pill badge-success">OKAY</span></td>
+										
+									</tr>
+									{% endif %}
+								{% endfor %}
+
+							
 					</div>
 					
 				</div>
