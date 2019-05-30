@@ -6,7 +6,7 @@ from request_form_app.models import Request,Company
 
 
 class Metadata(models.Model):
-	
+
 	data_category_choices = (
 		('personal','Personal Information'),
 		('commercial','Commercial Information'),
@@ -19,7 +19,7 @@ class Metadata(models.Model):
 		('inferred','Inferred Information'),
 		)
 
-
+	metadata_key = models.TextField(max_length=255,blank=True,primary_key=True)
 	field	= models.TextField(max_length=255,blank=False) #stores the api name
 	label	= models.TextField(max_length=255,blank=False) #stores the readable label of the field
 	field_type = models.TextField(max_length=255,blank=True)
@@ -30,6 +30,13 @@ class Metadata(models.Model):
 	company		= models.ForeignKey(Company,on_delete=models.CASCADE,null=False,blank=False)
 	created_at 	= models.DateTimeField(auto_now_add=True)
 	updated_at 	= models.DateTimeField(auto_now=True)
+	sequence = models.IntegerField(max_length=4,blank=True,default="1")
 
 	def __str__(self):
 		return self.field + ' - ' + self.company.company_name
+
+	def save(self,*args,**kwargs):
+
+		self.metadata_key = self.field  + "_" + self.company.company_code
+		# self.metadata_key.save()
+		super(Metadata,self).save(*args,**kwargs)

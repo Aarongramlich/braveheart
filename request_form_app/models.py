@@ -62,6 +62,7 @@ class Company(models.Model):
 	logo 		= models.ImageField(upload_to='request_form_app/company_logo',height_field='logo_height',width_field='logo_width',null=True,blank=True)
 	logo_height = models.IntegerField(blank=True,null=True)
 	logo_width  = models.IntegerField(blank=True,null=True)
+	company_code = models.TextField(max_length=6,blank=True,null=True)
 
 
 	def __str__(self):
