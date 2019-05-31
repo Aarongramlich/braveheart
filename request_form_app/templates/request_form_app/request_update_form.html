@@ -1,0 +1,131 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block css_block%}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_update.css' %}">
+{% endblock %}
+
+{% block main_block %}
+
+<div class="container-fullwidth">
+
+	<div class="container-fullwidth fixed-top" id="header-wrapper">
+
+		<div class="container-fullwidth" id="request-header-container">
+			<div class="row">
+				<!-- {% if request.status == 'red' %}
+					<div class="alert alert-danger alert-dismissible fade show" role='alert'>This request is near expiration!
+						<button type="button" class="close" data-dismiss='alert' aria-label="Close">
+							<span aria-hidden='true'>&times;</span>
+						</button>
+					</div>
+				{% endif %} -->
+				<div class="col-10">
+					<!-- <p id="request-image" style="padding-top: 10px; padding-right: 40px;"><img src="{% static 'user_console/asset 3.svg' %}" width="60" height="auto"></p> -->
+				
+					<span style="font-size: 1.2em;"><b>{{request.first_name}} {{request.last_name}} - {{request.email}}</b></span><br>
+					<p><span style="font-size:.9em;">Request: {{request.pk}}</span><br>
+
+					
+					<span style="font-size: .9em;">Company: {{request.company_requested}}<br>
+
+					{% if request.status == 'red' %}
+						<span class="badge badge-pill badge-danger">CRITICAL</span>
+						<span style="font-size: 1em;"><i> - 2 days until expiration</i></span>
+					
+					{% elif request.status == 'yellow' %}
+						<span class="badge badge-pill badge-warning" >DANGER</span>
+						<span style="font-size: 1em;"><i> - 14 days until expiration</i></span>
+
+					{% else %}
+						<span class="badge badge-pill badge-success" >OKAY</span>
+						<span style="font-size: 1em;"><i> - 44 days until expiration</i></span>
+					{% endif %}</span></p>
+
+					
+				</div>
+				
+				
+					<div class="button-box col-lg-2 float-right" style="padding-top: 40px;">
+					<a href="{% url 'user_console:request_list'%}"><button type="Cancel" title="cancel" class="btn btn-danger btn-sm" style="width: 125px;">Cancel</button></a>
+					<a href="{% url 'user_console:request_detail' pk=request.pk %}"><button type="submit" value="submit" class="btn btn-info btn-sm" style="width: 125px;">Save</button></a>
+				
+				</div>
+				
+
+				
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container-fullwidth" id="data-container">
+		<div class="jumbotron" id="data-jumbo">
+		<form method="POST">
+			
+			{% csrf_token %}
+			<input type="submit" name="Update">
+			{{form.as_p}}
+			<!-- <div class="form-row">
+				
+				
+				<div class="col-md-3">
+					{{ form.first_name | as_crispy_field }}
+					{{ form.last_name | as_crispy_field }}
+					{{ form.email | as_crispy_field }}
+					{{ form.alternative_email | as_crispy_field }}
+					{{ form.phone | as_crispy_field }}
+					{{ form.alternative_phone | as_crispy_field }}
+					{{ form.ssn | as_crispy_field }}
+					{{ form.driver_license_number | as_crispy_field }}
+					{{ form.driver_license_state | as_crispy_field }}
+					
+					
+				</div>
+				<div class="col-md-3">
+					
+					{{ form.consumer | as_crispy_field }}
+					{{ form.company_requested | as_crispy_field }}
+					{{ form.primary_address | as_crispy_field }}
+					{{ form.primary_address_line_two | as_crispy_field }}
+					{{ form.primary_city | as_crispy_field }}
+					{{ form.primary_state | as_crispy_field }}
+					{{ form.primary_country | as_crispy_field }}
+					{{ form.primary_zip | as_crispy_field }}
+					{{ form.alternative_address | as_crispy_field }}
+					{{ form.alternative_address_line_two | as_crispy_field }}
+					{{ form.alternative_city | as_crispy_field }}
+					{{ form.alternative_state | as_crispy_field }}
+					{{ form.alternative_country | as_crispy_field }}
+					
+					
+				</div>
+
+				<div class="col-md-3">
+					{{ form.data_ready_to_send | as_crispy_field }}
+					{{ form.stage | as_crispy_field }}
+					{{ form.status | as_crispy_field }}
+					{{ form.priority | as_crispy_field }}
+					{{ form.escalated | as_crispy_field }}
+					{{ form.terms_of_service_signed | as_crispy_field }}
+				</div>
+				<div class="col-md-3">
+					{{ form.what_request | as_crispy_field }}
+					{{ form.delete_request | as_crispy_field }}
+					{{ form.opt_out_request | as_crispy_field }}
+					{{ form.who_request | as_crispy_field }}
+					{{ form.request_source | as_crispy_field }}
+					{{ form.website_source | as_crispy_field }}
+					
+				</div>
+			</div> -->
+		</form>
+		</div>
+	</div>
+</div>
+		
+	
+	
+{% endblock %}

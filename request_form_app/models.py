@@ -44,9 +44,6 @@ class Consumer(models.Model):
 	def __str__(self):
 		return self.first_name + " " + self.last_name
 
-	def get_absolute_url(self):
-		return reverse('request_form_app:request_detail',kwargs={'pk':self.pk})
-
 
 class Company(models.Model):
 

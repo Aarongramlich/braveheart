@@ -1,0 +1,35 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_detail.css' %}">
+{% endblock%}
+
+{% block main_block %}
+	<div class="container-fullwidth">
+		<div class="container-fullwidth fixed-top" id="header-wrapper">
+			<div class="container-fullwidth" id="request-header-container">
+				<div class="row">
+					
+					<div class="col-10">
+						<span style="font-size: 1.2em;"><b>Field: {{metadata.field}}</b></span><br>
+						<p><span style="font-size:.9em;">Label: {{metadata.label}}</span><br>
+						<span style="font-size: .9em;">Key: {{metadata.metadata_key}}</span>
+
+
+
+
+					</div>
+
+
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+{% endblock %}

@@ -30,7 +30,7 @@ class Metadata(models.Model):
 	company		= models.ForeignKey(Company,on_delete=models.CASCADE,null=False,blank=False)
 	created_at 	= models.DateTimeField(auto_now_add=True)
 	updated_at 	= models.DateTimeField(auto_now=True)
-	sequence = models.IntegerField(max_length=4,blank=True,default="1")
+	sequence = models.IntegerField(blank=True,default="1")
 
 	def __str__(self):
 		return self.field + ' - ' + self.company.company_name

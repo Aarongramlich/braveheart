@@ -71,8 +71,9 @@ class ConsumerCreateView(LoginRequiredMixin,CreateView):
 
 	login_url = '/console/login/'
 
-	def form_valid(form,self):
-		return super().form_valid(form)
+	# def form_valid(form,self):
+	# 	return super().form_valid(form)
+	# 	form.save()
 
 	def get_success_url(self):
 		return reverse("user_console:consumer_detail",args=[self.object.pk])
@@ -97,6 +98,12 @@ class CompanyCreateView(LoginRequiredMixin,CreateView):
 		return super().form_valid(form)
 
 		return HttpResponseRedirect(reverse('user_console:company_detail',kwargs={'pk':self.pk}))
+
+class ConsumerDetailView(LoginRequiredMixin,DetailView):
+	model = Consumer
+	template_name = 'user_console/consumer_detail.html'
+
+	login_url = '/console/login/'
 
 class CompanyListView(LoginRequiredMixin,TemplateView):
 	context_object_name = 'company_list'
@@ -184,20 +191,58 @@ class RequestDetailView(LoginRequiredMixin,DetailView):
 class RequestUpdate(LoginRequiredMixin,UpdateView):
 	
 	model = Request
-	template_name='user_console/request_update.html'
-	form_class=RequestForm
+	fields = ['consumer',
+		'company_requested',
+		'request_source',
+		'website_source',
+		'what_request',
+		'who_request',
+		'opt_out_request',
+		'delete_request',
+		'priority',
+		'escalated',
+		'stage',
+		'first_name',
+		'last_name',
+		'email',
+		'alternative_email',
+		'phone',
+		'alternative_phone',
+		'primary_address',
+		'primary_address_line_two',
+		'primary_city',
+		'primary_state',
+		'primary_zip',
+		'primary_country',
+		'alternative_address',
+		'alternative_address_line_two',
+		'alternative_city',
+		'alternative_state',
+		'alternative_country',
+		'ssn',
+		'driver_license_number',
+		'driver_license_state',
+		'date_of_birth',
+		'terms_of_service_signed',
+		'data_ready_to_send',
+		'status',
+		'days_open',]
+	template_name_suffix='_update_form'
+
 
 	login_url = '/console/login/'
 
 	
 	
-	def form_valid(self,form):
-		return super().form_valid(form)
-		# self.object = form.save()
-		# return HttpResponseRedirect(self.get_success_url())
+	# def form_valid(self,form):
+	# 	return super(RequestUpdate,self.object).form_valid(form)
+	# 	self.object.form.save()
 
-	def get_success_url(self):
-		return reverse("user_console:request_detail",args=[self.object.pk])
+	# 	# self.object = form.save()
+	# 	return HttpResponseRedirect(self.object.get_success_url())
+
+	# def get_success_url(self):
+	# 	return reverse("user_console:request_detail",args=[self.object.pk])
 
 		# return HttpResponseRedirect(reverse_lazy('user_console:request_detail',kwargs={'pk':self.pk}))
 
@@ -214,7 +259,7 @@ class RequestUpdate(LoginRequiredMixin,UpdateView):
 
 	
 
-class RequestCreateView(CreateView):
+class RequestCreateView(LoginRequiredMixin,CreateView):
 	model = Request
 	form_class = RequestForm
 	template_name = 'user_console/request_form.html'
@@ -222,12 +267,10 @@ class RequestCreateView(CreateView):
 	login_url = '/console/login/'
 
 	
-	def form_valid(self,form):
-		
-		return super(RequestCreateView, self).form_valid(form)
+	
 		
 	def get_success_url(self):
-		return reverse("request_form_app:request_detail",args=[self.object.pk])
+		return reverse("user_console:request_detail",args=[self.object.pk])
 
 
 
@@ -254,15 +297,4 @@ def RequestImport(request):
 	return render(request,'user_console/import_requests.html')
 			
 
-# class RequestExport(LoginRequiredMixin,View):
 
-# 	template_name = 'export_requests.html'
-
-	
-# 	def form_valid(self,request):
-
-# 		request_resource = RequestResource()
-# 		dataset = request_resource.export()
-# 		response = HttpResponse(dataset.csv,content_type='text/csv')
-# 		response['Content-Disposition'] = 'attachment;filename="request.csv'
-# 		return response

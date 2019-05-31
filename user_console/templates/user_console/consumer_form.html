@@ -1,0 +1,18 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css_block %}
+
+{% endblock %}
+
+{% block main_block %}
+<div class="container-fullwidth" style="padding-top: 100px;">
+	<form method="POST">
+		{% csrf_token %}
+		{{ form.as_p }}
+
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>	
+{% endblock %}

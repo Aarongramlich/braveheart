@@ -50,7 +50,7 @@
 				
 					<div class="button-box col-lg-2 float-right" style="padding-top: 40px;">
 					<a href="{% url 'user_console:request_list'%}"><button type="Cancel" title="cancel" class="btn btn-danger btn-sm" style="width: 125px;">Cancel</button></a>
-					<a href="{% url 'user_console:request_detail' pk=request.pk %}"><button type="Submit" class="btn btn-info btn-sm" style="width: 125px;">Save</button></a>
+					<a href="{% url 'user_console:request_detail' pk=request.pk %}"><button type="submit" value="submit" class="btn btn-info btn-sm" style="width: 125px;">Save</button></a>
 				
 				</div>
 				
@@ -66,6 +66,7 @@
 		<form method="POST">
 			
 			{% csrf_token %}
+			<button type="submit" value="submit" class="btn btn-info btn-sm" style="width: 125px;">Save</button>
 			<div class="form-row">
 				
 				

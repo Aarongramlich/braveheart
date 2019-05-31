@@ -43,35 +43,42 @@
 		<div class="container-fullwidth" id="data-container" >
 			<div class="jumbotron" id="data-jumbo" style="padding-bottom: 300px">
 				<div class="row">
-					<div class="col-4">
+					<div class="col-2">
 					<table>
 					<tbody>
 						<tr><td class="data-row"><span class="field-label">Company ID:</span><br>{{ company.pk }}</td></tr>
-						<tr><td class="data-row"><span class="field-label">Address</span><br>{{ company.address }}</td></tr>
-						<tr><td class="data-row"><span class="field-label">Address Line Two</span><br>{{ company.address_line_two }}</td></tr>
-						<tr><td class="data-row"><span class="field-label">City</span><br>{{ company.city }}</td></tr>
-						<tr><td class="data-row"><span class="field-label">State</span><br>{{ company.state }}</td></tr>
-						<tr><td class="data-row"><span class="field-label">Zip</span><br>{{ company.zip_code }}</td></tr>
-						<tr><td class="data-row"><span class="field-label">Country</span><br>{{ company.Country }}</td></tr>
-
-					
+						<tr><td class="data-row"><span class="field-label">Logo Image:</span><br>{{ company.logo }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Logo Height:</span><br>{{ company.logo_height }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Logo Width:</span><br>{{ company.logo_width }}</td></tr>		
 					</tbody>
 					</table>
 					</div>
 
-					<div class="col-3">
+					<div class="col-2">
 						<table>
 					<tbody>
-						<tr><td class="data-row"><span class="field-label">Logo Image:</span><br>{{ company.logo }}</td></tr>
-						<tr><td class="data-row"><span class="field-label">Logo Height:</span><br>{{ company.logo_height }}</td></tr>
-						<tr><td class="data-row"><span class="field-label">Logo Width:</span><br>{{ company.logo_width }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Address</span><br>{{ company.address }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Address Line Two</span><br>{{ company.address_line_two }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">City</span><br>{{ company.city }}</td></tr>
 						
 					
 					</tbody>
 					</table>
 					</div>
 
-					<div class="col-5 pt-3" id="related-list-col">
+					<div class="col-2">
+						<table>
+					<tbody>
+						<tr><td class="data-row"><span class="field-label">State</span><br>{{ company.state }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Zip</span><br>{{ company.zip_code }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Country</span><br>{{ company.Country }}</td></tr>
+						
+					
+					</tbody>
+					</table>
+					</div>
+
+					<div class="col-6 pt-3" id="related-list-col">
 						<table class="table table-light table-bordered table-hover table-sm" id="request-table" style="background-color: white">
 							<h5>{{company.company_name}}'s Data Privacy Requests</h5>
 							<thead class="thead" style="background-color:#215CA0;color: white;">
