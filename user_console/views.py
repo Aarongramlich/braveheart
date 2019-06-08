@@ -5,7 +5,7 @@ from django.views.generic import View,TemplateView,ListView,DetailView,FormView,
 from django.http import HttpResponse, HttpResponseRedirect
 
 from request_form_app.models import Company,Request,Consumer,Contact
-from request_response.models import RequestResponse
+from request_response.models import RequestResponse,ResponseData
 from accounts.models import User
 
 from request_response import urls
@@ -159,7 +159,7 @@ class RequestListView(LoginRequiredMixin,TemplateView):
 		context['todays_list'] = Request.objects.filter(created_at__year=today.year,created_at__month=today.month,created_at__day=today.day,company_requested__in = self.request.user.company.all())
 		context['not_started_list'] = Request.objects.filter(stage__iexact='new',company_requested__in = self.request.user.company.all())
 		context['last_week_list'] = Request.objects.filter(created_at__gte=date.today()+timedelta(days=-7),company_requested__in = self.request.user.company.all())
-		context['ready_for_review_list'] = Request.objects.filter(stage__iexact='ready for review',company_requested__in = self.request.user.company.all())
+		context['ready_for_review_list'] = Request.objects.filter(stage__iexact='ready to review',company_requested__in = self.request.user.company.all())
 		context['data_ready_to_send_list'] = Request.objects.filter(stage__iexact='ready for consumer',company_requested__in = self.request.user.company.all())
 		context['green_status_list'] = Request.objects.filter(status__iexact='green',company_requested__in = self.request.user.company.all())
 		context['yellow_status_list'] = Request.objects.filter(status__iexact='yellow',company_requested__in = self.request.user.company.all())
@@ -181,6 +181,7 @@ class RequestDetailView(LoginRequiredMixin,DetailView):
 		context = super(RequestDetailView,self).get_context_data(**kwargs)
 		pk=self.kwargs.get('pk')
 		context['request_response_list']=RequestResponse.objects.filter(request__id=pk)
+		context['response_data_list']=ResponseData.objects.filter(request__id=pk)
 		return context
 
 	

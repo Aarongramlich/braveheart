@@ -8,17 +8,23 @@ from django.urls import reverse,reverse_lazy
 
 class RequestResponse(models.Model):
 
-	request 	= models.ForeignKey(Request,on_delete=models.CASCADE,blank=True)
+	request 	= models.ForeignKey(Request,on_delete=models.CASCADE,blank=False)
 	company 	= models.ForeignKey(Company,on_delete=models.CASCADE,blank=True)
-	response_file = models.FileField(upload_to='request_response')
+	response_file = models.FileField(upload_to='request_response',blank=True)
 	created_at	= models.DateTimeField(auto_now_add=True)
 	updated_at 	= models.DateTimeField(auto_now=True)
+	sent = models.BooleanField(default=False)
+	sent_date_time = models.DateTimeField(blank=True,null=True)
+	email = models.EmailField(blank=True,null=True)
 
-	# def __str__(self):
-	# 	return self.request
+	def __str__(self):
+		return self.request.email + ' - ' + self.request.company_requested.company_name
 
-	def get_absolute_url(self):
-		return reverse('request_response:response_detail',kwargs={'pk',self.pk})
+
+
+
+	# def get_absolute_url(self):
+	# 	return reverse("user_console:request_detail",kwargs={'pk',self.request.pk})
 
 class ResponseData(models.Model): #WILL BE USED FOR API/JSON INSERTS "DAY 2"
 

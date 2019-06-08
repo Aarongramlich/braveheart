@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = '/console/home/'
+LOGIN_REDIRECT_URL = '/console/requests/'
 LOGOUT_REDIRECT_URL = '/console/login/'
 
 # Application definition

@@ -12,11 +12,11 @@
 			
 			<div class="row" id="header-row">
 				<div class="col-2 text-center">
-					<h1 class="display-5" id="request-header">METADATA</h1>
+					<h1 class="display-5" id="request-header">DATA DICTIONARY</h1>
 				</div>
 				<div class="col-10" style="padding-top: 10px;">
-					<a href="{% url 'user_console:export_all_requests' %}"><button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export all metadata</button></a>
-					<a href="{% url 'user_console:import_requests' %}"><button type="button" class="btn btn-outline-primary btn-sm mb-4 mr-1 float-right">Import metadata</button></a>
+					<a href="{% url 'user_console:export_all_requests' %}"><button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export dictionary</button></a>
+					<a href="{% url 'user_console:import_requests' %}"><button type="button" class="btn btn-outline-primary btn-sm mb-4 mr-1 float-right">Import dictionary</button></a>
 				</div>
 
 
@@ -32,7 +32,7 @@
 					<div class="col text-center ">
 						
 					
-					<a href="{% url 'user_console:request_create' %}"><button type="button" class="btn btn-success mb-4">Create New Metadata</button></a>
+					<a href="{% url 'user_console:request_create' %}"><button type="button" class="btn btn-success mb-4">Create New Entry</button></a>
 
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 
 					<li class="list-group-item" style="text-align: center;font-size:1.2em;background-color:#F3F5F8 ">QUICK FILTERS</li>
 					
-					<a class="list-group-item list-group-item-action active d-flex justify-content-between align-items-center" id="filter-1-list" data-toggle='list' href='#filter-1' role='tab' aria-controls='filter-1'>All Metadata<span class="badge badge-primary badge-pill">{{all_metadata_list|length}}</span></a>
+					<a class="list-group-item list-group-item-action active d-flex justify-content-between align-items-center" id="filter-1-list" data-toggle='list' href='#filter-1' role='tab' aria-controls='filter-1'>All Entries<span class="badge badge-primary badge-pill">{{all_metadata_list|length}}</span></a>
 					
 					<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" id="filter-2-list" data-toggle='list' href='#filter-2' role='tab' aria-controls='filter-2'>Personal Information 
 					<span class="badge badge-primary badge-pill">{{personal_meta_list|length}}</span></a>

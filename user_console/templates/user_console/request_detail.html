@@ -131,15 +131,17 @@
 				</table>
 			</div>
 			<div class="col-6 pt-3" id="related-list-col">
+
 				<div class="table-responsive">
 				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
 					<h5 style="padding-bottom: 15px;">Request Responses
 						<a href="{% url 'request_response:create_response' pk=request.pk %}"><button type="button" class="btn btn-primary btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a></h5>
 					<thead class="thead" style="background-color:#215CA0;color: white;">
 						<th class="table-head" scope="col">Response ID</th>
-						<th class="table-head" scope="col">File</th>
+						<th class="table-head" scope="col">PDF</th>
 						<th class="table-head" scope="col">Created at</th>
 						<th class="table-head" scope="col">Updated at</th>
+						<th class="table-head" scope="col">Sent</th>
 						<th class="table-head" scope="col"></th>
 					</thead>
 
@@ -151,17 +153,62 @@
 						<td>{{ response.response_file }}</td>
 						<td>{{ response.created_at }}</td>
 						<td>{{ response.updated_at }}</td>
+						<td>{{response.sent}}</td>
+
 						<td><button class="btn btn-secondary btn-sm" style="font-size: .8em;">Generate PDF</button></td>
 					</tr>
 					{% endfor %}
 					{% else %}
 					<tr>
-					<td colspan="5"><p>No responses have been added.</p></td>
+					<td colspan="6"><p>No responses have been added.</p></td>
 					</tr>
 					{% endif %}
 					
 				</table>
 			</div>
+
+			<div class="table-responsive">
+				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
+					<h5 style="padding-bottom: 15px;">Response Data
+						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-primary btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
+						<a href="{% url 'request_response:create_response' pk=request.pk %}"><button type="button" class="btn btn-primary btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Bulk Import</button></a>
+					</h5>
+					<thead class="thead" style="background-color:#215CA0;color: white;">
+						<th class="table-head" scope="col">Response Data ID</th>
+						<th class="table-head" scope="col">Parent Response</th>
+						<th class="table-head" scope="col">Metadata</th>
+						<th class="table-head" scope="col">Value</th>
+						<th class="table-head" scope="col">Exclude from report</th>
+						<th class="table-head" scope="col">Source system</th>
+						<th class="table-head" scope="col">Created at</th>
+					</thead>
+
+					{% if response_data_list %}
+					{% for data in response_data_list %}
+					
+					<tr>
+
+						<th scope="row"><a href="{% url 'request_response:response_data_detail' pk=data.pk %}">{{data.pk}}</a></th>
+						<td>{{ data.request_response__id }}</td>
+						<td>{{ data.metadata }}</td>
+						<td>{{ data.value }}</td>
+						<td>{{data.exclude_from_report}}</td>
+						<td>{{data.source_system}}</td>
+						<td>{{data.create_at}}</td>
+						
+					</tr>
+					{% endfor %}
+					{% else %}
+					<tr>
+					<td colspan="8"><p>No response data have been added.</p></td>
+					</tr>
+					{% endif %}
+					
+				</table>
+			</div>
+
+
+
 			</div>
 		</div>
 		<!-- {% if request_response_list %}

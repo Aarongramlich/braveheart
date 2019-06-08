@@ -45,6 +45,7 @@ class RequestForm(forms.ModelForm):
 		'days_open',
 		
 		]
+				
 
 class CompanyForm(forms.ModelForm):
 	class Meta:
@@ -52,8 +53,18 @@ class CompanyForm(forms.ModelForm):
 
 		fields = [
 			'company_name',
+			'company_code',
 			'website',
-			'primary_contact'
+			'primary_contact',
+			'address',
+			'address_line_two',
+			'city',
+			'state',
+			'zip_code',
+			'country',
+			'logo',
+
+
 		]
 
 class ConsumerForm(forms.ModelForm):
@@ -64,4 +75,6 @@ class ConsumerForm(forms.ModelForm):
 			'first_name',
 			'last_name',
 			'email',
+
+
 		]

@@ -15,8 +15,8 @@
 			
 			<form method="POST">
 				{% csrf_token %}
-				<input type="submit" name="Save">
-				{{form.as_table}}
+				
+				{{ form|crispy }}
 				<!-- <div class="row" id="title-row">
 				<div class="col"><i>
 					Create Request
@@ -80,6 +80,7 @@
 					<button type="submit">Request list</button>
 					
 				</a> -->
+				<input type="submit" name="Save">
 			</form>
 				
 			

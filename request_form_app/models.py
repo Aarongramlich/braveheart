@@ -2,7 +2,6 @@ from django.db import models
 from django.urls import reverse
 from localflavor.us.models import USStateField, USSocialSecurityNumberField, USZipCodeField
 
-
 # Create your models here.
 
 class Consumer(models.Model):
@@ -163,6 +162,7 @@ class Request(models.Model):
 
 	def get_absolute_url(self):
 		return reverse("user_console:request_detail",kwargs={'pk':self.pk})
+
 
 
 

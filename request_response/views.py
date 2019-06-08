@@ -4,10 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.views.generic import View,TemplateView,ListView,DetailView,FormView,UpdateView,CreateView
 from django.contrib.auth.decorators import permission_required,login_required 
-from .forms import RequestResponseForm
+from .forms import RequestResponseForm,ResponseDataForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import RequestResponse
+from .models import RequestResponse,ResponseData
 from django.http import HttpResponse
 
 from .utils import render_to_pdf
@@ -25,6 +25,15 @@ def request_response_upload(request):   #https://www.youtube.com/watch?v=BppyfPy
 		'order': 'Order of the CSV should be first_name,last_name,email'
 	}
 
+# def RequestResponseCreateView(request):
+# 	if request.method == 'POST':
+# 		form = RequestResponseForm(request.POST,request.FILES)
+# 		if form.is_valid():
+# 			form.save()
+# 		else:
+# 			form = RequestResponseForm()
+# 		return render(request,'request_response/request_response_form.html',{'form',form})
+
 class RequestResponseCreateView(LoginRequiredMixin,CreateView):
 
 
@@ -35,11 +44,24 @@ class RequestResponseCreateView(LoginRequiredMixin,CreateView):
 	form_class = RequestResponseForm
 	template_name = 'request_response/request_response_form.html'
 
-	def form_valid(self,form):
-		Response = form.save(commit=False)
-		Response.request = self.pk
-		Response.company = self.pk.company__id
-		Response.save()
+	success_url = '/console/requests/'
+
+	# def form_valid(self,form):
+	# 	if request.method == 'POST':
+	# 		form = RequestResponseForm(request.POST,request.FILES)
+	# 		if form.is_valid():
+	# 			Response = form.save(commit=False)
+	# 			Response.request = self.pk
+	# 			Response.company = self.pk.company__id
+	# 			Response.save()
+	# 	else:
+	# 		form = RequestResponseForm()
+	# 	return render(request,template_name,{'form',form})
+
+	# 	Response = form.save(commit=False)
+	# 	Response.request = self.pk
+	# 	Response.company = self.pk.company__id
+	# 	Response.save()
 
 
 	
@@ -54,14 +76,29 @@ class RequestResponseCreateView(LoginRequiredMixin,CreateView):
 	login_url='/console/login'
 
 
-
 class RequestResponseDetailView(LoginRequiredMixin,DetailView):
 	model = RequestResponse
-	template = "request_response_detail.html"
+	
 
 	login_url='/console/login'
 
 
+
+class ResponseDataCreateView(LoginRequiredMixin,CreateView):
+
+	model = ResponseData
+
+	form_class = ResponseDataForm
+	template_name = 'request_response/response_data_form.html'
+
+	success_url = '/console/requests/'
+
+
+class ResponseDataDetailView(LoginRequiredMixin,DetailView):
+	model = ResponseData
+	template = "response_data_detail.html"
+
+	login_url='/console/login'
 
 
 # def generate_pdf(self, request,*args,**kwargs):
@@ -163,3 +200,27 @@ class GeneratePdf(DetailView):
 	# 	return HttpResponse("Not Found")
 
 		# https://www.youtube.com/watch?v=B7EIK9yVtGY
+
+
+def ResponseDataExport(request):
+	response_resource = ResponseDataResource()
+	dataset = request_resource.export()
+	response = HttpResponse(dataset.csv,content_type='text/csv')
+	response['Content-Disposition'] = 'attachment;filename=response_data.csv'
+	return response
+
+def ResponseDataImport(request):
+	if request.method == 'POST':
+		response_resource = ResponseDataResource()
+		dataset = Dataset()
+		new_responses = request.FILES['response_data_file']
+
+		imported_data = dataset.load(new_responses.read())
+		result = response_resource.import_data(dataset,dry_run=True)
+
+		if not result.has_errors():
+			response_resource.import_data(datase,dry_run=True)
+
+	return render(request,'request_response/import_response_data.html')
+
+
