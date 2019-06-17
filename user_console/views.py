@@ -5,18 +5,19 @@ from django.views.generic import View,TemplateView,ListView,DetailView,FormView,
 from django.http import HttpResponse, HttpResponseRedirect
 
 from request_form_app.models import Company,Request,Consumer,Contact
-from request_response.models import RequestResponse,ResponseData
+from request_response.models import RequestResponse,ResponseData,ResponseCategory
 from accounts.models import User
 
 from request_response import urls
 
 from user_console.forms import RequestForm,CompanyForm,ConsumerForm
 from django.urls import reverse,reverse_lazy
-from django.shortcuts import get_list_or_404,get_object_or_404
+from django.shortcuts import get_list_or_404,get_object_or_404,redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from request_form_app.admin import RequestResource
 from tablib import Dataset
 from datetime import date,timedelta,datetime,timezone
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 
 
@@ -26,6 +27,10 @@ from datetime import date,timedelta,datetime,timezone
 
 # class ProfileView(View):
 # 	template_name='user_console/homepage.html'
+
+
+class IndexView(View):
+	pass
 
 class HomepageView(LoginRequiredMixin,View):
 
@@ -134,11 +139,20 @@ class CompanyDetailView(LoginRequiredMixin,DetailView):
 		return context
 
 
+class MyCompanyDetail(LoginRequiredMixin,DetailView):
+	model = Company
+	template_name = 'user_console/my_company_detail.html'
 
+	login_url = '/console/login/'
+
+	# def get_queryset(self):
+	# 	return Company.objects.filter(company__id__in=self.request.user.company)[:0]
+
+	# def get_object(self,**kwargs):
 
 # REQUEST VIEWS
 
-class RequestListView(LoginRequiredMixin,TemplateView):
+class RequestListView(LoginRequiredMixin,ListView):
 
 	model = Request
 
@@ -147,7 +161,10 @@ class RequestListView(LoginRequiredMixin,TemplateView):
 
 	login_url = '/console/login/'
 
-	
+
+
+
+
 
 	def get_context_data(self,**kwargs):
 
@@ -155,17 +172,28 @@ class RequestListView(LoginRequiredMixin,TemplateView):
 		last_week = date.today() + timedelta(days=-7)
 
 		context = super(RequestListView,self).get_context_data(**kwargs)
-		context['all_requests_list'] = Request.objects.filter(company_requested__in = self.request.user.company.all()).order_by('-created_at')
-		context['todays_list'] = Request.objects.filter(created_at__year=today.year,created_at__month=today.month,created_at__day=today.day,company_requested__in = self.request.user.company.all())
-		context['not_started_list'] = Request.objects.filter(stage__iexact='new',company_requested__in = self.request.user.company.all())
-		context['last_week_list'] = Request.objects.filter(created_at__gte=date.today()+timedelta(days=-7),company_requested__in = self.request.user.company.all())
-		context['ready_for_review_list'] = Request.objects.filter(stage__iexact='ready to review',company_requested__in = self.request.user.company.all())
-		context['data_ready_to_send_list'] = Request.objects.filter(stage__iexact='ready for consumer',company_requested__in = self.request.user.company.all())
-		context['green_status_list'] = Request.objects.filter(status__iexact='green',company_requested__in = self.request.user.company.all())
-		context['yellow_status_list'] = Request.objects.filter(status__iexact='yellow',company_requested__in = self.request.user.company.all())
+		
+		context['all_requests_list'] = Request.objects.filter(company_requested__in = self.request.user.company.all()).order_by('-pk')
+
+		
+		# context['paginator_all_requests_list'] = Paginator(all_request_list,10)
+
+
+
+		context['todays_list'] = Request.objects.filter(created_at__year=today.year,created_at__month=today.month,created_at__day=today.day,company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['not_started_list'] = Request.objects.filter(stage__iexact='new',company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['last_week_list'] = Request.objects.filter(created_at__gte=date.today()+timedelta(days=-7),company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['ready_for_review_list'] = Request.objects.filter(stage__iexact='ready to review',company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['data_ready_to_send_list'] = Request.objects.filter(stage__iexact='ready for consumer',company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['green_status_list'] = Request.objects.filter(status__iexact='green',company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['yellow_status_list'] = Request.objects.filter(status__iexact='yellow',company_requested__in = self.request.user.company.all()).order_by('-pk')
 		# context['orange_status_list'] = Request.objects.filter(status__iexact='orange')
-		context['red_status_list'] = Request.objects.filter(status__iexact='red',company_requested__in = self.request.user.company.all())
+		context['red_status_list'] = Request.objects.filter(status__iexact='red',company_requested__in = self.request.user.company.all()).order_by('-pk')
+		
+
+
 		return context
+
 
 class RequestDetailView(LoginRequiredMixin,DetailView):
 
@@ -182,6 +210,10 @@ class RequestDetailView(LoginRequiredMixin,DetailView):
 		pk=self.kwargs.get('pk')
 		context['request_response_list']=RequestResponse.objects.filter(request__id=pk)
 		context['response_data_list']=ResponseData.objects.filter(request__id=pk)
+		context['response_data_category_list']=ResponseCategory.objects.filter(request__id=pk)
+		context['response_category_vendor_list'] = ResponseCategory.objects.filter(request__id=pk,data_category__category_type__iexact='vendor')
+		context['response_category_data_list'] = ResponseCategory.objects.filter(request__id=pk,data_category__category_type__iexact='data')
+		context['response_category_source_list'] = ResponseCategory.objects.filter(request__id=pk,data_category__category_type__iexact='source')
 		return context
 
 	
@@ -189,74 +221,64 @@ class RequestDetailView(LoginRequiredMixin,DetailView):
 
 
 
-class RequestUpdate(LoginRequiredMixin,UpdateView):
+# class RequestUpdate(LoginRequiredMixin,UpdateView):
 	
-	model = Request
-	fields = ['consumer',
-		'company_requested',
-		'request_source',
-		'website_source',
-		'what_request',
-		'who_request',
-		'opt_out_request',
-		'delete_request',
-		'priority',
-		'escalated',
-		'stage',
-		'first_name',
-		'last_name',
-		'email',
-		'alternative_email',
-		'phone',
-		'alternative_phone',
-		'primary_address',
-		'primary_address_line_two',
-		'primary_city',
-		'primary_state',
-		'primary_zip',
-		'primary_country',
-		'alternative_address',
-		'alternative_address_line_two',
-		'alternative_city',
-		'alternative_state',
-		'alternative_country',
-		'ssn',
-		'driver_license_number',
-		'driver_license_state',
-		'date_of_birth',
-		'terms_of_service_signed',
-		'data_ready_to_send',
-		'status',
-		'days_open',]
-	template_name_suffix='_update_form'
+# 	model = Request
+# 	fields = ['consumer',
+# 		'company_requested',
+# 		'request_source',
+# 		'website_source',
+# 		'what_request',
+# 		'who_request',
+# 		'opt_out_request',
+# 		'delete_request',
+# 		'priority',
+# 		'escalated',
+# 		'stage',
+# 		'first_name',
+# 		'last_name',
+# 		'email',
+# 		'alternative_email',
+# 		'phone',
+# 		'alternative_phone',
+# 		'primary_address',
+# 		'primary_address_line_two',
+# 		'primary_city',
+# 		'primary_state',
+# 		'primary_zip',
+# 		'primary_country',
+# 		'alternative_address',
+# 		'alternative_address_line_two',
+# 		'alternative_city',
+# 		'alternative_state',
+# 		'alternative_country',
+# 		'ssn',
+# 		'driver_license_number',
+# 		'driver_license_state',
+# 		'date_of_birth',
+# 		'terms_of_service_signed',
+# 		'data_ready_to_send',
+# 		'status',
+# 		'days_open',]
+# 	template_name_suffix='_update_form'
 
+
+# 	login_url = '/console/login/'
+
+class RequestUpdate(LoginRequiredMixin,UpdateView):
+	model = Request
+	form_class = RequestForm
+	template_name = 'user_console/request_form.html'
 
 	login_url = '/console/login/'
 
+	def form_valid(self,form):
+		print(form.cleaned_data)
+		return super().form_valid(form)
+
+
+	# def get_object(self):
 	
-	
-	# def form_valid(self,form):
-	# 	return super(RequestUpdate,self.object).form_valid(form)
-	# 	self.object.form.save()
-
-	# 	# self.object = form.save()
-	# 	return HttpResponseRedirect(self.object.get_success_url())
-
-	# def get_success_url(self):
-	# 	return reverse("user_console:request_detail",args=[self.object.pk])
-
-		# return HttpResponseRedirect(reverse_lazy('user_console:request_detail',kwargs={'pk':self.pk}))
-
-	# success_url = reverse_lazy('user_console:request_detail')
-
-	# def form_valid(self,form):
-	# 	pk = self.kwargs.get('pk')
-	# 	obj = get_object_or_404(Request, pk=pk)
-	# 	return super().form_valid(form)
-
-
-
-		# pk.save()
 
 	
 
@@ -267,13 +289,10 @@ class RequestCreateView(LoginRequiredMixin,CreateView):
 
 	login_url = '/console/login/'
 
-	
-	
+	def form_valid(self,form):
+		print(form.cleaned_data)
+		return super().form_valid(form)
 		
-	def get_success_url(self):
-		return reverse("user_console:request_detail",args=[self.object.pk])
-
-
 
 def RequestExport(request):
 

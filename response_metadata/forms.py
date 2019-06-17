@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from response_metadata.models import Metadata
+from response_metadata.models import Metadata,MetadataCategory
 
 class MetadataForm(forms.ModelForm):
 	class Meta:
@@ -17,3 +17,18 @@ class MetadataForm(forms.ModelForm):
 			'company',
 			'sequence',
 		]
+
+class MetadataCategoryForm(forms.ModelForm):
+
+	class Meta:
+		model = MetadataCategory
+
+		fields = [
+			'category',
+			'consumer_label',
+			'consumer_description',
+			'sequence',
+			'category_type',
+			'company',
+		]
+

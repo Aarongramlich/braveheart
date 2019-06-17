@@ -14,9 +14,14 @@
 		<div class="jumbotron" id="requestform-data-jumbo">
 			
 			<form method="POST">
+				{{ form.errors }}
+				{{ form.non_field_errors }}
 				{% csrf_token %}
 				
-				{{ form|crispy }}
+				{% crispy form %}
+
+
+				<!-- {{ form|crispy }} -->
 				<!-- <div class="row" id="title-row">
 				<div class="col"><i>
 					Create Request
@@ -80,7 +85,7 @@
 					<button type="submit">Request list</button>
 					
 				</a> -->
-				<input type="submit" name="Save">
+				
 			</form>
 				
 			

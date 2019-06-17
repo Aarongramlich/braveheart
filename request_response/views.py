@@ -7,10 +7,11 @@ from django.contrib.auth.decorators import permission_required,login_required
 from .forms import RequestResponseForm,ResponseDataForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import RequestResponse,ResponseData
+from .models import RequestResponse,ResponseData,ResponseCategory
 from django.http import HttpResponse
 
 from .utils import render_to_pdf
+from easy_pdf.views import PDFTemplateView
 
 from request_form_app.models import Request,Company
 
@@ -118,50 +119,110 @@ class ResponseDataDetailView(LoginRequiredMixin,DetailView):
 # 			return response 
 # 	return HttpResponse("Not Found")
 
+
+class TestPdf(PDFTemplateView):
+	template_name='request_response/response_pdf.html'
+
+
+	def get_context_data(self,**kwargs):
+
+		context = super(TestPdf,self).get_context_data(**kwargs)
+		
+		pk = self.kwargs.get('pk')
+		
+
+		
+		
+		self.company = self.kwargs.get('company')
+
+		context['response_data'] = ResponseData.objects.filter(request_response__id=pk)
+		context['personal_response_data'] = ResponseData.objects.filter(request_response__id=pk,metadata__data_category__iexact='personal')
+		context['employment_response_data'] = ResponseData.objects.filter(request_response__id=pk,metadata__data_category__iexact='employment')
+		context['geolocation_response_data'] = ResponseData.objects.filter(request_response__id=pk,metadata__data_category__iexact='geolocation')
+		context['inferred_response_data'] = ResponseData.objects.filter(request_response__id=pk,metadata__data_category__iexact='inferred')
+		context['commercial_response_data'] = ResponseData.objects.filter(request_response__id=pk,metadata__data_category__iexact='commercial')
+		context['biometric_response_data'] = ResponseData.objects.filter(request_response__id=pk,metadata__data_category__iexact='biometric')
+		context['internet_response_data'] = ResponseData.objects.filter(request_response__id=pk,metadata__data_category__iexact='internet')
+		context['psychometric_response_data'] = ResponseData.objects.filter(request_response__id=pk,metadata__data_category__iexact='psychometric')
+		context['sensory_response_data'] = ResponseData.objects.filter(request_response__id=pk,metadata__data_category__iexact='sensory')
+		context['data_source_category_list'] = ResponseCategory.objects.filter(request_response__id=pk,data_category__category_type__iexact='source')
+		context['vendor_category_list'] = ResponseCategory.objects.filter(request_response__id=pk,data_category__category_type__iexact='vendor')
+		context['data_category_list'] = ResponseCategory.objects.filter(request_response__id=pk,data_category__category_type__iexact='data')
+
+		context['response_company'] = Company.objects.filter() ##THIS WON'T WORK -- FIX 
+		return context
+
+
 class GeneratePdf(DetailView):
 
-	model = Request
+	model = RequestResponse
 	template_name='request_response/response.html'
 
-	def get(self, request, *args, **kwargs):
+
+
+	def get_context_data(self,**kwargs):
+
+		context = super(GeneratePdf,self).get_context_data(**kwargs)
 		
-		context = super(GeneratePdf,self).get(request,*args,**kwargs)
+		pk = self.kwargs.get('pk')
+
+		context['response_data'] = ResponseData.objects.filter(request_response__id=pk)
+		return context
+		return render_to_pdf('request_response/response.html',(response_data))
+
+
+		# if pdf:
+		# 	response = HttpResponse(pdf,content_type='application/pdf')
+		# 	filename = "PrivacyRequest_%s.pdf" %(self.kwargs.get('pk'))
+		# 	content = "inline; filename='%s'" %(filename)
+		# 	response['Content-Disposition'] = content
+		# 	return response
+		# else:
+		# 	print('No PDF found.')
+		# return context 
+
+
+
+
+	# def get(self, request, *args, **kwargs):
+		
+	# 	context = super(GeneratePdf,self).get(request,*args,**kwargs)
 		# pk = self.kwargs.get('pk')
 		
 		# return context
  
 		# context['request_object'] = Request.objects.filter(pk=pk)
 
-		context = {
-			'first_name': context.get('first_name'),
-			'last_name': 'Lee',
-			'email': 'david.lee@gmail1.com',
-			'email_2': 'davel87@gmail1.com',
-			'address': '201 Warner Ave',
-			'address_2': 'Apt A201',
-			'city': 'Los Angeles',
-			'state': 'CA',
-			'zip': '92716',
-			'country': 'US',
-			'annual_income': '$100,000-$150,000',
-			'household_income': '$300,000-$500,000',
-			'marketing_score': '87.6',
-			'marketing_grade': 'B+',
-			'last_activity': '09/28/18',
-			'ip_address': '172.16.52.63',
-			'customer_id': '1291840',
-			'net_revenue': '$1,248.50',
-			'interests': 'Golf, Cars',
-			'relationship_status': 'Married',
-			 }
-		pdf = render_to_pdf('request_response/response.html',(context))
+		# context = {
+		# 	'first_name': context.get('first_name'),
+		# 	'last_name': 'Lee',
+		# 	'email': 'david.lee@gmail1.com',
+		# 	'email_2': 'davel87@gmail1.com',
+		# 	'address': '201 Warner Ave',
+		# 	'address_2': 'Apt A201',
+		# 	'city': 'Los Angeles',
+		# 	'state': 'CA',
+		# 	'zip': '92716',
+		# 	'country': 'US',
+		# 	'annual_income': '$100,000-$150,000',
+		# 	'household_income': '$300,000-$500,000',
+		# 	'marketing_score': '87.6',
+		# 	'marketing_grade': 'B+',
+		# 	'last_activity': '09/28/18',
+		# 	'ip_address': '172.16.52.63',
+		# 	'customer_id': '1291840',
+		# 	'net_revenue': '$1,248.50',
+		# 	'interests': 'Golf, Cars',
+		# 	'relationship_status': 'Married',
+		# 	 }
+		# pdf = render_to_pdf('request_response/response.html',(context))
         
-		if pdf:
-			response = HttpResponse(pdf,content_type='application/pdf')
-			filename = "PrivacyRequest_%s.pdf" %("1234")
-			content = "inline; filename='%s'" %(filename)
-			response['Content-Disposition'] = content
-			return response
+		# if pdf:
+		# 	response = HttpResponse(pdf,content_type='application/pdf')
+		# 	filename = "PrivacyRequest_%s.pdf" %("1234")
+		# 	content = "inline; filename='%s'" %(filename)
+		# 	response['Content-Disposition'] = content
+		# 	return response
 		# return HttpResponse("Not Found")
 
 	# def get_context_data(self,request,*args,**kwargs):

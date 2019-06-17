@@ -1,0 +1,361 @@
+{% extends "easy_pdf/base.html" %}
+
+{% block content %}
+    
+    {% for company in response_company %}
+    	<span style="font-size:25px;">{{company.company_name}}</span></br></br>
+    	<span style="font-size:15px">Reference ID: {{pk}}</br>{{company.legal_name}}</br>
+    	{{company.address}}</br>{{company.website}}</span>
+    <!-- <img src= "{{company.logo.url}}" width="100" height="auto"> -->
+    {% endfor %}
+</br>
+
+		<p style="padding-top: 30px; font-size: 1.15em;"><i>Thank you for reaching out to our team to inquire about your personal information. It is your right to stay knowledgeable and  informed on your data being stored, and we strive
+		    	to make it easy to do so. Below is a breakdown of the data we have stored for you in our databases. For questions, please contact us at customer.service@culturesip.com, or by phone
+		    	at 1-800-124-5817.</i></p>
+
+{% if data_category_list %}
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+			
+	    		<h1 style="text-align: center;margin-top: 40px;">Explanation of Data Categories</h1>
+
+
+	    		<thead>
+	    			<tr>
+	    				<th>Category Label</th>
+	    				
+	    				<th>Category Description</th>
+	    			</tr>
+	    		</thead>
+	    		
+	    		{% for category in data_category_list %}
+	    			<tr style="padding-left:5px;">
+		    			<td>{{ category.data_category.consumer_label}}</td>
+		    			<td>{{ category.data_category.consumer_description }}</td>
+
+		    		</tr>
+	    		{% endfor %}
+	    		
+	    
+	</table>
+
+{% endif %}
+
+{% if data_source_category_list %}
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+			
+	    		<h1 style="text-align: center;margin-top: 40px;">Explanation of Data Source Categories</h1>
+
+
+	    		<thead>
+	    			<tr>
+	    				<th>Category Label</th>
+	    				
+	    				<th>Category Description</th>
+	    			</tr>
+	    		</thead>
+	    		
+	    		{% for category in data_source_category_list %}
+	    			<tr style="padding-left:5px;">
+		    			<td>{{ category.data_category.consumer_label}}</td>
+		    			<td>{{ category.data_category.consumer_description }}</td>
+
+		    		</tr>
+	    		{% endfor %}
+	    		
+	    
+	</table>
+
+{% endif %}
+
+{% if vendor_category_list %}
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+			
+	    		<h1 style="text-align: center;margin-top: 40px;">Explanation of 3rd Party Sharing Categories</h1>
+
+
+	    		<thead>
+	    			<tr>
+	    				<th>Category Label</th>
+	    				
+	    				<th>Category Description</th>
+	    			</tr>
+	    		</thead>
+	    		
+	    		{% for category in vendor_category_list %}
+	    			<tr style="padding-left:5px;">
+		    			<td>{{ category.data_category.consumer_label}}</td>
+		    			<td>{{ category.data_category.consumer_description }}</td>
+
+		    		</tr>
+	    		{% endfor %}
+	    		
+	    
+	</table>
+
+{% endif %}
+
+    <table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+
+    	
+
+    	<tbody>
+
+    		
+
+    		{% if personal_response_data %}
+    		<h1 style="text-align: center;margin-top: 40px;">Personal Information</h1>
+    		
+    		<thead>
+    			<tr>
+    				<th>Field Label</th>
+    				<th>Field Value</th>
+    				<th>Description</th>
+    			</tr>
+    		</thead>
+    		
+    		{% for data in personal_response_data %}
+    			<tr style="padding-left:5px;">
+	    			<td>{{data.metadata.consumer_label}}</td>
+	    			<td>{{ data.value }}</td>
+	    			<td>{{data.metadata.consumer_description}}</td>
+	    			
+	    		</tr>
+    		{% endfor %}
+    		{% endif %}
+
+
+    	
+    	</tbody>
+	</table>
+
+
+
+	{% if employment_response_data %}
+
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+		    		<h1 style="text-align: center;margin-top: 60px;">Employment Information</h1>
+    		<thead>
+    			<tr>
+    				<th>Field Label</th>
+    				<th>Field Value</th>
+    				<th>Description</th>
+    			</tr>
+    		</thead>
+    		
+    		{% for data in employment_response_data %}
+    			<tr style="padding-left:5px;">
+	    			<td>{{data.metadata.consumer_label}}</td>
+	    			<td>{{ data.value }}</td>
+	    			<td>{{data.metadata.consumer_description}}</td>
+	    			
+	    		</tr>
+    		{% endfor %}
+    		
+	</table>
+
+	{% endif %}
+
+
+	{% if internet_response_data %}
+
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+		    		<h1 style="text-align: center;margin-top: 60px;">Internet Browsing Information</h1>
+    		<thead>
+    			<tr>
+    				<th>Field Label</th>
+    				<th>Field Value</th>
+    				<th>Description</th>
+    			</tr>
+    		</thead>
+    		
+    		{% for data in internet_response_data %}
+    			<tr style="padding-left:5px;">
+	    			<td>{{data.metadata.consumer_label}}</td>
+	    			<td>{{ data.value }}</td>
+	    			<td>{{data.metadata.consumer_description}}</td>
+	    			
+	    		</tr>
+    		{% endfor %}
+    		
+	</table>
+
+	{% endif %}
+
+
+
+
+	{% if geolocation_response_data %}
+
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+		    		<h1 style="text-align: center;margin-top: 60px;">Geolocation Information</h1>
+    		<thead>
+    			<tr>
+    				<th>Field Label</th>
+    				<th>Field Value</th>
+    				<th>Description</th>
+    			</tr>
+    		</thead>
+    		
+    		{% for data in geolocation_response_data %}
+    			<tr style="padding-left:5px;">
+	    			<td>{{data.metadata.consumer_label}}</td>
+	    			<td>{{ data.value }}</td>
+	    			<td>{{data.metadata.consumer_description}}</td>
+	    			
+	    		</tr>
+    		{% endfor %}
+    		
+	</table>
+
+	{% endif %}
+
+
+
+
+	{% if commercial_response_data %}
+
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+		    		<h1 style="text-align: center;margin-top: 60px;">Commercial Information</h1>
+    		<thead>
+    			<tr>
+    				<th>Field Label</th>
+    				<th>Field Value</th>
+    				<th>Description</th>
+    			</tr>
+    		</thead>
+    		
+    		{% for data in commercial_response_data %}
+    			<tr style="padding-left:5px;">
+	    			<td>{{data.metadata.consumer_label}}</td>
+	    			<td>{{ data.value }}</td>
+	    			<td>{{data.metadata.consumer_description}}</td>
+	    			
+	    		</tr>
+    		{% endfor %}
+    		
+	</table>
+
+	{% endif %}
+
+
+	{% if biometric_response_data %}
+
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+		    		<h1 style="text-align: center;margin-top: 60px;">Biometric Information</h1>
+    		<thead>
+    			<tr>
+    				<th>Field Label</th>
+    				<th>Field Value</th>
+    				<th>Description</th>
+    			</tr>
+    		</thead>
+    		
+    		{% for data in biometric_response_data %}
+    			<tr style="padding-left:5px;">
+	    			<td>{{data.metadata.consumer_label}}</td>
+	    			<td>{{ data.value }}</td>
+	    			<td>{{data.metadata.consumer_description}}</td>
+	    			
+	    		</tr>
+    		{% endfor %}
+    		
+	</table>
+
+	{% endif %}
+
+
+	{% if psychometric_response_data %}
+
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+		    		<h1 style="text-align: center;margin-top: 60px;">Psychometric Information</h1>
+    		<thead>
+    			<tr>
+    				<th>Field Label</th>
+    				<th>Field Value</th>
+    				<th>Description</th>
+    			</tr>
+    		</thead>
+    		
+    		{% for data in psychometric_response_data %}
+    			<tr style="padding-left:5px;">
+	    			<td>{{data.metadata.consumer_label}}</td>
+	    			<td>{{ data.value }}</td>
+	    			<td>{{data.metadata.consumer_description}}</td>
+	    			
+	    		</tr>
+    		{% endfor %}
+    		
+	</table>
+
+	{% endif %}
+
+	{% if sensory_response_data %}
+
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+		    		<h1 style="text-align: center;margin-top: 60px;">Sensory Information</h1>
+    		<thead>
+    			<tr>
+    				<th>Field Label</th>
+    				<th>Field Value</th>
+    				<th>Description</th>
+    			</tr>
+    		</thead>
+    		
+    		{% for data in sensory_response_data %}
+    			<tr style="padding-left:5px;">
+	    			<td>{{data.metadata.consumer_label}}</td>
+	    			<td>{{ data.value }}</td>
+	    			<td>{{data.metadata.consumer_description}}</td>
+	    			
+	    		</tr>
+    		{% endfor %}
+    		
+	</table>
+
+	{% endif %}
+
+	{% if inferred_response_data %}
+
+	<table style="margin-top: 20px; padding-top: 5px;padding-bottom:5px;border:1px black solid">
+		
+		    		<h1 style="text-align: center;margin-top: 60px;">Inferred Information</h1>
+    		<thead>
+    			<tr>
+    				<th>Field Label</th>
+    				<th>Field Value</th>
+    				<th>Description</th>
+    			</tr>
+    		</thead>
+    		
+    		{% for data in inferred_response_data %}
+    			<tr style="padding-left:5px;">
+	    			<td>{{data.metadata.consumer_label}}</td>
+	    			<td>{{ data.value }}</td>
+	    			<td>{{data.metadata.consumer_description}}</td>
+	    			
+	    		</tr>
+    		{% endfor %}
+    		
+	</table>
+
+	{% endif %}
+
+
+
+
+
+
+
+   
+{% endblock %}

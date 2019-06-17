@@ -52,8 +52,8 @@
 
 					<div class="btn-group" role="group" aria-label="request detail group">
 						
-						<a href="{% url 'user_console:import_requests' %}"><button type="button" class="btn btn-success float-right btn-sm mr-4">Import Response</button></a>
-						<a href="{% url 'request_response:pdf' pk=request.pk %}"><button type="button" class="btn btn-info float-right btn-sm mr-4">Generate Response PDF</button></a>
+						<!-- <a href="{% url 'user_console:import_requests' %}"><button type="button" class="btn btn-success float-right btn-sm mr-4">Import Response</button></a> -->
+						<!-- <a href="{% url 'request_response:pdf' pk=request.pk %}"><button type="button" class="btn btn-info float-right btn-sm mr-4">Generate Response PDF</button></a> -->
 						<a href="{% url 'user_console:request_update' pk=request.pk %}"><button type="button" class="btn btn-secondary float-right btn-sm" style="width: 150px;">Edit Request</button></a>
 						<!-- <button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Send Data</button>
 						<button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Contact Requester</button> -->
@@ -135,7 +135,7 @@
 				<div class="table-responsive">
 				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
 					<h5 style="padding-bottom: 15px;">Request Responses
-						<a href="{% url 'request_response:create_response' pk=request.pk %}"><button type="button" class="btn btn-primary btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a></h5>
+						<a href="{% url 'request_response:create_response' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a></h5>
 					<thead class="thead" style="background-color:#215CA0;color: white;">
 						<th class="table-head" scope="col">Response ID</th>
 						<th class="table-head" scope="col">PDF</th>
@@ -155,7 +155,7 @@
 						<td>{{ response.updated_at }}</td>
 						<td>{{response.sent}}</td>
 
-						<td><button class="btn btn-secondary btn-sm" style="font-size: .8em;">Generate PDF</button></td>
+						<td><a href="{% url 'request_response:pdf' pk=response.pk %}"><button class="btn btn-secondary btn-sm" style="font-size: .8em;">Generate PDF</button></a></td>
 					</tr>
 					{% endfor %}
 					{% else %}
@@ -167,11 +167,11 @@
 				</table>
 			</div>
 
-			<div class="table-responsive">
+			<div class="table-responsive" style="padding-top: 20px;">
 				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
 					<h5 style="padding-bottom: 15px;">Response Data
-						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-primary btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
-						<a href="{% url 'request_response:create_response' pk=request.pk %}"><button type="button" class="btn btn-primary btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Bulk Import</button></a>
+						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
+						<a href="{% url 'request_response:create_response' pk=request.pk %}"><button type="button" class="btn btn-secondary btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Bulk Import</button></a>
 					</h5>
 					<thead class="thead" style="background-color:#215CA0;color: white;">
 						<th class="table-head" scope="col">Response Data ID</th>
@@ -189,7 +189,7 @@
 					<tr>
 
 						<th scope="row"><a href="{% url 'request_response:response_data_detail' pk=data.pk %}">{{data.pk}}</a></th>
-						<td>{{ data.request_response__id }}</td>
+						<td>{{ data.request_response.pk }}</td>
 						<td>{{ data.metadata }}</td>
 						<td>{{ data.value }}</td>
 						<td>{{data.exclude_from_report}}</td>
@@ -208,6 +208,117 @@
 			</div>
 
 
+			<div class="table-responsive" style="padding-top: 20px;">
+				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
+					<h5 style="padding-bottom: 15px;">Data Categories
+						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
+						
+					</h5>
+					<thead class="thead" style="background-color:#215CA0;color: white;">
+						<th class="table-head" scope="col">Response Data Category ID</th>
+						<th class="table-head" scope="col">Parent Response</th>
+						<th class="table-head" scope="col">Category Label</th>
+						<th class="table-head" scope="col">Category Description</th>
+						<th class="table-head" scope="col">Exclude from report</th>
+					</thead>
+
+					{% if response_category_data_list %}
+					{% for category in response_category_data_list %}
+					
+					<tr>
+
+						<th scope="row"><a href="{% url 'request_response:response_data_detail' pk=category.pk %}">{{category.pk}}</a></th>
+						<td>{{ category.request_response.pk }}</td>
+						<td>{{ category.data_category.consumer_label }}</td>
+						<td>{{ category.data_category.consumer_description }}</td>
+						
+						<td>{{category.exclude_from_report}}</td>
+						
+					</tr>
+					{% endfor %}
+					{% else %}
+					<tr>
+					<td colspan="8"><p>No data categories have been added.</p></td>
+					</tr>
+					{% endif %}
+					
+				</table>
+			</div>
+
+			<div class="table-responsive" style="padding-top: 20px;">
+				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
+					<h5 style="padding-bottom: 15px;">Source Categories
+						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
+						
+					</h5>
+					<thead class="thead" style="background-color:#215CA0;color: white;">
+						<th class="table-head" scope="col">Response Data Category ID</th>
+						<th class="table-head" scope="col">Parent Response</th>
+						<th class="table-head" scope="col">Category Label</th>
+						<th class="table-head" scope="col">Category Description</th>
+						<th class="table-head" scope="col">Exclude from report</th>
+					</thead>
+
+					{% if response_category_source_list %}
+					{% for category in response_category_source_list %}
+					
+					<tr>
+
+						<th scope="row"><a href="{% url 'request_response:response_data_detail' pk=category.pk %}">{{category.pk}}</a></th>
+						<td>{{ category.request_response.pk }}</td>
+						<td>{{ category.data_category.consumer_label }}</td>
+						<td>{{ category.data_category.consumer_description }}</td>
+						
+						<td>{{category.exclude_from_report}}</td>
+						
+					</tr>
+					{% endfor %}
+					{% else %}
+					<tr>
+					<td colspan="8"><p>No data source categories have been added.</p></td>
+					</tr>
+					{% endif %}
+					
+				</table>
+			</div>
+
+			<div class="table-responsive" style="padding-top: 20px;">
+				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
+					<h5 style="padding-bottom: 15px;">3rd Party Sharing Categories
+						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
+						
+					</h5>
+					<thead class="thead" style="background-color:#215CA0;color: white;">
+						<th class="table-head" scope="col">Response Data Category ID</th>
+						<th class="table-head" scope="col">Parent Response</th>
+						<th class="table-head" scope="col">Category Label</th>
+						<th class="table-head" scope="col">Category Description</th>
+						<th class="table-head" scope="col">Exclude from report</th>
+					</thead>
+
+					{% if response_category_vendor_list %}
+					{% for category in response_category_vendor_list %}
+					
+					<tr>
+
+						<th scope="row"><a href="{% url 'request_response:response_data_detail' pk=category.pk %}">{{category.pk}}</a></th>
+						<td>{{ category.request_response.pk }}</td>
+						<td>{{ category.data_category.consumer_label }}</td>
+						<td>{{ category.data_category.consumer_description }}</td>
+						
+						<td>{{category.exclude_from_report}}</td>
+					
+						
+					</tr>
+					{% endfor %}
+					{% else %}
+					<tr>
+					<td colspan="8"><p>No 3rd party categories have been added.</p></td>
+					</tr>
+					{% endif %}
+					
+				</table>
+			</div>
 
 			</div>
 		</div>

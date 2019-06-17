@@ -3,7 +3,29 @@ from request_form_app.models import Request,Company
 
 # Create your models here.
 
+class MetadataCategory(models.Model):
 
+	category_type_choices = (
+		('source','Data Source'),
+		('vendor','3rd Party'),
+		('data','Data')
+		)
+
+
+	category = models.TextField(max_length=255,blank=False,null=False)
+	consumer_label = models.TextField(max_length=255,blank=False,null=False)
+	consumer_description = models.TextField(max_length=255,blank=True)
+	sequence = models.IntegerField(blank=True,default="1")
+	created_at 	= models.DateTimeField(auto_now_add=True)
+	updated_at 	= models.DateTimeField(auto_now=True)
+	company		= models.ForeignKey(Company,on_delete=models.CASCADE,null=False,blank=False)
+	category_type = models.TextField(max_length=255,choices=category_type_choices,blank=False,default='data')
+
+	def __str__(self):
+		return self.category + ' - ' + self.company.company_name
+
+	def get_absolute_url(self):
+		return revere("response_metadata:metadata_category_detail",kwargs={'pk':self.pk})
 
 class Metadata(models.Model):
 
@@ -34,6 +56,9 @@ class Metadata(models.Model):
 
 	def __str__(self):
 		return self.field + ' - ' + self.company.company_name
+
+	def get_absolute_url(self):
+		return revere("response_metadata:metadata_detail",kwargs={'pk':self.pk})
 
 	def save(self,*args,**kwargs):
 

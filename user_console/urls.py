@@ -23,4 +23,8 @@ urlpatterns = [
 	path('request/create/',views.RequestCreateView.as_view(),name='request_create'),
 	path('requests/export-all/',views.RequestExport,name='export_all_requests'),
 	path('requests/import/',views.RequestImport,name='import_requests'),
-]
+
+
+
+	path('mycompany/<int:pk>/',views.MyCompanyDetail.as_view(),name='my_company_detail'),
+] 

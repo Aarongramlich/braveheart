@@ -18,6 +18,7 @@ from django.urls import path, include
 from request_form_app import views
 from companies_app import views
 from user_console import urls
+from user_console import views
 from response_metadata import urls
 # from user_console import views
 from request_response import urls

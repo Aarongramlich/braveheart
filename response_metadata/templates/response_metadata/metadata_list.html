@@ -1,5 +1,6 @@
 {% extends 'user_console/console_base.html' %}
 {% load staticfiles %}
+{% load el_pagination_tags %}
 
 
 {% block css_block %}
@@ -12,7 +13,7 @@
 			
 			<div class="row" id="header-row">
 				<div class="col-2 text-center">
-					<h1 class="display-5" id="request-header">DATA DICTIONARY</h1>
+					<h1 class="pt-2" id="request-header">Data Dictionary</h1>
 				</div>
 				<div class="col-10" style="padding-top: 10px;">
 					<a href="{% url 'user_console:export_all_requests' %}"><button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export dictionary</button></a>
@@ -32,7 +33,7 @@
 					<div class="col text-center ">
 						
 					
-					<a href="{% url 'user_console:request_create' %}"><button type="button" class="btn btn-success mb-4">Create New Entry</button></a>
+					<a href="{% url 'response_metadata:metadata_create' %}"><button type="button" class="btn btn-success mb-4">Create New Entry</button></a>
 
 					</div>
 				</div>
@@ -122,10 +123,10 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate all_metadata_list %}
 							{% for metadata in all_metadata_list %}
 								<tr>
-									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
+									<td scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></td>
 									
 									<td>{{metadata.label}}</td>
 									<td>{{metadata.consumer_label}}</td>
@@ -136,6 +137,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>
@@ -173,7 +175,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate personal_meta_list %}
 							{% for metadata in personal_meta_list %}
 								<tr>
 									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
@@ -187,6 +189,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>
@@ -220,7 +223,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate employment_meta_list %}
 							{% for metadata in employment_meta_list %}
 								<tr>
 									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
@@ -234,6 +237,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>
@@ -268,7 +272,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate biometric_meta_list %}
 							{% for metadata in biometric_meta_list %}
 								<tr>
 									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
@@ -282,6 +286,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>
@@ -314,7 +319,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate internet_meta_list%}
 							{% for metadata in internet_meta_list %}
 								<tr>
 									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
@@ -328,6 +333,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>
@@ -360,7 +366,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate geolocation_meta_list %}
 							{% for metadata in geolocation_meta_list %}
 								<tr>
 									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
@@ -374,6 +380,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>
@@ -408,7 +415,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate sensory_meta_list %}
 							{% for metadata in sensory_meta_list %}
 								<tr>
 									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
@@ -422,6 +429,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>
@@ -455,7 +463,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate commercial_meta_list%}
 							{% for metadata in commercial_meta_list %}
 								<tr>
 									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
@@ -469,6 +477,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>
@@ -503,7 +512,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate psychometric_meta_list %}
 							{% for metadata in psychometric_meta_list %}
 								<tr>
 									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
@@ -517,6 +526,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>
@@ -548,7 +558,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate inferred_meta_list %}
 							{% for metadata in inferred_meta_list %}
 								<tr>
 									<th scope="row"><a href="{% url 'response_metadata:metadata_detail' pk=metadata.pk %}">{{ metadata.field }}</a></th>
@@ -562,6 +572,7 @@
 
 								</tr>
 							{% endfor %}
+							{% show_pages %}
 						</tbody>
 
 					</table>

@@ -1,6 +1,6 @@
 from django.db import models
 from request_form_app.models import Request,Company
-from response_metadata.models import Metadata
+from response_metadata.models import Metadata,MetadataCategory
 from django.urls import reverse,reverse_lazy
 
 
@@ -38,5 +38,19 @@ class ResponseData(models.Model): #WILL BE USED FOR API/JSON INSERTS "DAY 2"
 	created_at 	= models.DateTimeField(auto_now_add=True)
 	updated_at 	= models.DateTimeField(auto_now=True)
 
+
 	def __str__(self):
 		return self.metadata.field + ' - ' + self.value + ' - ' + self.request.email
+
+class ResponseCategory(models.Model):
+
+	request = models.ForeignKey(Request,on_delete=models.CASCADE,blank=False)
+	request_response = models.ForeignKey(RequestResponse,on_delete=models.CASCADE,blank=False)
+	data_category	= models.ForeignKey(MetadataCategory,on_delete=models.CASCADE,blank=False)
+	exclude_from_report = models.BooleanField(default=False)
+	created_at 	= models.DateTimeField(auto_now_add=True)
+	updated_at 	= models.DateTimeField(auto_now=True)
+
+
+	def __str__(self):
+		return self.data_category.category + ' - ' + self.request.email

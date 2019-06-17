@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import RequestResponse,ResponseData
+from .models import RequestResponse,ResponseData,ResponseCategory
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
@@ -18,3 +18,4 @@ class ResponseDataAdmin(ImportExportModelAdmin):
 
 admin.site.register(RequestResponse)
 admin.site.register(ResponseData,ResponseDataAdmin)
+admin.site.register(ResponseCategory)

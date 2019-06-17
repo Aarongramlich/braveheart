@@ -1,5 +1,6 @@
 {% extends 'user_console/console_base.html' %}
 {% load staticfiles %}
+{% load el_pagination_tags %}
 
 {% block css_block %}
 	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_list.css' %}">
@@ -14,7 +15,7 @@
 			
 		<div class="row" id="header-row">
 			<div class="col-2 text-center">
-				<h1 class="display-5" id="request-header">REQUESTS</h1>
+				<h1 class="pt-2" id="request-header">Requests</h1>
 			</div>
 			<div class="col-10" style="padding-top: 10px;">
 				<a href="{% url 'user_console:export_all_requests' %}"><button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export all requests</button></a>
@@ -111,14 +112,15 @@
 						<tbody>
 							<div class="row float-right">
 								<div class="pr-5">
-								{% if all_requests_list %}
+								{% if request_list %}
 									<p class="list-count"><span><i>All requests - </span><span>{{all_requests_list | length}} results found</i></span></p>
 								{% else %}
 									<p class="list-count">All requests - <span><i>No results</i></span></p>
 								{% endif %}
 								
 								</div>
-							</div>	
+							</div>
+								{% paginate all_requests_list %}	
 								{% for request in all_requests_list %}
 								{% if request.status == 'red' %}
 								<tr>
@@ -172,9 +174,16 @@
 									<td>{{request.created_at}}</td>
 								</tr>
 								{% endif %}
-							{% endfor %}	
+
+
+							{% endfor %}
+							{% show_pages %}
+								
 						</tbody>
 					</table>
+
+					
+
 					</div>
 
 					<div class="tab-pane" id="filter-2" role='tabpanel' arialabelledby='filter-2-list'>
@@ -208,7 +217,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+							{% paginate todays_list %}
 							{% for request in todays_list %}
 
 								{% if request.status == 'red' %}
@@ -263,7 +272,8 @@
 									<td>{{request.created_at}}</td>
 								</tr>
 								{% endif %}
-							{% endfor %}	
+							{% endfor %}
+							{% show_pages %}	
 						</tbody>
 					</table>
 					</div>
@@ -300,7 +310,7 @@
 								</div>
 							</div>
 
-
+							{% paginate last_week_list %}
 							{% for request in last_week_list %}
 
 								{% if request.status == 'red' %}
@@ -355,7 +365,8 @@
 									<td>{{request.created_at}}</td>
 								</tr>
 								{% endif %}
-							{% endfor %}	
+							{% endfor %}
+							{% show_pages %}	
 						</tbody>
 					</table>
 					</div>
@@ -392,7 +403,7 @@
 								</div>
 							</div>
 
-
+							{% paginate not_started_list %}
 							{% for request in not_started_list %}
 
 								{% if request.status == 'red' %}
@@ -447,7 +458,8 @@
 									<td>{{request.created_at}}</td>
 								</tr>
 								{% endif %}
-							{% endfor %}	
+							{% endfor %}
+							{% show_pages %}	
 						</tbody>
 					</table>
 					</div>
@@ -483,7 +495,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+								{% paginate ready_for_review_list %}
 								{% for request in ready_for_review_list %}
 
 									{% if request.status == 'red' %}
@@ -538,7 +550,8 @@
 										<td>{{request.created_at}}</td>
 									</tr>
 									{% endif %}
-								{% endfor %}	
+								{% endfor %}
+								{% show_pages %}	
 							</tbody>
 						</table>
 					</div>
@@ -574,7 +587,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+								{% paginate data_ready_to_send_list %}
 								{% for request in data_ready_to_send_list %}
 
 									{% if request.status == 'red' %}
@@ -629,7 +642,8 @@
 										<td>{{request.created_at}}</td>
 									</tr>
 									{% endif %}
-								{% endfor %}	
+								{% endfor %}
+								{% show_pages %}	
 							</tbody>
 						</table>
 					</div>
@@ -667,7 +681,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+								{% paginate green_status_list %}
 								{% for request in green_status_list %}
 
 									{% if request.status == 'red' %}
@@ -722,7 +736,8 @@
 										<td>{{request.created_at}}</td>
 									</tr>
 									{% endif %}
-								{% endfor %}	
+								{% endfor %}
+								{% show_pages %}	
 							</tbody>
 						</table>
 					</div>
@@ -759,7 +774,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+								{% paginate yellow_status_list %}
 								{% for request in yellow_status_list %}
 
 									{% if request.status == 'red' %}
@@ -814,7 +829,8 @@
 										<td>{{request.created_at}}</td>
 									</tr>
 									{% endif %}
-								{% endfor %}	
+								{% endfor %}
+								{% show_pages %}	
 							</tbody>
 						</table>
 					</div>
@@ -851,7 +867,7 @@
 								{% endif %}
 								</div>
 							</div>
-
+								{% paginate red_status_list %}
 								{% for request in red_status_list %}
 
 									{% if request.status == 'red' %}
@@ -906,7 +922,8 @@
 										<td>{{request.created_at}}</td>
 									</tr>
 									{% endif %}
-								{% endfor %}	
+								{% endfor %}
+								{% show_pages %}	
 							</tbody>
 						</table>
 					</div>

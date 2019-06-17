@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
@@ -19,6 +21,8 @@ STATIC_DIR = os.path.join(BASE_DIR,"static")
 MEDIA_DIR = os.path.join(BASE_DIR,"media")
 # STATIC_ROOT= os.path.join(BASE_DIR,"static/") only needed for PRODUCTION
 # MEDIA_ROOT
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -52,6 +56,8 @@ INSTALLED_APPS = [
     'accounts',
     'response_metadata',
     'request_response',
+    'easy_pdf',
+    'el_pagination',
 ]
 
 AUTH_USER_MODEL = 'accounts.User' #changes built in user model to our custom user model
@@ -68,6 +74,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'project_braveheart.urls'
 
+
+
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -83,6 +93,10 @@ TEMPLATES = [
         },
     },
 ]
+
+
+#Defaults how many objects are normally displayed in a page (overwriteable by templatetag).
+EL_PAGINATION_PER_PAGE = 20
 
 WSGI_APPLICATION = 'project_braveheart.wsgi.application'
 
@@ -148,7 +162,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'request_form_app/media')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = ('bootstrap4')
 
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT = 465

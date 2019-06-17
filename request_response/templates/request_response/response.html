@@ -69,9 +69,15 @@
                 <p>Data we've retreived from our databases based on your originally submitted information:</p>
                 <div class="container-fullwidth">
                     <table>
+
                         <tbody>
                            
                             <tr>
+                                <td>{% for data in response_data %}
+                                    {{data.value}}
+                                    {{data.metadata}}
+                                    {{data.pk}}
+                                {% endfor %}</td>
                                 <td>First Name:</td>
                                 <td>{{ first_name }}</td>
                                 <td>Last Name:</td>
