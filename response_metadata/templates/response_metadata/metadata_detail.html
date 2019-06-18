@@ -8,6 +8,9 @@
 
 {% block main_block %}
 	<div class="container-fullwidth">
+
+<!-- ------------------------------------ -->
+
 		<div class="container-fullwidth fixed-top" id="header-wrapper">
 			<div class="container-fullwidth" id="request-header-container">
 				<div class="row">
@@ -22,14 +25,66 @@
 
 					</div>
 
+					<div class="col-2 float-right" style="padding-top: 25px;">
+					
+
+						<div class="btn-group" role="group" aria-label="dictionary detail group">
+							
+							
+							<a href="{% url 'response_metadata:metadata_update' pk=metadata.metadata_key %}"><button type="button" class="btn btn-secondary float-right btn-sm" style="width: 150px;">Edit Data Entry</button></a>
+							
+
+						</div>
+				</div>
+				</div>
+			</div>
+		</div>
 
 
 
+<!-- ------------------------------------ -->
+
+	<div class="container-fullwidth" id="data-container" style="min-height: 1080px">
+		<div class="jumbotron" id="data-jumbo">
+			<div class="row">
+				<div class="col-6">
+					<table>
+						<tbody>
+							<tr><td class="data-row"><span class="field-label">Data Entry ID:</span><br>{{ metadata.pk }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Consumer Label:</span><br>{{ metadata.consumer_label }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Description:</span><br>{{ metadata.description }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Consumer Description:</span><br>{{ metadata.consumer_description }}</td></tr>
+							
+						</tbody>
+					</table>
+				</div>
+				<div class="col-6">
+					<table>
+						<tbody>
+							<tr><td class="data-row"><span class="field-label">Sequence:</span><br>{{ metadata.sequence }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Data Category:</span><br>{{ metadata.field_type }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Field Type:</span><br>{{ metadata.description }}</td></tr>
+						</tbody>
+					</table>
 				</div>
 
 			</div>
 
+
+
 		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
 
 	</div>
 {% endblock %}

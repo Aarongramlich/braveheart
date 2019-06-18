@@ -2,34 +2,52 @@
 {% load staticfiles %}
 
 {% block css_block %}
-	<link rel="stylesheet" type="text/css" href="{% static 'user_console/consumer_list.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_list.css' %}">
 {% endblock %}
 	
 {% block main_block %}
 
 
-	<div class="container-fullwidth" id="consumer-container">
+	<div class="container-fullwidth" id="request-container">
 
-		<div class="container-fullwidth" id="consumer-header-container">
+		<div class="container-fullwidth" id="request-header-container">
 			
 
 
 
-		<div class="row" id="consumer-row">
+		<div class="row" id="header-row">
 			<div class="col-2 text-center">
 
-				<h1 class="pt-2" id="consumer-header">Consumers</h1>
+				<h2 class="pt-2" id="request-header">Consumers</h2>
 
-				<a href="{% url 'user_console:consumer_create' %}"><button type="button" class="btn btn-success mb-4">Create New Consumer</button></a>
+			</div>
+
+			<div class="col-10" style="padding-top:10px;">
+			<button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export Consumers</button>
+			</div>
+
+		</div>
+
+		<div class="row" id="request-row">
+			<div class="col-2 text-center" id="filter-column">
+
+				<div class="row" id="new-request-button-row">
+					<div class="col text-center">
+
+					<a href="{% url 'user_console:consumer_create' %}"><button type="button" class="btn btn-success mb-4">Create New Consumer</button></a>
+
+					</div>
+
+				</div>
 
 
 
-
+		
 				
 
 
-
-
+				<div class="row pt-3">
+					<div class="col">
 				<div class="list-group" id="list-tab" role="tablist">
 
 					<li class="list-group-item" style="text-align: center;font-size:1.2em;background-color:#F3F5F8 ">FILTERS</li>
@@ -42,23 +60,23 @@
 
 					<a class="list-group-item list-group-item-action" id="filter-4-list" data-toggle='list' href='#filter-4' role='tab' aria-controls='filter-4'>Ready for Review</a>
 
-					<a class="list-group-item list-group-item-action" id="filter-5-list" data-toggle='list' href='#filter-5' role='tab' aria-controls='filter-5'>Green Status (1-14 Days)</a>
+					<a class="list-group-item list-group-item-action" id="filter-5-list" data-toggle='list' href='#filter-5' role='tab' aria-controls='filter-5'>Needs verification</a>
 
-					<a class="list-group-item list-group-item-action" id="filter-6-list" data-toggle='list' href='#filter-6' role='tab' aria-controls='filter-6'>Yellow Status (15-30 Days)</a>
-
-					<a class="list-group-item list-group-item-action" id="filter-7-list" data-toggle='list' href='#filter-7' role='tab' aria-controls='filter-7'>Red Status (31-45 Days)</a>
-
+					
+					</div>
+					</div>
 				</div>
-			</div>
+				</div>
+				
 			
 			<div class="col-10">
 
-				<button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export Consumers</button>
+				
 		
 				<div class="tab-content" id="nav-tabContent"> 
 				
 					<div class="tab-pane show active" id="filter-1" role='tabpanel' arialabelledby='filter-1-list'>
-					<table class="table table-light table-bordered table-hover table-sm" id="consumer-table">
+					<table class="table table-light table-bordered table-hover table-sm" id="request-table">
 						<thead class="thead" style="background-color:#2d5d7b;color: white;">
 							<th class="table-head" scope="col">Consumer ID</th>
 							<th class="table-head" scope="col">First Name</th>
@@ -77,7 +95,7 @@
 
 								
 								<tr>
-									<th scope="row">{{consumer.pk }}</th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=consumer.pk %}">{{consumer.pk }}</a></td>
 									<td>{{consumer.first_name}}</td>
 									<td>{{consumer.last_name}}</td>
 									<td>{{consumer.email }}</td>

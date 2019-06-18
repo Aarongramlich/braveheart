@@ -11,8 +11,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-	<!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,200," rel="stylesheet"> -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
 
 	<link rel="stylesheet" type="text/css" href="{% static 'user_console/user_console.css' %}">
 
@@ -24,7 +23,7 @@
 <body>
 
 
-	<nav class="navbar navbar-expand-md navbar-expand-lg navbar-expand-xl fixed-top navbar-light" style="font-weight: 300;background-color: #ffffff; border-bottom: 1px solid;">
+	<nav class="navbar navbar-expand-md navbar-expand-lg navbar-expand-xl fixed-top navbar-light" style="background-color: #FFFFFF;color:white;border-bottom: 1px solid black;">
 
 			<button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
 
@@ -46,26 +45,26 @@
 			    
 
 
-				    <ul class="nav navbar-nav mr-auto ml-5 p-3">
+				    <ul class="nav navbar-nav mr-auto ml-5 p-3" >
 
 				    
 				    <li class="nav-item active mr-3">
-				      	<a class="nav-link" href="{% url 'user_console:home' %}"><b>Home</b></a>
+				      	<a class="nav-link" href="{% url 'user_console:home' %}">HOME</a>
 				      </li>	
 				      <li class="nav-item active mr-3">
-				      	<a class="nav-link" href="{% url 'user_console:request_list' %}"><b>Requests</b></a>
+				      	<a class="nav-link" href="{% url 'user_console:request_list' %}">REQUESTS</a>
 				      </li>
 
 				      <li class="nav-item active mr-3">
-				      	<a class="nav-link" href="{% url 'user_console:consumer_list' %}"><b>Consumers</b></a>
+				      	<a class="nav-link" href="{% url 'user_console:consumer_list' %}">CONSUMERS</a>
 				      </li>
 
 
 				      <li class="nav-item active mr-3">
-				      	<a class="nav-link" href="{% url 'user_console:company_list' %}"><b>Companies</b></a>
+				      	<a class="nav-link" href="{% url 'user_console:company_list' %}">COMPANIES</a>
 				      </li>
 				      <li class="nav-item dropdown active">
-				      	<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Setup</a>
+				      	<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">SETUP</a>
 				      	<div class="dropdown-menu">
 				      		<a class="dropdown-item" href="#">My Company</a>
 				      		<a class="dropdown-item" href="{% url 'response_metadata:metadata_list' %}">Manage Data Dictionary</a>
@@ -80,7 +79,7 @@
 
 				    <ul class="nav navbar-nav ml-auto mr-5">
 				    	<a href="{% url 'user_console:logged_out' %}">
-				    		<button type="button" class="btn btn-outline-primary">Log out</button>
+				    		<button type="button" class="btn btn-outline-light">Log out</button>
 				    	</a>
 				    </ul>
 			    </div>

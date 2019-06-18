@@ -15,19 +15,22 @@
 			
 		<div class="row" id="header-row">
 			<div class="col-2 text-center">
-				<h1 class="pt-2" id="request-header">Requests</h1>
+				<h2 class="pt-2" id="request-header">Requests</h2>
 			</div>
+
+
 			<div class="col-10" style="padding-top: 10px;">
 				<a href="{% url 'user_console:export_all_requests' %}"><button type="button" class="btn btn-primary btn-sm mb-4 float-right">Export all requests</button></a>
 				<a href="{% url 'user_console:import_requests' %}"><button type="button" class="btn btn-outline-primary btn-sm mb-4 mr-1 float-right">Import requests</button></a>
 			</div>
+
+
 		</div>
 
 
 		<div class="row" id="request-row">
 			<div class="col-2 text-center" id="filter-column">
 
-				<!-- <h1 class="display-5" id="request-header">REQUESTS</h1> -->
 				<div class="row" id="new-request-button-row">
 					<div class="col text-center ">
 						
@@ -124,7 +127,7 @@
 								{% for request in all_requests_list %}
 								{% if request.status == 'red' %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -141,7 +144,7 @@
 								</tr>
 								{% elif request.status == 'yellow' %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -158,7 +161,7 @@
 								</tr>
 								{% else %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -222,7 +225,7 @@
 
 								{% if request.status == 'red' %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -239,7 +242,7 @@
 								</tr>
 								{% elif request.status == 'yellow' %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -256,7 +259,7 @@
 								</tr>
 								{% else %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -315,7 +318,7 @@
 
 								{% if request.status == 'red' %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -332,7 +335,7 @@
 								</tr>
 								{% elif request.status == 'yellow' %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -349,7 +352,7 @@
 								</tr>
 								{% else %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -408,7 +411,7 @@
 
 								{% if request.status == 'red' %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -425,7 +428,7 @@
 								</tr>
 								{% elif request.status == 'yellow' %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -442,7 +445,7 @@
 								</tr>
 								{% else %}
 								<tr>
-									<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></th>
+									<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{ request.pk }}</a></td>
 									<td>{{request.first_name}}</td>
 									<td>{{request.last_name}}</td>
 									<td>{{request.email }}</td>
@@ -500,7 +503,7 @@
 
 									{% if request.status == 'red' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -517,7 +520,7 @@
 									</tr>
 									{% elif request.status == 'yellow' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -534,7 +537,7 @@
 									</tr>
 									{% else %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -592,7 +595,7 @@
 
 									{% if request.status == 'red' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -609,7 +612,7 @@
 									</tr>
 									{% elif request.status == 'yellow' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -626,7 +629,7 @@
 									</tr>
 									{% else %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -686,7 +689,7 @@
 
 									{% if request.status == 'red' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -703,7 +706,7 @@
 									</tr>
 									{% elif request.status == 'yellow' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -720,7 +723,7 @@
 									</tr>
 									{% else %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -779,7 +782,7 @@
 
 									{% if request.status == 'red' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -796,7 +799,7 @@
 									</tr>
 									{% elif request.status == 'yellow' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -813,7 +816,7 @@
 									</tr>
 									{% else %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -872,7 +875,7 @@
 
 									{% if request.status == 'red' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -889,7 +892,7 @@
 									</tr>
 									{% elif request.status == 'yellow' %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
@@ -906,7 +909,7 @@
 									</tr>
 									{% else %}
 									<tr>
-										<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></th>
+										<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
 										<td>{{request.first_name}}</td>
 										<td>{{request.last_name}}</td>
 										<td>{{request.email }}</td>
