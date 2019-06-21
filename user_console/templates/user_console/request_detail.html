@@ -171,7 +171,8 @@
 				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
 					<h5 style="padding-bottom: 15px;">Response Data
 						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
-						<a href="{% url 'request_response:create_response' pk=request.pk %}"><button type="button" class="btn btn-secondary btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Bulk Import</button></a>
+						<a href="{% url 'request_response:import_response_data' %}"><button type="button" class="btn btn-secondary btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Bulk Import</button></a>
+
 					</h5>
 					<thead class="thead" style="background-color:#215CA0;color: white;">
 						<th class="table-head" scope="col">Response Data ID</th>
@@ -211,11 +212,11 @@
 			<div class="table-responsive" style="padding-top: 20px;">
 				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
 					<h5 style="padding-bottom: 15px;">Data Categories
-						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
+						<a href="{% url 'request_response:create_response_category' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
 						
 					</h5>
 					<thead class="thead" style="background-color:#215CA0;color: white;">
-						<th class="table-head" scope="col">Response Data Category ID</th>
+						<th class="table-head" scope="col">Response Category ID</th>
 						<th class="table-head" scope="col">Parent Response</th>
 						<th class="table-head" scope="col">Category Label</th>
 						<th class="table-head" scope="col">Category Description</th>
@@ -227,7 +228,7 @@
 					
 					<tr>
 
-						<th scope="row"><a href="{% url 'request_response:response_data_detail' pk=category.pk %}">{{category.pk}}</a></th>
+						<th scope="row"><a href="{% url 'request_response:response_category_detail' pk=category.pk %}">{{category.pk}}</a></th>
 						<td>{{ category.request_response.pk }}</td>
 						<td>{{ category.data_category.consumer_label }}</td>
 						<td>{{ category.data_category.consumer_description }}</td>
@@ -248,11 +249,11 @@
 			<div class="table-responsive" style="padding-top: 20px;">
 				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
 					<h5 style="padding-bottom: 15px;">Source Categories
-						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
+						<a href="{% url 'request_response:create_response_category' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
 						
 					</h5>
 					<thead class="thead" style="background-color:#215CA0;color: white;">
-						<th class="table-head" scope="col">Response Data Category ID</th>
+						<th class="table-head" scope="col">Response Category ID</th>
 						<th class="table-head" scope="col">Parent Response</th>
 						<th class="table-head" scope="col">Category Label</th>
 						<th class="table-head" scope="col">Category Description</th>
@@ -264,7 +265,7 @@
 					
 					<tr>
 
-						<th scope="row"><a href="{% url 'request_response:response_data_detail' pk=category.pk %}">{{category.pk}}</a></th>
+						<th scope="row"><a href="{% url 'request_response:response_category_detail' pk=category.pk %}">{{category.pk}}</a></th>
 						<td>{{ category.request_response.pk }}</td>
 						<td>{{ category.data_category.consumer_label }}</td>
 						<td>{{ category.data_category.consumer_description }}</td>
@@ -285,11 +286,11 @@
 			<div class="table-responsive" style="padding-top: 20px;">
 				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
 					<h5 style="padding-bottom: 15px;">3rd Party Sharing Categories
-						<a href="{% url 'request_response:create_response_data' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
+						<a href="{% url 'request_response:create_response_category' pk=request.pk %}"><button type="button" class="btn btn-info btn-sm float-right mr-3" style="width: 80px;font-size:.5em;">Add</button></a>
 						
 					</h5>
 					<thead class="thead" style="background-color:#215CA0;color: white;">
-						<th class="table-head" scope="col">Response Data Category ID</th>
+						<th class="table-head" scope="col">Response Category ID</th>
 						<th class="table-head" scope="col">Parent Response</th>
 						<th class="table-head" scope="col">Category Label</th>
 						<th class="table-head" scope="col">Category Description</th>
@@ -301,7 +302,7 @@
 					
 					<tr>
 
-						<th scope="row"><a href="{% url 'request_response:response_data_detail' pk=category.pk %}">{{category.pk}}</a></th>
+						<th scope="row"><a href="{% url 'request_response:response_category_detail' pk=category.pk %}">{{category.pk}}</a></th>
 						<td>{{ category.request_response.pk }}</td>
 						<td>{{ category.data_category.consumer_label }}</td>
 						<td>{{ category.data_category.consumer_description }}</td>

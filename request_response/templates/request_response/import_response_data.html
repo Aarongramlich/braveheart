@@ -1,0 +1,62 @@
+{% extends 'user_console/console_base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/import_form.css' %}">
+{% endblock %}
+
+
+{% block main_block %}
+
+{% if messages %}
+	
+	{% for message in messages %}
+		<div>
+			<strong>{{message|safe}}</strong>
+		</div>
+	{% endfor %}
+
+
+{% else %}
+
+<div class="container-fullwidth" style="background: radial-gradient(circle, rgba(20,117,190,1) 0%, rgba(46,192,249,0.75) 100%);">
+	<div class="container" id="requestform-data-container">
+		<div class="jumbotron" id="requestform-data-jumbo">
+			<h2 style="font-weight: 300;opacity: .5"><i>Import Response Data</i></h2></br>
+			Steps:</br>
+			<ol>
+				<li>Prepare .csv with columns in the following order:</br></br>
+					<ol>
+						<li>id (Note: leave blank for import)</li>
+						<li>metadata (Note: concatenation of metadata field name and company key)</li>
+						<li>request (Note: id of the original Request record)</li>
+						<li>request_response_id</li>
+						<li>value</li>
+						<li>encrypted (TRUE / FALSE)</li>
+						<li>exclude_from_report (TRUE / FALSE)</li>
+						<li>source_system</li>
+
+					</ol>
+				</li></br></br>
+				<li>Attach .csv and Submit Import</li>
+			 </ol>
+			
+			<form method="POST" enctype="multipart/form-data" style="margin-top: 50px;">
+				{% csrf_token %}
+					
+					<!-- <label>Choose file</label> -->
+					<input type="file" name="responseFile">
+					
+				
+				
+				<button class="btn btn-primary float-right" type="submit">Submit Import</button>
+			</form>
+	</div>
+</div>
+
+{% endif %}
+
+{% endblock %}
+
+

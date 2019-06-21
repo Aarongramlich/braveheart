@@ -1,5 +1,7 @@
 from django.db import models
 from request_form_app.models import Request,Company
+from django.urls import reverse
+
 
 # Create your models here.
 
@@ -22,10 +24,10 @@ class MetadataCategory(models.Model):
 	category_type = models.TextField(max_length=255,choices=category_type_choices,blank=False,default='data')
 
 	def __str__(self):
-		return self.category + ' - ' + self.company.company_name
+		return self.category + ' - ' + self.category_type + ' - ' + self.company.company_name
 
 	def get_absolute_url(self):
-		return revere("response_metadata:metadata_category_detail",kwargs={'pk':self.pk})
+		return reverse("response_metadata:metadata_category_detail",kwargs={'pk':self.pk})
 
 class Metadata(models.Model):
 
@@ -58,10 +60,10 @@ class Metadata(models.Model):
 		return self.field + ' - ' + self.company.company_name
 
 	def get_absolute_url(self):
-		return revere("response_metadata:metadata_detail",kwargs={'pk':self.pk})
+		return reverse("response_metadata:metadata_detail",kwargs={'pk':self.pk})
 
 	def save(self,*args,**kwargs):
 
 		self.metadata_key = self.field  + "_" + self.company.company_code
-		# self.metadata_key.save()
+		
 		super(Metadata,self).save(*args,**kwargs)

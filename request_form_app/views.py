@@ -15,13 +15,7 @@ class RequestCreateView(CreateView):
 	model = Request
 	form_class = RequestForm
 	def form_valid(self,form):
-		# request = form.save()
-
-		# send_mail('Hello from Braveheart Data!',
-		# 	'This is the automated message. <b r> This is a test message',
-		# 	'support@braveheartdata.com',
-		# 	[case.email],
-		# 	fail_silently=False)
+		
 		return super().form_valid(form)
 
 	def get_success_url(self):
@@ -35,6 +29,3 @@ class RequestCreateView(CreateView):
 class RequestDetailView(DetailView):
 	model = Request
 	template_name = 'request_form_app/request_detail.html'
-
-	def consumer_dupe_check(request,email,pk):
-		pass

@@ -8,28 +8,82 @@
 
 {% block main_block %}
 	<div class="container-fullwidth">
+
+<!-- ---------------------------------------------------- -->
+
 		<div class="container-fullwidth fixed-top" id="header-wrapper">
 			<div class="container-fullwidth" id="request-header-container">
 				<div class="row">
 					
 					<div class="col-10">
-						<span style="font-size: 1.2em;"><b>Field: {{metadata.field}}</b></span><br>
-						<p><span style="font-size:.9em;">Label: {{metadata.label}}</span><br>
-						<span style="font-size: .9em;">Key: {{metadata.metadata_key}}</span>
+						<span style="font-size: 1.2em;"><b>Category Name: {{metadatacategory.category}}</b></span><br>
+						<p><span style="font-size:.9em;">Category ID: {{metadatacategory.pk}}</span><br>
+						<span style="font-size: .9em;">Consumer Label: {{metadatacategory.consumer_label}}</span></p>
 
 
 
 
 					</div>
 
+					<div class="col-2 float-right" style="padding-top: 25px;">
+					
+
+						<div class="btn-group" role="group" aria-label="category detail group">
+							
+							
+							<a href="{% url 'response_metadata:metadata_category_update' pk=metadatacategory.pk %}"><button type="button" class="btn btn-secondary float-right btn-sm" style="width: 150px;">Edit Category</button></a>
+							
+
+						</div>
+					</div>
+				
+				
+				</div>
+
+				</div>
+					
+				
+
+			</div>
 
 
 
+
+
+<!-- ------------------------------------ -->
+
+	<div class="container-fullwidth" id="data-container" style="min-height: 1080px">
+		<div class="jumbotron" id="data-jumbo">
+			<div class="row">
+				<div class="col-6">
+					<table>
+						<tbody>
+							<tr><td class="data-row"><span class="field-label">Consumer Description:</span><br>{{ metadatacategory.comsumer_description }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Consumer Label:</span><br>{{ metadatacategory.sequence }}</td></tr>
+							
+							
+						</tbody>
+					</table>
+				</div>
+				<div class="col-6">
+					<table>
+						<tbody>
+							<tr><td class="data-row"><span class="field-label">Category Type:</span><br>{{ metadatacategory.category_type }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Data Category:</span><br>{{ metadatacategory.company }}</td></tr>
+							
+						</tbody>
+					</table>
 				</div>
 
 			</div>
 
+
+
 		</div>
+	</div>
+
+
+
 
 	</div>
 {% endblock %}

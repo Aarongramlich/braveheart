@@ -87,6 +87,8 @@ class User(AbstractBaseUser):
 	staff		= models.BooleanField(default=False)
 	admin		= models.BooleanField(default=False) #superuser
 	company		= models.ManyToManyField('request_form_app.Company',blank=True)
+	primary_company_code = models.TextField(max_length=6,blank=True,null=True)
+	primary_company_pk = models.IntegerField(blank=True,null=True)
 	confirmed_email = models.BooleanField(default=False) #set to true when email is confirmed by user
 	notes		=	models.TextField(null=True,blank=True)
 

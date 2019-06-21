@@ -1,17 +1,67 @@
 {% extends 'user_console/console_base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/import_form.css' %}">
+{% endblock %}
 
 {% block main_block %}
 
-<div class="container" style="margin-top: 150px;">
-	<div class="jumbotron">
-	<h1>Import requests</h1>
-	<form method="POST" enctype="multipart/form-data" style="margin-top: 50px;">
-		{% csrf_token %}
-		<input type="file" name="requests_file" style="padding-left: 100px;">
-		<button class="btn-primary float-center" type="submit">Submit Import</button>
-	</form>
+<div class="container-fullwidth" style="background: radial-gradient(circle, rgba(20,117,190,1) 0%, rgba(46,192,249,0.75) 100%);">
+	<div class="container" id="requestform-data-container">
+		<div class="jumbotron" id="requestform-data-jumbo">
+			<h2 style="font-weight: 300;opacity: .5"><i>Import Requests</i></h2></br>
+			Steps:</br>
+
+			<ol>
+				<li>Prepare .csv with columns in the following order:</br></br>
+					<ol>
+						<div class="row">
+							<div class="col" >
+
+								<li>id (Note: leave blank for import)</li>
+								<li>company_requested</li>
+								<li>first_name</li>
+								<li>last_name</li>
+								<li>email</li>
+								<li>what_request (yes/no)</li>
+								<li>opt_out_request (yes/no)</li>
+								<li>who_request (yes/no)</li>
+								<li>delete_request (yes/no)</li>
+
+							</div>
+
+							<div class="col" >
+
+								<li>alternative_email</li>
+								<li>phone</li>
+								<li>alternative_phone</li>
+								<li>primary_address</li>
+								<li>primary_city</li>
+								<li>primary_state (Note: two-letter abbreviation)</li>
+								<li>primary_country (Note: two-letter abbreviation)</li>
+								<li>request_source (Options: web, phone, email)</li>
+								<li>website_source (Note: if request_source = web)</li>
+							</div>
+						</div>
+
+					</ol>
+				</li></br></br>
+
+				<li>Attach .csv and Submit Import</li>
+			 </ol>
+			
+			<form method="POST" enctype="multipart/form-data" style="margin-top: 50px;">
+				{% csrf_token %}
+				<div class="custom-file mb-3">
+					<input class="custom-file-input" type="file" name="request_file" id="request-file-input" style="padding-left: 100px;max-width: 500px;">
+					<label class="custom-file-label" for="request-file-input">Choose file</label>
+				</div>
+				
+				<button class="btn btn-primary float-right" type="submit">Submit Import</button>
+			</form>
 	</div>
-</div>
+</div> 
 
 {% endblock %}

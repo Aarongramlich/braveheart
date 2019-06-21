@@ -1,18 +1,91 @@
 {% extends 'user_console/console_base.html' %}
 {% load staticfiles %}
-{% load crispy_forms_tags %}
 
 
 {% block css_block %}
-
-{% endblock %}
-
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_detail.css' %}">
+{% endblock%}
 
 {% block main_block %}
-	<div class="container">
 
-		TEST
 
+	<div class="container-fullwidth">
+
+<!-- ------------------------------------ -->
+
+		<div class="container-fullwidth fixed-top" id="header-wrapper">
+			<div class="container-fullwidth" id="request-header-container">
+				<div class="row">
+					
+					<div class="col-10">
+						<span style="font-size: 1.2em;"><b>Value: {{responsedata.value}}</b></span><br>
+						<span style="font-size: .9em;">Field: {{responsedata.metadata.field}}</span>
+
+						<p><span style="font-size:.9em;">ID: {{responsedata.pk}}</span><br>
+
+
+
+
+					</div>
+
+					<div class="col-2 float-right" style="padding-top: 25px;">
+					
+
+						<div class="btn-group" role="group" aria-label="response detail group">
+							
+							
+							<a href="{% url 'request_response:response_data_update' pk=responsedata.pk %}"><button type="button" class="btn btn-secondary float-right btn-sm" style="width: 150px;">Edit Category</button></a>
+							
+
+						</div>
+				</div>
+				</div>
+			</div>
+		</div>
+
+
+
+<!-- ------------------------------------ -->
+
+	<div class="container-fullwidth" id="data-container" style="min-height: 1080px">
+		<div class="jumbotron" id="data-jumbo">
+			<div class="row">
+				<div class="col-6">
+					<table>
+						<tbody>
+							<tr><td class="data-row"><span class="field-label">Request:</span><br>{{ responsedata.request}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Request response:</span><br>{{ responsedata.request_response.pk }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Encrypted:</span><br>{{ responsedata.exclude_from_report }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Exclude from report:</span><br>{{ responsedata.exclude_from_report }}</td></tr>
+							
+
+							
+							
+						</tbody>
+					</table>
+				</div>
+
+				<div class="col-6">
+					<table>
+						<tbody>
+							<tr><td class="data-row"><span class="field-label">Consumer Label:</span><br>{{ responsedata.metadata.consumer_label }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Consumer Description:</span><br>{{ responsedata.metadata.consumer_description }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Source System:</span><br>{{ responsedata.source_system }}</td></tr>
+							
+							
+							
+							
+						</tbody>
+					</table>
+				</div>
+				
+
+			</div>
+
+
+
+		</div>
 	</div>
-	
+
+</div>
 {% endblock %}

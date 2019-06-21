@@ -1,0 +1,64 @@
+#home-container{
+	/*margin-top:20px;*/
+	background: radial-gradient(circle, rgba(20,117,190,1) 0%, rgba(46,192,249,0.75) 100%);
+	min-height:1000px;
+}
+
+.row{
+	padding-top: 50px;
+}
+
+.home-main-jumbo{
+	margin-left: 100px;
+}
+
+/*.container{
+	display: flex;
+}*/
+
+#request-table{
+	margin-top: 20px;
+	font-size: .85em;
+	font-weight:400;
+	/*width: 90%;*/
+	/*margin-left: 50px;*/
+	
+}
+
+.table-title{
+	font-weight: 300;
+	font-size: 1.1em;
+	/*padding-left: 2%;*/
+	/*color: #707070;*/
+	/*text-align: center;*/
+
+}
+
+.jumbotron{
+	background-color: white;
+	height: 300px;
+	box-shadow: 1.5px 1.5px 3px 1.5px rgba(0,0,0,0.2);
+	border:1px solid #DCDAD9;
+	text-align: center;
+
+
+}
+
+#jumbo1{
+	padding-top: 30px;
+}
+#jumbo2{
+	padding-top: 30px;
+}
+#jumbo3{
+	padding-top: 30px;
+}
+#jumbo4{
+	padding-top: 30px;
+}
+
+#header-container{
+	font-weight: 300;
+	color: #707070;
+	padding-left: 100px;
+}

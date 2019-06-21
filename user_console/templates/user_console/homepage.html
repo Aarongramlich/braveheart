@@ -1,15 +1,205 @@
 {% extends 'user_console/console_base.html' %}
 {% load staticfiles %}
-{% load crispy_forms_tags %}
+{% load el_pagination_tags %}
+
+{% block css_block %}
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/homepage.css' %}">
+{% endblock %}
+
 
 {% block main_block %}
-	<div class="container-fullwidth">
-		<div class="row">
-			<div class="col">
+
+	<div class="row" style="padding-top: 60px;background-color: white; border-bottom: 1px solid black;padding-bottom: 10px;">
+		<div class="container-fullwidth" id="header-container" style="background-color: white;padding-top: 50px;">
+		<span class="display-4">Hello, {{user.first_name}}!</span>
+		<p>Here's a quick overview of the items you may be interested in.</p>
+		</div>
+	</div>
+	<div class="container-fullwidth" id="home-container">
+	<div class="row" id="main-row" style="margin:auto;">
+			<div class="col-mid-6 col-lg-6 col-xl-6">
+				<div class="jumbotron" id="jumbo1">
+				<span class="table-title">CRITICAL REQUESTS</span>
+				<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+					<thead class="thead" style="background-color:#2d5d7b;color: white">
+					<th class="table-head" scope="col">Request ID</th>
+					<th class="table-head" scope="col">First Name</th>
+					<th class="table-head" scope="col">Last Name</th>
+					<th class="table-head" scope="col">Email</th>
+					<th class="table-head" scope="col">Days Open</th>
+					<th class="table-head" scope="col">Status</th>
+					<th class="table-head" scope="col">What</th>
+					<th class="table-head" scope="col">Opt-out</th>
+					<th class="table-head" scope="col">Delete</th>
+					<th class="table-head" scope="col">Created</th>
+					</thead>
 				
+
+				<tbody>
+
+				{% for request in red_status_list %}
+
+						
+						<tr>
+							<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
+							<td>{{request.first_name}}</td>
+							<td>{{request.last_name}}</td>
+							<td>{{request.email }}</td>
+							<td>{{request.days_open}}</td>
+							<td><span class="badge badge-pill badge-danger">CRITICAL</span></td>
+							<td>{{request.what_request}}</td>
+							<td>{{request.opt_out_request}}</td>
+							<td>{{request.delete_request}}</td>
+							<td>{{request.created_at}}</td>
+						</tr>
+
+					
+
+				{% endfor %}
+				</tbody>
+				</table>
+			</div>
 			</div>
 			
+			<div class="col-mid-6 col-lg-6 col-xl-6">	
+				<div class="jumbotron" id="jumbo1">
+					<span class="table-title">READY FOR RESPONSE</span>
+					<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+						<thead class="thead" style="background-color:#2d5d7b;color: white">
+						<th class="table-head" scope="col">Request ID</th>
+						<th class="table-head" scope="col">First Name</th>
+						<th class="table-head" scope="col">Last Name</th>
+						<th class="table-head" scope="col">Email</th>
+						<th class="table-head" scope="col">Days Open</th>
+						<th class="table-head" scope="col">Status</th>
+						<th class="table-head" scope="col">What</th>
+						<th class="table-head" scope="col">Opt-out</th>
+						<th class="table-head" scope="col">Delete</th>
+						<th class="table-head" scope="col">Created</th>
+						</thead>
+
+					
+					<tbody>
+					{% for request in data_ready_to_send_list %}
+						<tr>
+							<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
+							<td>{{request.first_name}}</td>
+							<td>{{request.last_name}}</td>
+							<td>{{request.email }}</td>
+							<td>{{request.days_open}}</td>
+							<td><span class="badge badge-pill badge-success">OKAY</span></td>
+							<td>{{request.what_request}}</td>
+							<td>{{request.opt_out_request}}</td>
+							<td>{{request.delete_request}}</td>
+							<td>{{request.created_at}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+					
+					</table>
+
+
+
+			</div>
+			</div>
+
+
+			<div class="col-mid-6 col-lg-6 col-xl-6">
+				<div class="jumbotron" id="jumbo1">
+				<span class="table-title">READY FOR REVIEW</span>
+				<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+					<thead class="thead" style="background-color:#2d5d7b;color: white">
+					<th class="table-head" scope="col">Request ID</th>
+					<th class="table-head" scope="col">First Name</th>
+					<th class="table-head" scope="col">Last Name</th>
+					<th class="table-head" scope="col">Email</th>
+					<th class="table-head" scope="col">Days Open</th>
+					<th class="table-head" scope="col">Status</th>
+					<th class="table-head" scope="col">What</th>
+					<th class="table-head" scope="col">Opt-out</th>
+					<th class="table-head" scope="col">Delete</th>
+					<th class="table-head" scope="col">Created</th>
+					</thead>
+				
+
+				<tbody>
+
+				{% for request in todays_list %}
+
+						
+						<tr>
+							<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
+							<td>{{request.first_name}}</td>
+							<td>{{request.last_name}}</td>
+							<td>{{request.email }}</td>
+							<td>{{request.days_open}}</td>
+							<td><span class="badge badge-pill badge-success">OKAY</span></td>
+							<td>{{request.what_request}}</td>
+							<td>{{request.opt_out_request}}</td>
+							<td>{{request.delete_request}}</td>
+							<td>{{request.created_at}}</td>
+						</tr>
+
+					
+
+				{% endfor %}
+				</tbody>
+				</table>
+				</div>
+			
+			</div>
+
+
+			<div class="col-mid-6 col-lg-6 col-xl-6">
+				<div class="jumbotron" id="jumbo1">
+				<span class="table-title">IN DANGER REQUESTS</span>
+				<table class="table table-light table-bordered table-hover table-sm" id="request-table">
+					<thead class="thead" style="background-color:#2d5d7b;color: white">
+					<th class="table-head" scope="col">Request ID</th>
+					<th class="table-head" scope="col">First Name</th>
+					<th class="table-head" scope="col">Last Name</th>
+					<th class="table-head" scope="col">Email</th>
+					<th class="table-head" scope="col">Days Open</th>
+					<th class="table-head" scope="col">Status</th>
+					<th class="table-head" scope="col">What</th>
+					<th class="table-head" scope="col">Opt-out</th>
+					<th class="table-head" scope="col">Delete</th>
+					<th class="table-head" scope="col">Created</th>
+					</thead>
+				
+
+				<tbody>
+
+				{% for request in yellow_status_list %}
+
+						
+						<tr>
+							<td scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk }}</a></td>
+							<td>{{request.first_name}}</td>
+							<td>{{request.last_name}}</td>
+							<td>{{request.email }}</td>
+							<td>{{request.days_open}}</td>
+							<td><span class="badge badge-pill badge-warning">DANGER</span></td>
+							<td>{{request.what_request}}</td>
+							<td>{{request.opt_out_request}}</td>
+							<td>{{request.delete_request}}</td>
+							<td>{{request.created_at}}</td>
+						</tr>
+
+					
+
+				{% endfor %}
+				</tbody>
+				</table>
+			</div>
+			</div>
+			
+
+			
+			
+
 		</div>
-		
+
 	</div>
+
 {% endblock %}

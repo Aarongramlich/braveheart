@@ -20,6 +20,8 @@ class RequestResponse(models.Model):
 	def __str__(self):
 		return self.request.email + ' - ' + self.request.company_requested.company_name
 
+	def get_absolute_url(self):
+		return reverse('user_console:request_detail',kwargs={'pk':self.request.pk})
 
 
 
@@ -41,6 +43,9 @@ class ResponseData(models.Model): #WILL BE USED FOR API/JSON INSERTS "DAY 2"
 
 	def __str__(self):
 		return self.metadata.field + ' - ' + self.value + ' - ' + self.request.email
+
+	def get_absolute_url(self):
+		return reverse('user_console:request_detail',kwargs={'pk':self.request.pk})
 
 class ResponseCategory(models.Model):
 

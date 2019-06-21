@@ -23,7 +23,7 @@ from datetime import date,timedelta,datetime,timezone
 class MetadataListView(LoginRequiredMixin,ListView):
 	model = Metadata
 
-	context_object_name = 'metadata_list'
+	# context_object_name = 'metadata_list'
 	template_name='response_metadata/metadata_list.html'
 
 	login_url = '/console/login/'
@@ -45,13 +45,6 @@ class MetadataListView(LoginRequiredMixin,ListView):
 
 
 
-class MetadataDetailView(LoginRequiredMixin,DetailView):
-	model = Metadata
-	template_name = 'response_metadata/metadata_detail.html'
-
-	login_url = '/console/login/'
-
-
 class MetadataCreateView(LoginRequiredMixin,CreateView):
 	model = Metadata
 	form_class = MetadataForm
@@ -59,8 +52,15 @@ class MetadataCreateView(LoginRequiredMixin,CreateView):
 
 	login_url = '/console/login/'
 
-	# def get_success_url(self):
-	# 	return reverse("response_metadata:metadata_list")
+
+class MetadataDetailView(LoginRequiredMixin,DetailView):
+	model = Metadata
+	template_name = 'response_metadata/metadata_detail.html'
+
+	login_url = '/console/login/'
+
+
+
 
 class MetadataUpdateView(LoginRequiredMixin,UpdateView):
 	model = Metadata
@@ -78,7 +78,7 @@ class MetadataCategoryListView(LoginRequiredMixin,ListView):
 
 	model = MetadataCategory
 
-	context_object_name = 'metadata_category_list'
+	# context_object_name = 'metadata_category_list'
 
 	template_name = 'response_metadata/metadata_category_list.html'
 

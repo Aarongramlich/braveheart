@@ -3,11 +3,134 @@
 {% load crispy_forms_tags %}
 
 {% block css_block %}
-
+	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_detail.css' %}">
 {% endblock %}
 
 {% block main_block %}
-	<div class="container-fullwidth" style="padding:100px;">
-		{{consumer.first_name}}
+	<div class="container-fullwidth">
+
+	
+	
+
+	<div class="container-fullwidth fixed-top" id="header-wrapper">
+
+		<div class="container-fullwidth" id="request-header-container">
+			<div class="row">
+				
+				<div class="col-10">
+					
+				
+					<span style="font-size: 1.2em;"><b>{{consumer.first_name}} {{consumer.last_name}}</br>{{consumer.email}}</b></span><br></br>
+					<p><span style="font-size:1em;">Consumer ID: {{consumer.pk}}</span><br>
+
+					
+				</div>
+				<div class="col-2 float-right" style="padding-top: 40px;">
+					
+
+					<div class="btn-group" role="group" aria-label="consumer detail group">
+						
+						
+						<a href="{% url 'user_console:consumer_update' pk=consumer.pk %}"><button type="button" class="btn btn-secondary float-right btn-sm" style="width: 150px;">Edit consumer</button></a>
+						<!-- <button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Send Data</button>
+						<button type="button" class="btn btn-outline-info float-right" style="width: 150px;">Contact Requester</button> -->
+
+					</div>
+
+				</div>
+
+				
+			</div>
+		</div>
 	</div>
+
+	<div class="container-fullwidth" id="data-container">
+		<div class="jumbotron" id="data-jumbo">
+			
+		<div class="row" >
+			<div class="col-3">
+				<table>
+					<tbody>
+						<tr><td class="data-row"><span class="field-label">Consumer ID:</span><br>{{ consumer.pk }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">First Name:</span><br>{{ consumer.first_name }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Last Name:</span><br>{{ consumer.last_name }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Email:</span><br>{{ consumer.email }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Alternative Email:</span><br>{{ consumer.alternative_email }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Phone:</span><br>{{ consumer.phone }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Alternative Phone:</span><br>{{ consumer.alternative_phone }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary Address:</span><br>{{ consumer.primary_address }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary Address Line 2:</span><br>{{ consumer.primary_address_line_two }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary City:</span><br>{{ consumer.primary_city }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary State:</span><br>{{ consumer.primary_state }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary Zip:</span><br>{{ consumer.primary_zip }}</td></tr>
+						<tr><td class="data-row"><span class="field-label">Primary Country:</span><br>{{ consumer.primary_country }}</td></tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-3">
+				<table>
+					<tbody>
+							<tr><td class="data-row"><span class="field-label">SSN:</span><br>{{ consumer.ssn }}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Driver License Number:</span><br>{{consumer.driver_license_number}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Driver License State:</span><br>{{consumer.driver_license_state}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Alternative Address:</span><br>{{consumer.alternative_address}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Alternative Address Line 2:</span><br>{{consumer.alternative_address_line_two}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Alternative City:</span><br>{{consumer.alternative_city}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Alternative State:</span><br>{{consumer.alternative_state}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Alternative Zip:</span><br>{{consumer.alternative_zip}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Alternative Country:</span><br>{{consumer.alternative_country}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Terms of Service Signed: </span><br>{{consumer.terms_of_service_signed}}</td></tr>
+							<tr><td class="data-row"><span class="field-label">Identity Verified</span><br>{{consumer.identity_verified}}</td></tr>
+					</tbody>
+				</table>
+			</div>
+
+			
+			<div class="col-6 pt-3" id="related-list-col">
+
+				<div class="table-responsive">
+				<table class="table table-light table-bordered table-hover table-sm" id="request-table" >
+					<h5 style="padding-bottom: 15px;">Requests
+						
+					<thead class="thead" style="background-color:#215CA0;color: white;">
+						<th class="table-head" scope="col">Request ID</th>
+						<th class="table-head" scope="col">Request Source</th>
+						<th class="table-head" scope="col">Data Request</th>
+						<th class="table-head" scope="col">Source Request</th>
+						<th class="table-head" scope="col">Opt-out Request</th>
+						<th class="table-head" scope="col">Delete Request</th>
+						<th class="table-head" scope="col">Stage</th>
+						<th class="table-head" scope="col">Status</th>
+						<th class="table-head" scope="col">Action</th>
+					</thead>
+
+					{% if request_list %}
+					{% for request in request_list %}
+					
+					<tr>
+						<th scope="row"><a href="{% url 'user_console:request_detail' pk=request.pk %}">{{request.pk}}</a></th>
+						<td>{{ request.request_source }}</td>
+						<td>{{ request.what_request }}</td>
+						<td>{{ request.who_request }}</td>
+						<td>{{request.opt_out_request}}</td>
+						<td>{{request.delete_request}}</td>
+						<td>{{request.stage}}</td>
+						<td>{{request.status}}</td>
+
+						<td><a href="{% url 'user_console:request_update' pk=request.pk %}"><button class="btn btn-secondary btn-sm" style="font-size: .8em;">Edit</button></a></td>
+					</tr>
+					{% endfor %}
+					{% else %}
+					<tr>
+					<td colspan="8"><p>No responses have been added.</p></td>
+					</tr>
+					{% endif %}
+					
+				</table>
+			</div>
+
+			</div>
+
+</div>
 {% endblock %}

@@ -46,6 +46,7 @@
 .data-row{
 	padding-top: 10px;
 	padding-bottom: 10px;
+	min-height: 100px;
 	border-bottom: 1px solid #DCDAD9;
 	width: 400px;
 }

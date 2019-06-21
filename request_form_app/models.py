@@ -16,7 +16,7 @@ class Consumer(models.Model):
 
 	first_name = models.CharField(max_length=256,blank=True)
 	last_name = models.CharField(max_length=256,blank=False)
-	email = models.EmailField(max_length=256,blank=True)
+	email = models.EmailField(max_length=256,blank=True,unique=True)
 	alternative_email = models.EmailField(max_length=256,blank=True)
 	primary_address = models.CharField(max_length=256,blank=True)
 	primary_address_line_two = models.CharField(max_length=256,blank=True)
@@ -28,6 +28,7 @@ class Consumer(models.Model):
 	alternative_address_line_two = models.CharField(max_length=256,blank=True)
 	alternative_city = models.CharField(max_length=256,blank=True)
 	alternative_state = models.CharField(max_length=256,blank=True)
+	alternative_zip = USZipCodeField(null=True,blank=True)
 	alternative_country = models.CharField(max_length=256,blank=True)
 	# ssn = models.CharField(max_length=9,blank=True)
 	ssn = USSocialSecurityNumberField(null=True,blank=True)
@@ -45,6 +46,9 @@ class Consumer(models.Model):
 
 	def __str__(self):
 		return self.first_name + " " + self.last_name
+
+	def get_absolute_url(self):
+		return reverse('user_console:consumer_detail',kwargs={'pk':self.pk})
 
 
 class Company(models.Model):
@@ -68,8 +72,8 @@ class Company(models.Model):
 	def __str__(self):
 		return self.company_name
 
-	# def get_absolute_url(self):
-	# 	return reverse('user_console:company_detail',kwargs={'pk':self.pk})
+	def get_absolute_url(self):
+		return reverse('user_console:company_detail',kwargs={'pk':self.pk})
 
 class Contact(models.Model):
 
@@ -165,27 +169,20 @@ class Request(models.Model):
 	def __str__(self):
 		return self.first_name + self.last_name + " (" + self.email + ")"
 
-
-	# def save(self):
-
-	# 	d_open = (timedelta.days(datetime.today()-self.created_at))
-
-	# 	if d_open <= 14:
-	# 		self.status = 'green'
-	# 	elif d_open >14 and d_open <=30:
-	# 		self.status = 'yellow'
-	# 	elif d_open >30:
-	# 		self.status = 'red'
-	# 	self.save
-
-
 	def get_absolute_url(self):
 		return reverse("user_console:request_detail",kwargs={'pk':self.pk})
 
-	def update_date(self):
-		d_open = date.today()-self.created_at
-		self.days_open = d_open
-		self.save()
+	def save(self,*args,**kwargs):
+
+		if Consumer.objects.filter(email__iexact=self.email).exists():
+			self.consumer = Consumer.objects.get(email__iexact=self.email)
+						
+		else:
+			consumer = Consumer(first_name=self.first_name,last_name=self.last_name,email=self.email)
+			consumer.save()
+			
+		return super().save(*args,**kwargs)
+
 
 
 

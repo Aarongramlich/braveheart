@@ -35,7 +35,7 @@ urlpatterns = [
     path('request/',include('request_form_app.urls')),
     path('console/',include('user_console.urls')),
     path('response/',include('request_response.urls')),
-    path('metadata/',include('response_metadata.urls'))
+    path('metadata/',include('response_metadata.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

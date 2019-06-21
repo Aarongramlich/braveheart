@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
+
 {% block css_block %}
 	<link rel="stylesheet" type="text/css" href="{% static 'user_console/request_form.css' %}">
 {% endblock %}
@@ -9,10 +10,10 @@
 
 {% block main_block %}
 
-<div class="container-fullwidth">
+	<div class="container-fullwidth">
 	<div class="container-fullwidth" id="requestform-data-container">
 		<div class="jumbotron" id="requestform-data-jumbo">
-			<h2 style="font-weight: 300;opacity: .5"><i>Consumer Information</i></h2>
+			<h2 style="font-weight: 300;opacity: .5"><i>Response Category</i></h2>
 			<form method="POST">
 				{{ form.errors }}
 				{{ form.non_field_errors }}
@@ -28,5 +29,4 @@
 	</div>
 	
 </div>
-
 {% endblock %}

@@ -32,16 +32,32 @@ from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 class IndexView(View):
 	pass
 
-class HomepageView(LoginRequiredMixin,View):
-
+class HomepageView(LoginRequiredMixin,ListView):
+	model=Request
 	template_name = 'user_console/homepage.html'
 
 	login_url = '/console/login/'
 
-	def get(self,request):
+	def get_context_data(self,**kwargs):
 
-		return render(request,self.template_name)
+		today = date.today()
+		last_week = date.today() + timedelta(days=-7)
 
+		context = super(HomepageView,self).get_context_data(**kwargs)
+		
+		context['all_requests_list'] = Request.objects.filter(company_requested__in = self.request.user.company.all()).order_by('-pk')
+
+
+		context['todays_list'] = Request.objects.filter(created_at__year=today.year,created_at__month=today.month,created_at__day=today.day,company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['not_started_list'] = Request.objects.filter(stage__iexact='new',company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['last_week_list'] = Request.objects.filter(created_at__gte=date.today()+timedelta(days=-7),company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['ready_for_review_list'] = Request.objects.filter(stage__iexact='ready to review',company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['data_ready_to_send_list'] = Request.objects.filter(stage__iexact='ready for consumer',company_requested__in = self.request.user.company.all()).order_by('-days_open')
+		context['green_status_list'] = Request.objects.filter(status__iexact='green',company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['yellow_status_list'] = Request.objects.filter(status__iexact='yellow',company_requested__in = self.request.user.company.all()).order_by('-pk')
+		context['red_status_list'] = Request.objects.filter(status__iexact='red',company_requested__in = self.request.user.company.all()).order_by('-pk')
+
+		return context
 
 # CONSUMER VIEWS
 
@@ -104,11 +120,30 @@ class CompanyCreateView(LoginRequiredMixin,CreateView):
 
 		return HttpResponseRedirect(reverse('user_console:company_detail',kwargs={'pk':self.pk}))
 
+
+class ConsumerUpdate(LoginRequiredMixin,UpdateView):
+	model = Consumer
+	form_class = ConsumerForm
+	template_name = 'user_console/consumer_form.html'
+
+	login_url = '/console/login/'
+
+	def form_valid(self,form):
+		print(form.cleaned_data)
+		return super().form_valid(form)
+
 class ConsumerDetailView(LoginRequiredMixin,DetailView):
 	model = Consumer
 	template_name = 'user_console/consumer_detail.html'
 
 	login_url = '/console/login/'
+
+	def get_context_data(self,**kwargs):
+		context = super(ConsumerDetailView,self).get_context_data(**kwargs)
+		pk=self.kwargs.get('pk')
+		context['request_list']=Request.objects.filter(consumer__id=pk)
+		
+		return context
 
 class CompanyListView(LoginRequiredMixin,TemplateView):
 	context_object_name = 'company_list'
@@ -216,54 +251,6 @@ class RequestDetailView(LoginRequiredMixin,DetailView):
 		context['response_category_source_list'] = ResponseCategory.objects.filter(request__id=pk,data_category__category_type__iexact='source')
 		return context
 
-	
-
-
-
-
-# class RequestUpdate(LoginRequiredMixin,UpdateView):
-	
-# 	model = Request
-# 	fields = ['consumer',
-# 		'company_requested',
-# 		'request_source',
-# 		'website_source',
-# 		'what_request',
-# 		'who_request',
-# 		'opt_out_request',
-# 		'delete_request',
-# 		'priority',
-# 		'escalated',
-# 		'stage',
-# 		'first_name',
-# 		'last_name',
-# 		'email',
-# 		'alternative_email',
-# 		'phone',
-# 		'alternative_phone',
-# 		'primary_address',
-# 		'primary_address_line_two',
-# 		'primary_city',
-# 		'primary_state',
-# 		'primary_zip',
-# 		'primary_country',
-# 		'alternative_address',
-# 		'alternative_address_line_two',
-# 		'alternative_city',
-# 		'alternative_state',
-# 		'alternative_country',
-# 		'ssn',
-# 		'driver_license_number',
-# 		'driver_license_state',
-# 		'date_of_birth',
-# 		'terms_of_service_signed',
-# 		'data_ready_to_send',
-# 		'status',
-# 		'days_open',]
-# 	template_name_suffix='_update_form'
-
-
-# 	login_url = '/console/login/'
 
 class RequestUpdate(LoginRequiredMixin,UpdateView):
 	model = Request
@@ -275,9 +262,6 @@ class RequestUpdate(LoginRequiredMixin,UpdateView):
 	def form_valid(self,form):
 		print(form.cleaned_data)
 		return super().form_valid(form)
-
-
-	# def get_object(self):
 	
 
 	
@@ -316,5 +300,18 @@ def RequestImport(request):
 
 	return render(request,'user_console/import_requests.html')
 			
+
+
+class MyCompanyDetailView(LoginRequiredMixin,DetailView):
+	model = Company
+	template_name = 'user_console/my_company_detail.html'
+
+	login_url = '/consule/login/'
+
+	def get_object(self):
+		get_company = super(MyCompanyDetailView,self).get_object()
+		get_company['user_company'] = Company.objects.filter(pk__iexact=self.request.primary_company_pk)
+		return get_company
+
 
 
