@@ -27,7 +27,7 @@ PyPDF2==1.26.0
 python-dateutil==2.7.5
 pytz==2018.7
 PyYAML==5.1
-reportlab==3.5.21
+reportlab==3.5.55
 six==1.12.0
 tablib==0.13.0
 text-unidecode==1.2
